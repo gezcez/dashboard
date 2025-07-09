@@ -6,11 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 const queryclient = new QueryClient({
 	defaultOptions: {
 		queries: {
-			retry: (cnt) => {
-				return cnt < 5
-			},
-			retryDelay: (cnt) => 2 ^ cnt
-
+			retry: false
 		}
 	}
 })
