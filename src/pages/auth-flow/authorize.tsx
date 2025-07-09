@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router-dom";
-import { useGezcezStore } from "../../common/stores/GezcezAuthStore";
+import { useGezcezStore } from "../../common/stores/gezcez-auth-store";
 import Card from "../../components/Card";
 import { useEffect } from "react";
 

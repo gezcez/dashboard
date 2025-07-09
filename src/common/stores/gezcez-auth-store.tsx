@@ -12,11 +12,18 @@ interface GezcezStore {
 	setAccessToken: (token: string) => [true] | [false, string]
 	checkOAuth: () => void
 	clearState: () => void
+	network_id: number | undefined
+	setNetworkId: (id: number) => void
 }
 
 export const useGezcezStore = create<GezcezStore>()(
 
 	(set, get) => ({
+		network_id: undefined,
+		setNetworkId: (id) => {
+			setCookie("network_id",id)
+			set({ network_id: id })
+		},
 		refresh_token: undefined,
 		access_token: undefined,
 		setRefreshToken: (token: string) => {
@@ -37,6 +44,8 @@ export const useGezcezStore = create<GezcezStore>()(
 			// customHistory.push("/")
 		},
 		checkOAuth: () => {
+			const cookie_netid = getCookie("network_id")
+			const network_id = cookie_netid ? parseInt(cookie_netid) : undefined
 			console.log("starting oauth flow")
 			if (get().refresh_token && window.location.href === "/") {
 				console.log("redirecting to dash")
@@ -44,8 +53,8 @@ export const useGezcezStore = create<GezcezStore>()(
 				return
 			} else {
 				const cookie_token = getCookie("refresh_token")
-				console.log("cookie",cookie_token?.slice(0,5))
-				set({ refresh_token: cookie_token })
+				console.log("cookie", cookie_token?.slice(0, 5))
+				set({ refresh_token: cookie_token,network_id:network_id })
 				if (cookie_token && window.location.href === "/") {
 					console.log("redirecting to dash")
 					customHistory.push("/dash")
