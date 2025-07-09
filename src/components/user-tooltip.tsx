@@ -6,6 +6,7 @@ import { Skeleton } from "./ui/skeleton";
 import { Badge } from "./ui/badge";
 import { useGezcezStore } from "@/common/stores/gezcez-auth-store";
 import { Link } from "react-router-dom";
+import { Separator } from "./ui/separator";
 
 export default function UserTooltip(props: { user_id: number }) {
 	const { user_id } = props
@@ -33,10 +34,11 @@ function ActualTooltipContent(props: { user_id: number }) {
 			<Skeleton className="h-12 w-full" />
 		</HoverCardContent>
 	}
-	return <HoverCardContent className="w-80">
+	return <HoverCardContent>
 		<div className="flex justify-between gap-4">
 			<div className="space-y-2">
 				<h4 className="text-sm font-semibold">{user_id} | {data?.user?.username}</h4>
+				<Separator className="h-4"/>
 				<p className="text-sm">
 					{data?.roles?.filter(({ role, user_role }: any) => user_role.network_id === network_id).map(({ role, user_role }: any) => {
 						return <Badge>
