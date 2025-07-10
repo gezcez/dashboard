@@ -21,7 +21,7 @@ export function useGetUserInfoFromID(user_id:number) {
 	const access_token = useGezcezStore((state) => state.access_token)
 	const network_id = useGezcezStore((state) => state.network_id)
 	return useQuery({
-		queryKey: ["list_roles",user_id,network_id, access_token],
+		queryKey: ["get_user_info_from_id",user_id,network_id, access_token],
 		queryFn: async () => {
 			const [data, request] = await makeGezcezRequest(`${API_URL}/dashboard/${network_id}/get-user-info?user_id=${user_id}`)
 			return data
