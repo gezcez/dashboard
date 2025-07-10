@@ -37,7 +37,7 @@ export default function RolesTableComponent() {
 				</TableRow>
 			</TableHeader>
 			<TableBody>
-				{isLoading ? <Skeleton className="h-16 w-full" /> : roles?.roles.map((role: any) => <TableRow key={`${role.id}`}>
+				{isLoading ? <Skeleton className="h-16 w-full" /> : roles?.roles?.map((role: any) => <TableRow key={`${role.id}`}>
 					<TableCell>
 						{role.id}
 					</TableCell>

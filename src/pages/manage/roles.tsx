@@ -9,7 +9,7 @@ import { Separator } from "@/components/ui/separator";
 export default function ManageRolesPage() {
 	return <div className="self-center h-full items-center p-16 justify-center flex-1 w-full flex-col gap-6">
 		<Card>
-			<Tabs>
+			<Tabs defaultValue="roles">
 				<CardHeader className="flex flex-1 flex-row space-x-4">
 					<TabsList className="self-center" defaultValue={"roles"}>
 						<TabsTrigger value="roles">Roles</TabsTrigger>

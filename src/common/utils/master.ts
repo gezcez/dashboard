@@ -48,10 +48,13 @@ export async function makeGezcezRequest(
 		},
 	})
 	if (request.status !== 200) {
+		console.log("toasting now")
 		toast(data.result.message)
 	}
 
 	if ([401].includes(request.status)) {
+		console.log("not logged in")
+		toast("Oturum süresi dolmuş, çıkış yapılıyor.")
 		state.clearState()
 		return [false, "unauthorized, redirecting to login"]
 	}

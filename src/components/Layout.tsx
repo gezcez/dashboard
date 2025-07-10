@@ -13,7 +13,7 @@ export default function Layout(props: { children: any }) {
 	const checkOAuth = useGezcezStore((state) => state.checkOAuth)
 	const setRefreshToken = useGezcezStore((state) => state.setRefreshToken)
 
-	const { data, isLoading, isError, error } = useGetAccessToken()
+	const { data, isLoading,isFetching, isError, error } = useGetAccessToken()
 	useEffect(() => {
 		const token_param = urlSearchParams.get("_")
 		if (token_param) {
@@ -23,13 +23,14 @@ export default function Layout(props: { children: any }) {
 			checkOAuth()
 		}
 	}, [urlSearchParams])
-	if (isLoading) return <div>loading...</div>
-	if (isError) return <div>err:{error.message}</div>
+	let component_to_render
+	if (isFetching) component_to_render= <div>loading...</div>
+	if (isError) component_to_render= <div>err:{error.message}</div>
 	return <SidebarProvider>
 		<SidebarComponent />
 		<main className="h-screen w-full overflow-hidden bg-gradient-to-br from-yellow-600 to-yellow-500">
 			<Toaster />
-			{props.children}
+			{component_to_render|| props.children}
 		</main>
 	</SidebarProvider>
 }
