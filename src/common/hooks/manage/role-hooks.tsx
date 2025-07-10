@@ -8,14 +8,29 @@ export function useGetAllRoles() {
 	const access_token = useGezcezStore((state) => state.access_token)
 	const network_id = useGezcezStore((state) => state.network_id)
 	return useQuery({
-		queryKey: ["list_roles",network_id, access_token],
+		queryKey: ["list_all_roles",network_id, access_token],
 		queryFn: async () => {
-			const [data, request] = await makeGezcezRequest(`${API_URL}/dashboard/${network_id}/list-roles`)
+			const [data, request] = await makeGezcezRequest(`${API_URL}/dashboard/${network_id}/roles/list-all`)
 			return data
 		},
 		staleTime:60*1000
 	})
 }
+
+
+export function useGetRolePermissionMatrix() {
+	const access_token = useGezcezStore((state) => state.access_token)
+	const network_id = useGezcezStore((state) => state.network_id)
+	return useQuery({
+		queryKey: ["get_roles_permissions_matrix",network_id, access_token],
+		queryFn: async () => {
+			const [data, request] = await makeGezcezRequest(`${API_URL}/dashboard/${network_id}/roles/get-permission-matrix`)
+			return data
+		},
+		staleTime:60*1000
+	})
+}
+
 
 export function useGetUserInfoFromID(user_id:number) {
 	const access_token = useGezcezStore((state) => state.access_token)

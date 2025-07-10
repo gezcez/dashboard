@@ -2,7 +2,7 @@ import { useGetAllRoles } from "@/common/hooks/manage/role-hooks"
 import { useGezcezStore } from "@/common/stores/gezcez-auth-store"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import UserTooltip from "@/components/user-tooltip"
+import UserTooltip from "@/components/tooltips/user-tooltip"
 import { Navigate } from "react-router-dom"
 
 export default function RolesTableComponent() {

@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import RolesTableComponent from "./roles/roles-table";
 import { Separator } from "@/components/ui/separator";
+import RolesMatrixTableComponent from "./roles/matrix-table";
 
 export default function ManageRolesPage() {
 	return <div className="self-center h-full items-center p-16 justify-center flex-1 w-full flex-col gap-6">
@@ -38,14 +39,7 @@ export default function ManageRolesPage() {
 				<TabsContent value="role-permission">
 
 					<CardContent className="grid gap-6">
-						<div className="grid gap-3">
-							<Label htmlFor="tabs-demo-current">Current password</Label>
-							<Input id="tabs-demo-current" type="password" />
-						</div>
-						<div className="grid gap-3">
-							<Label htmlFor="tabs-demo-new">New password</Label>
-							<Input id="tabs-demo-new" type="password" />
-						</div>
+						<RolesMatrixTableComponent/>
 					</CardContent>
 				</TabsContent>
 			</Tabs>
