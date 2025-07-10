@@ -4,9 +4,9 @@ import { makeGezcezRequest } from "../utils/master"
 import { API_URL } from "../constants"
 
 export function useGetNetworks() {
-	// const access_token = useGezcezStore((state) => state.access_token)
+	const access_token = useGezcezStore((state) => state.access_token)
 	return useQuery({
-		queryKey: ["get_networks"],
+		queryKey: ["get_networks",access_token],
 		queryFn: async () => {
 			const [data, request] = await makeGezcezRequest(`${API_URL}/web/networks/list`)
 			return data
