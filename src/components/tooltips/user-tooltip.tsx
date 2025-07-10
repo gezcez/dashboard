@@ -1,4 +1,4 @@
-import { useGetUserInfoFromID } from "@/common/hooks/manage/role-hooks";
+import { useGetUserInfoFromID } from "@/common/hooks/manage/dashboard-hooks";
 import { Avatar } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../ui/hover-card";

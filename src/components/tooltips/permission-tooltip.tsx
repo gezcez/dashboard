@@ -1,4 +1,4 @@
-import { useGetUserInfoFromID } from "@/common/hooks/manage/role-hooks";
+import { useGetUserInfoFromID } from "@/common/hooks/manage/dashboard-hooks";
 import { useGezcezStore } from "@/common/stores/gezcez-auth-store";
 import { Link } from "react-router-dom";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../ui/hover-card";
@@ -25,10 +25,10 @@ function ActualTooltipContent(props: { permission_id: number,permission_content:
 	return <HoverCardContent>
 		<div className="flex justify-between gap-4">
 			<div className="space-y-2">
-				<h4 className="text-sm font-semibold">{permission_id} | {permission_content?.description}</h4>
+				<h4 className="text-sm font-semibold">{permission_id} | {permission_content?.key}</h4>
 				<Separator className="h-4"/>
 				<p className="text-sm">
-					
+				{permission_content?.description}
 				</p>
 				<div className="text-muted-foreground flex flex-col text-xs">
 					<a>

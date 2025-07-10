@@ -38,6 +38,7 @@ export function useGetUserInfoFromID(user_id:number) {
 	return useQuery({
 		queryKey: ["get_user_info_from_id",user_id,network_id, access_token],
 		queryFn: async () => {
+			if (!user_id || isNaN(user_id)) return
 			const [data, request] = await makeGezcezRequest(`${API_URL}/dashboard/${network_id}/get-user-info?user_id=${user_id}`)
 			return data
 		},

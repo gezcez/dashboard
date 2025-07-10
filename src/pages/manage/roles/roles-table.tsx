@@ -1,4 +1,4 @@
-import { useGetAllRoles } from "@/common/hooks/manage/role-hooks"
+import { useGetAllRoles } from "@/common/hooks/manage/dashboard-hooks"
 import { useGezcezStore } from "@/common/stores/gezcez-auth-store"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
