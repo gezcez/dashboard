@@ -9,20 +9,21 @@ import { Toaster } from "./ui/sonner";
 
 export default function Layout(props: { children: any }) {
 
-	const [urlSearchParams, setUrlSearchParams] = useSearchParams()
+	const [search_params, setUrlSearchParams] = useSearchParams()
 	const checkOAuth = useGezcezStore((state) => state.checkOAuth)
 	const setRefreshToken = useGezcezStore((state) => state.setRefreshToken)
 
 	const { data, isLoading,isFetching, isError, error } = useGetAccessToken()
 	useEffect(() => {
-		const token_param = urlSearchParams.get("_")
+		const token_param = search_params.get("_")
+		console.log("checked url search params",!!token_param)
 		if (token_param) {
 			setRefreshToken(token_param)
 			setUrlSearchParams(new URLSearchParams())
 		} else {
 			checkOAuth()
 		}
-	}, [urlSearchParams])
+	}, [search_params])
 	let component_to_render
 	if (isFetching) component_to_render= <div>loading...</div>
 	if (isError) component_to_render= <div>err:{error.message}</div>

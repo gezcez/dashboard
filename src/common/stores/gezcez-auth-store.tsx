@@ -27,7 +27,7 @@ export const useGezcezStore = create<GezcezStore>()(
 		refresh_token: undefined,
 		access_token: undefined,
 		setRefreshToken: (token: string) => {
-			set({ refresh_token: token })
+			set({ refresh_token: token,access_token:undefined })
 			setCookie("refresh_token", token)
 			return [true]
 		},
