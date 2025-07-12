@@ -14,7 +14,7 @@ import { useImperativeHandle, useRef, useState } from "react"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { customHistory } from "@/common/utils/nav"
-
+import { useEffect } from "react"
 export default function EditRolePermissionsTable(props: { role_id?: number }) {
 	const network_id = useGezcezStore((state) => state.network_id)
 	const { role_id } = props
@@ -34,7 +34,6 @@ export default function EditRolePermissionsTable(props: { role_id?: number }) {
 					</TableRow>
 				</TableHeader>
 				<BuildTableBody
-					ref={tableRef}
 					permissions={data?.permissions}
 					role_id={role_id}
 					role_permissions={data?.role_permissions}
@@ -60,13 +59,13 @@ function BuildTableBody(props: {
 	}[]
 	role_permissions: any
 	onFormSent: (form: { [permission_id: number]: "add" | "remove" }) => void
-	ref: any
 }) {
 	const { permissions, role_id, role_permissions } = props
 	const { mutateAsync, isPending, data: mutateData } = mutateRolePermissions()
 	const [form, setForm] = useState<{
 		[permission_id: number]: "add" | "remove"
 	}>({})
+
 	async function sendForm() {
 		console.log(form)
 
@@ -87,10 +86,6 @@ function BuildTableBody(props: {
 		})
 		props.onFormSent(form)
 	}
-	useImperativeHandle(props.ref, () => ({
-		sendForm,
-	}))
-
 	return (
 		<TableBody>
 			{permissions?.map(
