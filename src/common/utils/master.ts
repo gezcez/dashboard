@@ -47,7 +47,7 @@ export async function makeGezcezRequest(
 			"Content-Type": init?.body ? "application/json" : "application/json",
 		},
 	})
-	if (request.status !== 200) {
+	if (request.status !== 200 || data?.result?.message !== "OK") {
 		console.log("toasting now")
 		toast(data.result.message)
 	}

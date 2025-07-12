@@ -27,8 +27,7 @@ export function useGetRolePermissionMatrix(filter_roles?: number[]) {
 				`${API_URL}/dashboard/${network_id}/roles/get-permission-matrix?role_ids=${filter_roles?.join(",")}`
 			)
 			return data
-		},
-		staleTime: 60 * 1000,
+		}
 	})
 }
 
@@ -67,6 +66,31 @@ export function mutateRolePermissions() {
 				console.log(result)
 				toast(`Yetki ${result.permission_id} hata verdi:`,{duration:5000,description:result.error})
 			}
+			return data
+		}
+	})
+}
+
+export function useGetAllPermissions() {
+	
+	const access_token = useGezcezStore((state) => state.access_token)
+	return useQuery({
+		queryKey:["get_all_permissions"],
+		queryFn:async()=>{
+			const [data,request]= await makeGezcezRequest(`${API_URL}/dashboard/manage/permissions/list-all`)
+			return data
+		}
+	})
+}
+
+
+export function useGetPathRegistry() {
+	
+	const access_token = useGezcezStore((state) => state.access_token)
+	return useQuery({
+		queryKey:["get_path_registry"],
+		queryFn:async()=>{
+			const [data,request]= await makeGezcezRequest(`${API_URL}/dashboard/manage/permissions/get-registry`)
 			return data
 		}
 	})

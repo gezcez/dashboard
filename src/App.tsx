@@ -8,6 +8,7 @@ import { useGezcezStore } from './common/stores/gezcez-auth-store'
 import { useEffect } from 'react'
 import { ThemeProvider } from './common/stores/theme-provider'
 import ManageRolesPage from './pages/manage/roles'
+import ManagePermissionsPage from './pages/manage/permissions'
 
 function App() {
 
@@ -20,8 +21,8 @@ function App() {
 					<Route path="/dash" element={<DashIndex />}>
 					</Route>
 					<Route path = "manage">
-						<Route path = "roles" element = {<ManageRolesPage/>}>
-						</Route>
+						<Route path = "roles" element = {<ManageRolesPage/>}/>
+						<Route path = "permissions" element = {<ManagePermissionsPage/>}/>
 					</Route>
 					<Route path="*" element={<><title>Page Not Found!</title><Link to={"/"}>Page Not Found! click to go home</Link></>} />
 				</Routes>
