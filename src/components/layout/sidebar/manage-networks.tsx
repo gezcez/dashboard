@@ -8,8 +8,8 @@ import { HomeIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function SidebarManageNetworks() {
-	const { data: pages, isLoading } = useGetMyPages()
-	if (isLoading) {
+	const { data: pages, isFetching } = useGetMyPages()
+	if (isFetching) {
 		return <SidebarGroup>
 			<SidebarGroupLabel>Manage Network</SidebarGroupLabel>
 			<SidebarGroupContent className="space-y-4">

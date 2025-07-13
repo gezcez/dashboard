@@ -36,6 +36,9 @@ function ActualTooltipContent(props: { permission_id: number; permission_content
 					<div className="text-muted-foreground flex flex-col text-xs">
 						<a>Created At: {permission_content?.created_at}</a>
 						<a>Updated At: {permission_content?.updated_at}</a>
+						<a>App Key: {permission_content?.app}</a>
+						<a>Page Label: {permission_content?.page_label}</a>
+						<a>Page Href: {permission_content?.page_href}</a>
 					</div>
 				</div>
 			</div>

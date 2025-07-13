@@ -7,9 +7,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Label } from "@/components/ui/label";
 
 export default function AuthorizePage() {
-	const {data,isLoading} = useGetAccessToken()
+	const {data,isFetching} = useGetAccessToken()
 	const clearState = useGezcezStore((state)=>state.clearState)
-	if (isLoading) {
+	if (isFetching) {
 		return <div className="justify-center space-y-6 self-center  flex h-full items-center flex-col">
 			<Label className="justify-center text-3xl text-center">Hesap bilgileri kontrol ediliyor...</Label>
 		</div>

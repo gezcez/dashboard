@@ -4,9 +4,10 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import UserTooltip from "@/components/tooltips/user-tooltip"
 import { Link, Navigate } from "react-router-dom"
+import CrudTooltip from "@/components/tooltips/crud-tooltip"
 
 export default function PermissionsTableComponent() {
-	const { data: permissions, isLoading } = useGetAllPermissions()
+	const { data: permissions, isFetching } = useGetAllPermissions()
 	return (
 		<div className="flex-1 flex self-center justify-center items-center">
 			<Table>
@@ -17,11 +18,11 @@ export default function PermissionsTableComponent() {
 						<TableHead>Permission Key</TableHead>
 						<TableHead>Page Label</TableHead>
 						<TableHead>Page Href</TableHead>
-						<TableHead>Created At</TableHead>
+						<TableHead>CRUD</TableHead>
 					</TableRow>
 				</TableHeader>
 				<TableBody>
-					{isLoading ? (
+					{isFetching ? (
 						<Skeleton className="h-16 w-full" />
 					) : (
 						permissions?.permissions?.map((permission: any) => (
@@ -42,7 +43,7 @@ export default function PermissionsTableComponent() {
 								<TableCell>
 									{permission.page_href}
 								</TableCell>
-								<TableCell>{permission.created_at}</TableCell>
+								<TableCell><CrudTooltip data={permission} /></TableCell>
 							</TableRow>
 						))
 					)}

@@ -9,9 +9,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import UserTooltip from "@/components/tooltips/user-tooltip"
 import { Link, Navigate } from "react-router-dom"
 import PermissionTooltip from "@/components/tooltips/permission-tooltip"
+import CrudTooltip from "@/components/tooltips/crud-tooltip"
 
 export default function PathRegistryTableComponent() {
-	const { data: registry, isLoading } = useGetPathRegistry()
+	const { data: registry, isFetching } = useGetPathRegistry()
 	return (
 		<div className="flex-1 flex self-center justify-center items-center">
 			<Table>
@@ -23,12 +24,11 @@ export default function PathRegistryTableComponent() {
 						<TableHead>Path</TableHead>
 						<TableHead>Description</TableHead>
 						<TableHead>Type</TableHead>
-						<TableHead>Created At</TableHead>
-						<TableHead>Updated At</TableHead>
+						<TableHead>CRUD</TableHead>
 					</TableRow>
 				</TableHeader>
 				<TableBody>
-					{isLoading ? (
+					{isFetching ? (
 						<Skeleton className="h-16 w-full" />
 					) : (
 						registry?.path_registries?.map((path_registry: any) => (
@@ -46,8 +46,7 @@ export default function PathRegistryTableComponent() {
 
 								<TableCell>{path_registry.description}</TableCell>
 								<TableCell>{path_registry.type}</TableCell>
-								<TableCell>{path_registry.created_at}</TableCell>
-								<TableCell>{path_registry.updated_at}</TableCell>
+								<TableCell><CrudTooltip data={path_registry}/></TableCell>
 							</TableRow>
 						))
 					)}

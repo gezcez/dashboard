@@ -15,10 +15,11 @@ import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { customHistory } from "@/common/utils/nav"
 import { useEffect } from "react"
+import CrudTooltip from "@/components/tooltips/crud-tooltip"
 export default function EditRolePermissionsTable(props: { role_id?: number }) {
 	const network_id = useGezcezStore((state) => state.network_id)
 	const { role_id } = props
-	const { data, isLoading, refetch } = useGetRolePermissionMatrix()
+	const { data, refetch } = useGetRolePermissionMatrix()
 	const tableRef = useRef<any>(null)
 	if (!network_id) return <Navigate to={{ pathname: "/dash" }} />
 	return (
@@ -27,9 +28,8 @@ export default function EditRolePermissionsTable(props: { role_id?: number }) {
 				<TableHeader>
 					<TableRow>
 						<TableHead>Permission ID</TableHead>
-						<TableHead>Created By</TableHead>
-						<TableHead>Created At</TableHead>
 						<TableHead>Status</TableHead>
+						<TableHead>CRUD</TableHead>
 					</TableRow>
 				</TableHeader>
 				<BuildTableBody
@@ -114,10 +114,6 @@ const BuildTableBody = forwardRef(
 								<PermissionTooltip permission_id={permission.id} permission_content={permission} />
 							</TableCell>
 							<TableCell>
-								<UserTooltip user_id={permission.created_by} />
-							</TableCell>
-							<TableCell>{permission.created_at}</TableCell>
-							<TableCell>
 								<Checkbox
 									onCheckedChange={(value) => updateForm(permission.id, value ? "add" : "remove")}
 									defaultChecked={
@@ -125,6 +121,7 @@ const BuildTableBody = forwardRef(
 									}
 								></Checkbox>
 							</TableCell>
+							<TableCell><CrudTooltip data={role_permissions?.find((e: any) => e.permission_id === permission.id && e.role_id === role_id)}/></TableCell>
 						</TableRow>
 					)
 				)}

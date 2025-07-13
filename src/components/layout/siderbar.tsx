@@ -21,8 +21,8 @@ const items = [
 	}
 ]
 export default function SidebarComponent() {
-	const { data: user, isLoading: isAccountMeLoading } = useGetAccountMe()
-	const { data: permissions, isLoading: isPermissionsLoading } = useGetPermissions()
+	const { data: user, isFetching: isAccountMeLoading } = useGetAccountMe()
+	const { data: permissions, isFetching: isPermissionsLoading } = useGetPermissions()
 	const setNetworkId = useGezcezStore((state) => state.setNetworkId)
 	const network_id = useGezcezStore((state) => state.network_id)
 	return <Sidebar>

@@ -10,7 +10,7 @@ import { Separator } from "../ui/separator";
 
 export default function UserTooltip(props: { user_id: number }) {
 	const { user_id } = props
-	const { data, isLoading } = useGetUserInfoFromID(user_id)
+	const { data, isFetching } = useGetUserInfoFromID(user_id)
 	const network_id = useGezcezStore((state) => state.network_id)
 	return <HoverCard>
 		<HoverCardTrigger asChild>
@@ -49,10 +49,10 @@ function ActualTooltipContent(props: { user_id: number, content:any }) {
 				</p>
 				<div className="text-muted-foreground flex flex-col text-xs">
 					<a>
-						Created At: {new Date(content?.user?.created_at).toLocaleString()} (local)
+						Created At: {content?.user?.created_at}
 					</a>
 					<a>
-						Activated At: {new Date(content?.user?.activated_at).toLocaleString()} (local)
+						Activated At: {content?.user?.activated_at}
 					</a>
 					<a>
 						Ban Record: {content?.user?.ban_record || "null"}
