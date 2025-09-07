@@ -1,5 +1,5 @@
 import { toast } from "sonner"
-import { API_URL } from "../constants"
+import { API_URL, APP_KEY } from "../constants"
 import { useGezcezStore } from "../stores/gezcez-auth-store"
 import { customHistory } from "./nav"
 
@@ -54,8 +54,9 @@ export async function makeGezcezRequest(
 
 	if ([401].includes(request.status)) {
 		console.log("not logged in")
-		toast("Oturum süresi dolmuş, çıkış yapılıyor.")
+		toast(data.result.message || "Not logged in, redirecting to login")
 		state.clearState()
+		customHistory.push("/unauthorized")
 		return [false, "unauthorized, redirecting to login"]
 	}
 	return [data, request]

@@ -1,8 +1,8 @@
-export const ENV : "dev" | "production" = "production"
+export const ENV : "dev" | "production" | string & {} = "dev"
 
 const TESTING_API = "http://localhost:80"
 export const STATUS_URL = "https://status.gezcez.com"
 
-
+export const APP_KEY = ENV === "production" ? "dashboard" : "dashboard_dev"
 export const OAUTH_URL = "https://oauth.gezcez.com"
 export const API_URL = ENV === "production" as any ? "https://api.gezcez.com" : TESTING_API
