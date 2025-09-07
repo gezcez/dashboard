@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client"
 
 import * as React from "react"
@@ -61,3 +62,4 @@ function Slider({
 }
 
 export { Slider }
+

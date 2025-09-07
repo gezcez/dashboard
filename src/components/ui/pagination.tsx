@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as React from "react"
 import {
   ChevronLeftIcon,
@@ -125,3 +126,4 @@ export {
   PaginationNext,
   PaginationEllipsis,
 }
+

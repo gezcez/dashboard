@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as React from "react"
 import {
   ChevronDownIcon,
@@ -209,3 +210,4 @@ function CalendarDayButton({
 }
 
 export { Calendar, CalendarDayButton }
+

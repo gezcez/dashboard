@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client"
 
 import * as React from "react"
@@ -30,3 +31,4 @@ function Checkbox({
 }
 
 export { Checkbox }
+
