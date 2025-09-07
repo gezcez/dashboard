@@ -4,8 +4,8 @@ import { useGezcezStore } from "../../common/stores/gezcez-auth-store";
 export default function DashIndex() {
 	const {data:account} = useGetAccountMe()
 	return <div>
-		<p className="font-extrabold font-mono">
+		<pre className="font-extrabold font-mono">
 		{JSON.stringify(account,undefined,4)}
-		</p>
+		</pre>
 	</div>
 }

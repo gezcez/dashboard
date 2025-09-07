@@ -45,9 +45,10 @@ export default function SidebarNetworkSelector(props: {
 					value
 				)
 				setCookie("network_id", value)
+				
 				props.onValueChange(value)
 			}}
-			defaultValue={`${props.value}`}
+			value={parseInt(getCookie("network_id")!) || data?.networks?.[0]?.id}
 		>
 			<SelectTrigger className="w-full">
 				<SelectValue defaultValue={`${props.value}`} placeholder="Change network" />

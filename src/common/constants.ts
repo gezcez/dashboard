@@ -1,6 +1,6 @@
 export const ENV : "dev" | "production" = "dev"
 
-const TESTING_API = "http://localhost:8080"
+const TESTING_API = "http://localhost:80"
 export const STATUS_URL = "https://status.gezcez.com"
 
 
