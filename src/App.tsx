@@ -16,6 +16,7 @@ import { ThemeProvider } from "./common/stores/theme-provider"
 import ManageRolesPage from "./pages/manage/roles"
 import ManagePermissionsPage from "./pages/manage/permissions"
 import UnauthorizedPage from "./pages/auth-flow/unauthorized"
+import EmailTestingPage from "./pages/utilities/email-testing"
 
 function App() {
 	return (
@@ -30,6 +31,9 @@ function App() {
 						<Route path="manage">
 							<Route path="roles" element={<ManageRolesPage />} />
 							<Route path="permissions" element={<ManagePermissionsPage />} />
+						</Route>
+						<Route path="/utilities">
+							<Route path="email-testing" element={<EmailTestingPage />} />
 						</Route>
 						<Route
 							path="*"

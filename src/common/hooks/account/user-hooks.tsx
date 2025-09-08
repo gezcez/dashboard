@@ -27,50 +27,46 @@ export function useGetAccessToken() {
 }
 
 export function useGetAccountMe() {
-	const access_token = useGezcezStore((state) => state.access_token)
 	return useQuery({
-		queryKey: ["get_account_me", access_token],
+		queryKey: ["get_account_me"],
 		queryFn: async () => {
 			const [data, request] = await makeGezcezRequest(
 				`${API_URL}/shared/account/me`
 			)
 			return data
-		},
-		staleTime: 60 * 1000
+		}
 	})
 }
 export function useGetAccountRoles() {
-	const access_token = useGezcezStore((state) => state.access_token)
 	return useQuery({
-		queryKey: ["get_account_roles", access_token],
+		queryKey: ["get_account_roles"],
 		queryFn: async () => {
 			const [data, request] = await makeGezcezRequest(
 				`${API_URL}/shared/account/list-roles`
 			)
 			return data
 		},
-		staleTime: 60 * 1000
+		staleTime: 5 * 1000
 	})
 }
 export function useGetMyNetworks() {
 	const access_token = useGezcezStore((state) => state.access_token)
 	return useQuery({
-		queryKey: ["get_my_networks", access_token],
+		queryKey: ["get_my_networks",access_token],
 		queryFn: async () => {
 			const [data, request] = await makeGezcezRequest(
 				`${API_URL}/dashboard/account/list-networks`
 			)
 			return data
-		},
-		staleTime: 60 * 1000
+		}
 	})
 }
 
 export function useGetMyPages() {
-	const access_token = useGezcezStore((state) => state.access_token)
 	const network_id = useGezcezStore((state) => state.network_id)
+	const access_token = useGezcezStore((state) => state.access_token)
 	return useQuery({
-		queryKey: ["get_my_networks", network_id, access_token],
+		queryKey: ["get_my_networks", network_id,access_token],
 		queryFn: async () => {
 			const [data, request] = await makeGezcezRequest(
 				`${API_URL}/dashboard/${network_id}/get-page-buttons`

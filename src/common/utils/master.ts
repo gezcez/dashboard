@@ -2,6 +2,7 @@ import { toast } from "sonner"
 import { API_URL, APP_KEY } from "../constants"
 import { useGezcezStore } from "../stores/gezcez-auth-store"
 import { customHistory } from "./nav"
+import { Navigate, redirect } from "react-router-dom"
 
 export async function fetchJSON(
 	input: string | URL | globalThis.Request,
@@ -56,7 +57,7 @@ export async function makeGezcezRequest(
 		console.log("not logged in")
 		toast(data.result.message || "Not logged in, redirecting to login")
 		state.clearState()
-		customHistory.push("/unauthorized")
+		redirect("/authorize")
 		return [false, "unauthorized, redirecting to login"]
 	}
 	return [data, request]
