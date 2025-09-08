@@ -1,11 +1,18 @@
 import {
 	mutateRolePermissions,
 	useGetAllRoles,
-	useGetRolePermissionMatrix,
+	useGetRolePermissionMatrix
 } from "@/common/hooks/manage/dashboard-hooks"
 import { useGezcezStore } from "@/common/stores/gezcez-auth-store"
 import { Skeleton } from "@/components/ui/skeleton"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow
+} from "@/components/ui/table"
 import UserTooltip from "@/components/tooltips/user-tooltip"
 import { Navigate } from "react-router-dom"
 import PermissionTooltip from "@/components/tooltips/permission-tooltip"
@@ -16,6 +23,7 @@ import { Button } from "@/components/ui/button"
 import { customHistory } from "@/common/utils/nav"
 import { useEffect } from "react"
 import CrudTooltip from "@/components/tooltips/crud-tooltip"
+import { ScrollArea } from "@/components/ui/scroll-area"
 export default function EditRolePermissionsTable(props: { role_id?: number }) {
 	const network_id = useGezcezStore((state) => state.network_id)
 	const { role_id } = props
@@ -24,25 +32,27 @@ export default function EditRolePermissionsTable(props: { role_id?: number }) {
 	if (!network_id) return <Navigate to={{ pathname: "/dash" }} />
 	return (
 		<div className="flex-1 flex self-center justify-center items-start">
-			<Table>
-				<TableHeader>
-					<TableRow>
-						<TableHead>Permission ID</TableHead>
-						<TableHead>Status</TableHead>
-						<TableHead>CRUD</TableHead>
-					</TableRow>
-				</TableHeader>
-				<BuildTableBody
-					ref={tableRef}
-					permissions={data?.permissions}
-					role_id={role_id}
-					role_permissions={data?.role_permissions}
-					onFormSent={() => refetch}
-				/>
-			</Table>
-			<Button variant={"default"} onClick={tableRef?.current?.sendForm}>
-				SAVE
-			</Button>
+			<ScrollArea className="max-h-160 overflow-y-scroll w-120">
+				<Table>
+					<TableHeader>
+						<TableRow>
+							<TableHead>Permission ID</TableHead>
+							<TableHead>Status</TableHead>
+							<TableHead>CRUD</TableHead>
+						</TableRow>
+					</TableHeader>
+					<BuildTableBody
+						ref={tableRef}
+						permissions={data?.permissions}
+						role_id={role_id}
+						role_permissions={data?.role_permissions}
+						onFormSent={() => refetch}
+					/>
+				</Table>
+				<Button variant={"default"} onClick={tableRef?.current?.sendForm}>
+					SAVE
+				</Button>
+			</ScrollArea>
 		</div>
 	)
 }
@@ -71,7 +81,7 @@ const BuildTableBody = forwardRef(
 		useImperativeHandle(ref, () => ({
 			sendForm: () => {
 				sendForm(formRef.current)
-			},
+			}
 		}))
 		function updateForm(permission_id: number, operation: "add" | "remove") {
 			console.log("updating form", permission_id, operation)
@@ -91,10 +101,12 @@ const BuildTableBody = forwardRef(
 			}
 			mutateAsync({
 				role_id: role_id,
-				permissions: Object.entries(send_form).map(([permission_id, operation_type]: any) => ({
-					operation_type: operation_type,
-					permission_id: parseInt(permission_id),
-				})),
+				permissions: Object.entries(send_form).map(
+					([permission_id, operation_type]: any) => ({
+						operation_type: operation_type,
+						permission_id: parseInt(permission_id)
+					})
+				)
 			})
 			props.onFormSent(send_form)
 		}
@@ -111,17 +123,33 @@ const BuildTableBody = forwardRef(
 					}) => (
 						<TableRow key={`${permission.key}-${permission.id}`}>
 							<TableCell>
-								<PermissionTooltip permission_id={permission.id} permission_content={permission} />
+								<PermissionTooltip
+									permission_id={permission.id}
+									permission_content={permission}
+								/>
 							</TableCell>
 							<TableCell>
 								<Checkbox
-									onCheckedChange={(value) => updateForm(permission.id, value ? "add" : "remove")}
+									onCheckedChange={(value) =>
+										updateForm(permission.id, value ? "add" : "remove")
+									}
 									defaultChecked={
-										!!role_permissions?.find((e: any) => e.permission_id === permission.id && e.role_id === role_id)
+										!!role_permissions?.find(
+											(e: any) =>
+												e.permission_id === permission.id &&
+												e.role_id === role_id
+										)
 									}
 								></Checkbox>
 							</TableCell>
-							<TableCell><CrudTooltip data={role_permissions?.find((e: any) => e.permission_id === permission.id && e.role_id === role_id)}/></TableCell>
+							<TableCell>
+								<CrudTooltip
+									data={role_permissions?.find(
+										(e: any) =>
+											e.permission_id === permission.id && e.role_id === role_id
+									)}
+								/>
+							</TableCell>
 						</TableRow>
 					)
 				)}

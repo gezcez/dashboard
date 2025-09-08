@@ -1,5 +1,12 @@
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardFooter,
+	CardHeader,
+	CardTitle
+} from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -9,16 +16,22 @@ import RolesMatrixTableComponent from "./roles/matrix-table"
 import { Link, Navigate, useSearchParams } from "react-router-dom"
 import EditRolePermissionsTable from "./roles/edit-role-permissions"
 import { customHistory } from "@/common/utils/nav"
-import { ArrowBigLeft, ArrowBigLeftDash, ArrowLeft, SeparatorVertical } from "lucide-react"
+import {
+	ArrowBigLeft,
+	ArrowBigLeftDash,
+	ArrowLeft,
+	SeparatorVertical
+} from "lucide-react"
 import {
 	Breadcrumb,
 	BreadcrumbItem,
 	BreadcrumbLink,
 	BreadcrumbList,
 	BreadcrumbPage,
-	BreadcrumbSeparator,
+	BreadcrumbSeparator
 } from "@/components/ui/breadcrumb"
 import { SidebarSeparator } from "@/components/ui/sidebar"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 export default function ManageRolesPage() {
 	const [search_params, set_search_params] = useSearchParams()
@@ -28,7 +41,9 @@ export default function ManageRolesPage() {
 			<CardHeader className="flex flex-1 flex-row space-x-4">
 				<TabsList className="self-center" defaultValue={"roles"}>
 					<TabsTrigger value="roles">Roles</TabsTrigger>
-					<TabsTrigger value="role-permission">Role-Permission Matrix</TabsTrigger>
+					<TabsTrigger value="role-permission">
+						Role-Permission Matrix
+					</TabsTrigger>
 				</TabsList>
 				<TabsContent value="roles">
 					<CardTitle>Roles</CardTitle>
@@ -90,6 +105,7 @@ export default function ManageRolesPage() {
 						<CardDescription>Edit role permissions</CardDescription>
 					</Label>
 				</CardHeader>
+
 				<EditRolePermissionsTable role_id={parseInt(edit_role_id)} />
 			</>
 		)

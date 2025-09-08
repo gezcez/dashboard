@@ -95,3 +95,81 @@ export function useGetPathRegistry() {
 		}
 	})
 }
+
+export function useGetAllUsers() {
+	const access_token = useGezcezStore((state) => state.access_token)
+	const network_id = useGezcezStore((state) => state.network_id)
+	return useQuery({
+		queryKey: ["list_all_users", network_id, access_token],
+		queryFn: async () => {
+			// Note: This endpoint might not exist yet and may need to be created in the backend
+			const [data, request] = await makeGezcezRequest(`${API_URL}/dashboard/${network_id}/users/list-all`)
+			return data
+		},
+		retry: false, // Don't retry if endpoint doesn't exist
+	})
+}
+
+export function useGetUserRoleMatrix(filter_users?: number[]) {
+	const access_token = useGezcezStore((state) => state.access_token)
+	const network_id = useGezcezStore((state) => state.network_id)
+	return useQuery({
+		queryKey: ["get_user_role_matrix", network_id, access_token, `users-${filter_users}`],
+		queryFn: async () => {
+			const [data, request] = await makeGezcezRequest(
+				`${API_URL}/dashboard/${network_id}/users/get-role-matrix?user_ids=${filter_users?.join(",") || ""}`
+			)
+			return data
+		},
+		retry: false, // Don't retry if endpoint doesn't exist
+	})
+}
+
+export function mutateUserRoles() {
+	const access_token = useGezcezStore((state) => state.access_token)
+	const network_id = useGezcezStore((state) => state.network_id)
+	return useMutation({
+		mutationKey: ["write-user-roles"],
+		mutationFn: async (vars: { user_id: number, operations: { role_id: number, operation_type: "add" | "remove" }[] }) => {
+			const { operations, user_id } = vars
+			if (!user_id || isNaN(user_id) || !operations || !operations.length) return {}
+			const [data, request] = await makeGezcezRequest(
+				`${API_URL}/dashboard/${network_id}/users/write-roles`, {
+				body: JSON.stringify({
+					user_id: user_id,
+					operations: operations.map((e) => ({
+						role_id: e.role_id,
+						operation_type: e.operation_type
+					}))
+				})
+			}
+			)
+			for (const result of data?.results || []) {
+				console.log(result)
+				toast(`Role ${result.role_id} operation failed:`, { duration: 5000, description: result.error })
+			}
+			return data
+		}
+	})
+}
+
+export function useCheckUserEditPermission(user_id: number) {
+	const access_token = useGezcezStore((state) => state.access_token)
+	const network_id = useGezcezStore((state) => state.network_id)
+	
+	return useQuery({
+		queryKey: ["check-user-edit-permission", user_id, network_id],
+		queryFn: async () => {
+			if (!user_id || !network_id) return null
+			const [data] = await makeGezcezRequest(
+				`${API_URL}/dashboard/${network_id}/users/check-edit-permission`,
+				{
+					body: JSON.stringify({ user_id }),
+					method: "POST"
+				}
+			)
+			return data
+		},
+		enabled: !!(user_id && network_id && access_token)
+	})
+}

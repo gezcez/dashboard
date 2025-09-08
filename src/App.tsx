@@ -15,6 +15,7 @@ import { useEffect } from "react"
 import { ThemeProvider } from "./common/stores/theme-provider"
 import ManageRolesPage from "./pages/manage/roles"
 import ManagePermissionsPage from "./pages/manage/permissions"
+import ManageUsersPage from "./pages/manage/users"
 import UnauthorizedPage from "./pages/auth-flow/unauthorized"
 import EmailTestingPage from "./pages/utilities/email-testing"
 
@@ -31,6 +32,7 @@ function App() {
 						<Route path="manage">
 							<Route path="roles" element={<ManageRolesPage />} />
 							<Route path="permissions" element={<ManagePermissionsPage />} />
+							<Route path="users" element={<ManageUsersPage />} />
 						</Route>
 						<Route path="/utilities">
 							<Route path="email-testing" element={<EmailTestingPage />} />
