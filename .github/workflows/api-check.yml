@@ -1,0 +1,39 @@
+name: API contract check
+
+# Regenerates src/api/*.gen.ts from the backend's published openapi.json and fails on drift.
+# Runs on every PR (in ci.yml against the committed source) and weekly against staging here.
+on:
+  schedule:
+    - cron: "17 6 * * 1"
+  workflow_dispatch:
+    inputs:
+      source:
+        description: "openapi.json URL (default: staging)"
+        required: false
+
+jobs:
+  api-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.x
+      - run: bun install --frozen-lockfile
+      - name: Resolve spec source
+        id: src
+        run: |
+          SRC="${{ inputs.source }}"
+          SRC="${SRC:-https://api-staging.gezcez.com/openapi.json}"
+          echo "source=$SRC" >> "$GITHUB_OUTPUT"
+          if ! curl -fsS -o /dev/null "$SRC"; then
+            echo "::warning::$SRC is not reachable yet (backend not published?). Skipping."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: api:check
+        if: steps.src.outputs.skip != 'true'
+        run: bun run api:check "${{ steps.src.outputs.source }}"
+      - name: Typecheck against the regenerated types
+        if: failure() && steps.src.outputs.skip != 'true'
+        run: bun run api:gen "${{ steps.src.outputs.source }}" && bun run typecheck
