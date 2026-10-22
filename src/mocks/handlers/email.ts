@@ -131,7 +131,7 @@ export function emailHandlers(ctx: Ctx): HttpHandler[] {
       const items = db.moderation
         .filter((m) => !action || m.action === action)
         .filter((m) => !active || (m.action === "ban" && m.active))
-        .filter((m) => matches(q, m.user.display_name, m.user.username, m.public_reason))
+        .filter((m) => matches(q, m.user.id, m.user.display_name, m.user.username, m.public_reason))
       return response(200).json({
         ok: true,
         data: paginate(

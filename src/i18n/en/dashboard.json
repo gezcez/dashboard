@@ -58,7 +58,11 @@
     "tabs": {
       "profile": "Profile",
       "roles": "Roles",
-      "moderation": "Moderation"
+      "moderation": "Moderation",
+      "sessions": "Sessions",
+      "activity": "Activity",
+      "emails": "Emails",
+      "privacy": "Privacy"
     },
     "profile": {
       "account": "Account",
@@ -95,7 +99,24 @@
       "grantedBy": "Granted by",
       "grantedAt": "Granted",
       "global": "Global",
-      "system": "System"
+      "system": "System",
+      "granted": "Granted",
+      "actions": "Actions",
+      "hint": "Roles are global or per network. You can only change roles below your own level.",
+      "selfHint": "You can't change your own roles.",
+      "add": "Add role",
+      "addTitle": "Add a role to {{name}}",
+      "addBody": "Global roles need a recent sign-in. Network roles apply to that network only.",
+      "pick": "Pick a role",
+      "grant": "Grant role",
+      "globalHint": "Global roles count in every network.",
+      "levelHint": "Only roles below your level in this network are listed.",
+      "grantedToast": "Granted {{role}} ({{scope}}).",
+      "remove": "Remove",
+      "removeTitle": "Remove {{role}}?",
+      "removeEffect": "{{name}} loses {{role}} in {{scope}} and every permission that came only from it.",
+      "removed": "Role removed.",
+      "failed": "The role change wasn't saved. Try again."
     },
     "moderation": {
       "banned": "Banned",
@@ -104,7 +125,9 @@
       "until": "Until",
       "publicReason": "Reason shown to the user",
       "privateReason": "Internal note",
-      "by": "Banned by"
+      "by": "Banned by",
+      "history": "History",
+      "noHistory": "No moderation actions yet."
     },
     "ban": {
       "action": "Ban user",
@@ -137,6 +160,62 @@
       "failed": "Couldn't lift the ban.",
       "reason": "Reason",
       "reasonHint": "At least 3 characters. Recorded in the audit log."
+    },
+    "sessions": {
+      "summary_one": "{{count}} active session or token family.",
+      "summary_other": "{{count}} active sessions and token families.",
+      "empty": "No active sessions.",
+      "app": "App",
+      "device": "Device",
+      "ip": "IP (/24)",
+      "lastUsed": "Last used",
+      "expires": "Expires",
+      "actions": "Actions",
+      "sso": "gezcez sign-in",
+      "kinds": {
+        "sso": "SSO",
+        "refresh": "Refresh"
+      },
+      "created": "Since {{when}}",
+      "revoke": "Revoke",
+      "revokeAll": "Revoke all sessions",
+      "revokeTitle": "Revoke this session?",
+      "revokeEffect": "Signs the user out of {{app}} on {{device}}. Other sessions stay signed in.",
+      "revokeAllTitle": "Revoke every session of {{name}}?",
+      "revokeAllEffect_one": "Signs {{name}} out of {{count}} session on every device and app. They can sign in again unless banned.",
+      "revokeAllEffect_other": "Signs {{name}} out of {{count}} sessions on every device and app. They can sign in again unless banned.",
+      "reason": "Reason (kept in the audit log)",
+      "revoked_one": "Revoked {{count}} session.",
+      "revoked_other": "Revoked {{count}} sessions.",
+      "failed": "The sessions weren't revoked. Try again."
+    },
+    "activity": {
+      "empty": "No audit entries for this user."
+    },
+    "emails": {
+      "note": "Only metadata is kept: the content of codes and activation emails is never stored.",
+      "empty": "No emails sent to this user."
+    },
+    "privacy": {
+      "deletion": "Account deletion",
+      "exports": "Data exports",
+      "status": "Status",
+      "requested": "Requested",
+      "deleteAfter": "Deleted after",
+      "noDeletion": "No deletion request.",
+      "noExports": "No export requests.",
+      "expires": "expires {{date}}",
+      "deletionStatus": {
+        "scheduled": "Scheduled",
+        "cancelled": "Cancelled",
+        "completed": "Completed"
+      },
+      "exportStatus": {
+        "pending": "Preparing",
+        "ready": "Ready",
+        "expired": "Expired",
+        "failed": "Failed"
+      }
     }
   },
   "roles": {
@@ -311,5 +390,33 @@
     "deleteEffect_other": "Removes the key and its grants from {{count}} roles. It can't be undone; a deploy that uses the key again re-registers it with no grants.",
     "deleted": "Deleted {{key}}.",
     "deleteFailed": "The key wasn't deleted. Try again."
+  },
+  "moderation": {
+    "active": "Active",
+    "actions": {
+      "ban": "Ban",
+      "unban": "Unban",
+      "warn": "Warning",
+      "note": "Note"
+    }
+  },
+  "email": {
+    "status": {
+      "queued": "Queued",
+      "sent": "Sent",
+      "delivered": "Delivered",
+      "bounced": "Bounced",
+      "complained": "Complaint",
+      "failed": "Failed"
+    },
+    "columns": {
+      "sent": "Sent",
+      "template": "Template",
+      "subject": "Subject",
+      "status": "Status",
+      "to": "To",
+      "user": "User",
+      "locale": "Language"
+    }
   }
 }

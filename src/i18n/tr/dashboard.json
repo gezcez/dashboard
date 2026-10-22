@@ -58,7 +58,11 @@
     "tabs": {
       "profile": "Profil",
       "roles": "Roller",
-      "moderation": "Moderasyon"
+      "moderation": "Moderasyon",
+      "sessions": "Oturumlar",
+      "activity": "Etkinlik",
+      "emails": "E-postalar",
+      "privacy": "Gizlilik"
     },
     "profile": {
       "account": "Hesap",
@@ -95,7 +99,24 @@
       "grantedBy": "Veren",
       "grantedAt": "Verilme",
       "global": "Genel",
-      "system": "Sistem"
+      "system": "Sistem",
+      "granted": "Veriliş",
+      "actions": "İşlemler",
+      "hint": "Roller genel ya da ağ bazındadır. Yalnızca kendi seviyenizin altındaki rolleri değiştirebilirsiniz.",
+      "selfHint": "Kendi rollerinizi değiştiremezsiniz.",
+      "add": "Rol ekle",
+      "addTitle": "{{name}} kullanıcısına rol ekleyin",
+      "addBody": "Genel roller için yakın zamanda giriş yapmış olmanız gerekir. Ağ rolleri yalnızca o ağda geçerlidir.",
+      "pick": "Bir rol seçin",
+      "grant": "Rolü ver",
+      "globalHint": "Genel roller her ağda geçerlidir.",
+      "levelHint": "Yalnızca bu ağdaki seviyenizin altındaki roller listelenir.",
+      "grantedToast": "{{role}} verildi ({{scope}}).",
+      "remove": "Kaldır",
+      "removeTitle": "{{role}} kaldırılsın mı?",
+      "removeEffect": "{{name}}, {{scope}} kapsamında {{role}} rolünü ve yalnızca bu rolden gelen tüm izinleri kaybeder.",
+      "removed": "Rol kaldırıldı.",
+      "failed": "Rol değişikliği kaydedilemedi. Tekrar deneyin."
     },
     "moderation": {
       "banned": "Yasaklı",
@@ -104,7 +125,9 @@
       "until": "Bitiş",
       "publicReason": "Kullanıcıya gösterilen neden",
       "privateReason": "İç not",
-      "by": "Yasaklayan"
+      "by": "Yasaklayan",
+      "history": "Geçmiş",
+      "noHistory": "Henüz moderasyon işlemi yok."
     },
     "ban": {
       "action": "Kullanıcıyı yasakla",
@@ -137,6 +160,62 @@
       "failed": "Yasak kaldırılamadı.",
       "reason": "Neden",
       "reasonHint": "En az 3 karakter. Denetim kaydına yazılır."
+    },
+    "sessions": {
+      "summary_one": "{{count}} etkin oturum veya belirteç ailesi.",
+      "summary_other": "{{count}} etkin oturum ve belirteç ailesi.",
+      "empty": "Etkin oturum yok.",
+      "app": "Uygulama",
+      "device": "Cihaz",
+      "ip": "IP (/24)",
+      "lastUsed": "Son kullanım",
+      "expires": "Bitiş",
+      "actions": "İşlemler",
+      "sso": "gezcez girişi",
+      "kinds": {
+        "sso": "SSO",
+        "refresh": "Yenileme"
+      },
+      "created": "{{when}} tarihinden beri",
+      "revoke": "İptal et",
+      "revokeAll": "Tüm oturumları iptal et",
+      "revokeTitle": "Bu oturum iptal edilsin mi?",
+      "revokeEffect": "Kullanıcının {{device}} üzerindeki {{app}} oturumu kapatılır. Diğer oturumlar açık kalır.",
+      "revokeAllTitle": "{{name}} kullanıcısının tüm oturumları iptal edilsin mi?",
+      "revokeAllEffect_one": "{{name}} tüm cihaz ve uygulamalardaki {{count}} oturumdan çıkarılır. Yasaklı değilse yeniden giriş yapabilir.",
+      "revokeAllEffect_other": "{{name}} tüm cihaz ve uygulamalardaki {{count}} oturumdan çıkarılır. Yasaklı değilse yeniden giriş yapabilir.",
+      "reason": "Gerekçe (denetim kaydında tutulur)",
+      "revoked_one": "{{count}} oturum iptal edildi.",
+      "revoked_other": "{{count}} oturum iptal edildi.",
+      "failed": "Oturumlar iptal edilemedi. Tekrar deneyin."
+    },
+    "activity": {
+      "empty": "Bu kullanıcı için denetim kaydı yok."
+    },
+    "emails": {
+      "note": "Yalnızca üst veriler tutulur: kod ve etkinleştirme e-postalarının içeriği hiçbir zaman saklanmaz.",
+      "empty": "Bu kullanıcıya e-posta gönderilmemiş."
+    },
+    "privacy": {
+      "deletion": "Hesap silme",
+      "exports": "Veri dışa aktarımları",
+      "status": "Durum",
+      "requested": "Talep",
+      "deleteAfter": "Silinme tarihi",
+      "noDeletion": "Silme talebi yok.",
+      "noExports": "Dışa aktarım talebi yok.",
+      "expires": "{{date}} tarihinde sona erer",
+      "deletionStatus": {
+        "scheduled": "Planlandı",
+        "cancelled": "İptal edildi",
+        "completed": "Tamamlandı"
+      },
+      "exportStatus": {
+        "pending": "Hazırlanıyor",
+        "ready": "Hazır",
+        "expired": "Süresi doldu",
+        "failed": "Başarısız"
+      }
     }
   },
   "roles": {
@@ -311,5 +390,33 @@
     "deleteEffect_other": "Anahtarı ve {{count}} roldeki iznini kaldırır. Geri alınamaz; anahtarı yeniden kullanan bir sürüm onu izinsiz olarak yeniden kaydeder.",
     "deleted": "{{key}} silindi.",
     "deleteFailed": "Anahtar silinemedi. Tekrar deneyin."
+  },
+  "moderation": {
+    "active": "Etkin",
+    "actions": {
+      "ban": "Yasak",
+      "unban": "Yasak kaldırma",
+      "warn": "Uyarı",
+      "note": "Not"
+    }
+  },
+  "email": {
+    "status": {
+      "queued": "Sırada",
+      "sent": "Gönderildi",
+      "delivered": "Teslim edildi",
+      "bounced": "Geri döndü",
+      "complained": "Şikâyet",
+      "failed": "Başarısız"
+    },
+    "columns": {
+      "sent": "Gönderim",
+      "template": "Şablon",
+      "subject": "Konu",
+      "status": "Durum",
+      "to": "Alıcı",
+      "user": "Kullanıcı",
+      "locale": "Dil"
+    }
   }
 }
