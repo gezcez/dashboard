@@ -71,6 +71,23 @@ export function roleHandlers(ctx: Ctx): HttpHandler[] {
       )
       return response(200).json({ ok: true, data: db.toRole(role) })
     }),
+    // Before /roles/{roleId}: msw matches in order and {roleId} would swallow it.
+    http.get("/v1/dash/roles/permission-matrix", async ({ request, response }) => {
+      await wait()
+      const c = authorize(request, "GET /v1/dash/roles/permission-matrix")
+      if (c instanceof Response) return c
+      return response(200).json({
+        ok: true,
+        data: {
+          roles: db.roles.map((r) => db.toRole(r)),
+          permissions: PERMISSION_KEYS.map(permissionInfo),
+          grants: db.roles.map((r) => ({
+            role_id: r.id,
+            permissions: r.key === "root" ? [...PERMISSION_KEYS] : [...r.permissions],
+          })),
+        },
+      })
+    }),
     http.get("/v1/dash/roles/{roleId}", async ({ request, params, response }) => {
       await wait()
       const c = authorize(request, "GET /v1/dash/roles/{roleId}")
@@ -106,22 +123,6 @@ export function roleHandlers(ctx: Ctx): HttpHandler[] {
       )
       return response(200).json({ ok: true, data: db.toRole(r) })
     }),
-    http.get("/v1/dash/roles/permission-matrix", async ({ request, response }) => {
-      await wait()
-      const c = authorize(request, "GET /v1/dash/roles/permission-matrix")
-      if (c instanceof Response) return c
-      return response(200).json({
-        ok: true,
-        data: {
-          roles: db.roles.map((r) => db.toRole(r)),
-          permissions: PERMISSION_KEYS.map(permissionInfo),
-          grants: db.roles.map((r) => ({
-            role_id: r.id,
-            permissions: r.key === "root" ? [...PERMISSION_KEYS] : [...r.permissions],
-          })),
-        },
-      })
-    }),
     http.post("/v1/dash/roles/permissions:batch", async ({ request, response }) => {
       await wait()
       const c = authorize(request, "POST /v1/dash/roles/permissions:batch")
@@ -131,6 +132,8 @@ export function roleHandlers(ctx: Ctx): HttpHandler[] {
         const r = db.role(op.role_id)
         if (!r) return { ...op, ok: false, error_code: "NOT_FOUND" as const }
         if (r.immutable) return { ...op, ok: false, error_code: "ROLE_IMMUTABLE" as const }
+        if (!ctx.isRoot(c) && db.levelOf(c.persona.userId, null) <= r.level)
+          return { ...op, ok: false, error_code: "ROLE_LEVEL_TOO_LOW" as const }
         // No granting what you don't hold yourself (backend 6.4).
         if (op.op === "grant" && !holds(c, op.permission_key))
           return { ...op, ok: false, error_code: "PERMISSION_MISSING" as const }

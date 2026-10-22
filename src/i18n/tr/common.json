@@ -27,7 +27,8 @@
     "openMenu": "Menüyü açın",
     "home": "Ana sayfa",
     "toggleSidebar": "Kenar çubuğunu daralt",
-    "uiKit": "Arayüz kiti"
+    "uiKit": "Arayüz kiti",
+    "permissions": "İzinler"
   },
   "network": {
     "switch": "Ağ değiştirin",
@@ -121,6 +122,12 @@
     "sortedAsc": "artan sıralı",
     "sortedDesc": "azalan sıralı",
     "details": "Ayrıntılar",
-    "toggleDetails": "Ayrıntıları göster veya gizle"
+    "toggleDetails": "Ayrıntıları göster veya gizle",
+    "perPage": "Sayfa başına satır"
+  },
+  "confirm": {
+    "reasonHint": "Zorunlu. Denetim kaydına yazılır.",
+    "typeToConfirm": "Onaylamak için adı yazın:",
+    "working": "İşleniyor…"
   }
 }

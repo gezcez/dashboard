@@ -27,7 +27,8 @@
     "openMenu": "Open navigation",
     "home": "Home",
     "toggleSidebar": "Collapse sidebar",
-    "uiKit": "UI kit"
+    "uiKit": "UI kit",
+    "permissions": "Permissions"
   },
   "network": {
     "switch": "Switch network",
@@ -121,6 +122,12 @@
     "sortedAsc": "sorted ascending",
     "sortedDesc": "sorted descending",
     "details": "Details",
-    "toggleDetails": "Show or hide details"
+    "toggleDetails": "Show or hide details",
+    "perPage": "Rows per page"
+  },
+  "confirm": {
+    "reasonHint": "Required. Stored in the audit log.",
+    "typeToConfirm": "Type the name to confirm:",
+    "working": "Working…"
   }
 }

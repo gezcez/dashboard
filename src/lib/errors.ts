@@ -8,3 +8,9 @@ export function apiErrorMessage(error: GezcezApiError): string {
   if (isErrorCode(error.code)) return t(error.code)
   return t("_unknown", { code: String(error.status) })
 }
+
+/** Translated message for a bare error code (batch results carry codes, not errors). */
+export function errorCodeMessage(code: string): string {
+  const t = i18n.getFixedT(null, "errors")
+  return isErrorCode(code) ? t(code) : t("_unknown", { code })
+}

@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it } from "vitest"
 import { challengeS256, randomBase64Url } from "@/auth/pkce"
 import { server } from "../../../tests/setup/msw"
 import { createHandlers } from "."
+import { OPERATION_AUTH } from "@/api/permission-keys.gen"
 import { mockSession } from "../session"
 
 const API = "https://api.test"
@@ -112,6 +113,18 @@ describe("mock API", () => {
     expect(await res.json()).toMatchObject({ error: { code: "AUTH_STEP_UP_REQUIRED" } })
     const fresh = await signIn("founder")
     expect((await ban(fresh)).status).toBe(200)
+  })
+
+  it("serves every parameterless GET (no route is shadowed by a {param} handler)", async () => {
+    const token = await signIn("founder")
+    const paths = Object.keys(OPERATION_AUTH)
+      .filter((op) => op.startsWith("GET ") && !op.includes("{"))
+      .map((op) => op.slice(4))
+    expect(paths.length).toBeGreaterThan(5)
+    for (const path of paths) {
+      const res = await get(path, token)
+      expect([path, res.status]).toEqual([path, 200])
+    }
   })
 
   it("paginates with opaque cursors", async () => {

@@ -20,8 +20,10 @@ import { Route as MockAuthorizeRouteImport } from './routes/mock/authorize'
 import { Route as MockLogoutRouteImport } from './routes/mock/logout'
 import { Route as AppAdminIndexRouteImport } from './routes/_app/admin/index'
 import { Route as AppAdminAuditRouteImport } from './routes/_app/admin/audit'
-import { Route as AppAdminRolesRouteImport } from './routes/_app/admin/roles'
+import { Route as AppAdminPermissionsRouteImport } from './routes/_app/admin/permissions'
 import { Route as AppNNetworkRouteImport } from './routes/_app/n/$network'
+import { Route as AppAdminRolesIndexRouteImport } from './routes/_app/admin/roles/index'
+import { Route as AppAdminRolesRoleIdRouteImport } from './routes/_app/admin/roles/$roleId'
 import { Route as AppAdminUsersIndexRouteImport } from './routes/_app/admin/users/index'
 import { Route as AppAdminUsersUserIdRouteImport } from './routes/_app/admin/users/$userId'
 import { Route as AppNNetworkIndexRouteImport } from './routes/_app/n/$network/index'
@@ -80,14 +82,24 @@ const AppAdminAuditRoute = AppAdminAuditRouteImport.update({
   path: '/admin/audit',
   getParentRoute: () => AppRoute,
 } as any)
-const AppAdminRolesRoute = AppAdminRolesRouteImport.update({
-  id: '/admin/roles',
-  path: '/admin/roles',
+const AppAdminPermissionsRoute = AppAdminPermissionsRouteImport.update({
+  id: '/admin/permissions',
+  path: '/admin/permissions',
   getParentRoute: () => AppRoute,
 } as any)
 const AppNNetworkRoute = AppNNetworkRouteImport.update({
   id: '/n/$network',
   path: '/n/$network',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAdminRolesIndexRoute = AppAdminRolesIndexRouteImport.update({
+  id: '/admin/roles/',
+  path: '/admin/roles/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAdminRolesRoleIdRoute = AppAdminRolesRoleIdRouteImport.update({
+  id: '/admin/roles/$roleId',
+  path: '/admin/roles/$roleId',
   getParentRoute: () => AppRoute,
 } as any)
 const AppAdminUsersIndexRoute = AppAdminUsersIndexRouteImport.update({
@@ -116,10 +128,12 @@ export interface FileRoutesByFullPath {
   '/mock/authorize': typeof MockAuthorizeRoute
   '/mock/logout': typeof MockLogoutRoute
   '/admin/audit': typeof AppAdminAuditRoute
-  '/admin/roles': typeof AppAdminRolesRoute
+  '/admin/permissions': typeof AppAdminPermissionsRoute
   '/n/$network': typeof AppNNetworkRouteWithChildren
   '/admin/': typeof AppAdminIndexRoute
+  '/admin/roles/$roleId': typeof AppAdminRolesRoleIdRoute
   '/admin/users/$userId': typeof AppAdminUsersUserIdRoute
+  '/admin/roles/': typeof AppAdminRolesIndexRoute
   '/admin/users/': typeof AppAdminUsersIndexRoute
   '/n/$network/': typeof AppNNetworkIndexRoute
 }
@@ -133,9 +147,11 @@ export interface FileRoutesByTo {
   '/mock/logout': typeof MockLogoutRoute
   '/': typeof AppIndexRoute
   '/admin/audit': typeof AppAdminAuditRoute
-  '/admin/roles': typeof AppAdminRolesRoute
+  '/admin/permissions': typeof AppAdminPermissionsRoute
   '/admin': typeof AppAdminIndexRoute
+  '/admin/roles/$roleId': typeof AppAdminRolesRoleIdRoute
   '/admin/users/$userId': typeof AppAdminUsersUserIdRoute
+  '/admin/roles': typeof AppAdminRolesIndexRoute
   '/admin/users': typeof AppAdminUsersIndexRoute
   '/n/$network': typeof AppNNetworkIndexRoute
 }
@@ -151,10 +167,12 @@ export interface FileRoutesById {
   '/mock/logout': typeof MockLogoutRoute
   '/_app/': typeof AppIndexRoute
   '/_app/admin/audit': typeof AppAdminAuditRoute
-  '/_app/admin/roles': typeof AppAdminRolesRoute
+  '/_app/admin/permissions': typeof AppAdminPermissionsRoute
   '/_app/n/$network': typeof AppNNetworkRouteWithChildren
   '/_app/admin/': typeof AppAdminIndexRoute
+  '/_app/admin/roles/$roleId': typeof AppAdminRolesRoleIdRoute
   '/_app/admin/users/$userId': typeof AppAdminUsersUserIdRoute
+  '/_app/admin/roles/': typeof AppAdminRolesIndexRoute
   '/_app/admin/users/': typeof AppAdminUsersIndexRoute
   '/_app/n/$network/': typeof AppNNetworkIndexRoute
 }
@@ -170,10 +188,12 @@ export interface FileRouteTypes {
     | '/mock/authorize'
     | '/mock/logout'
     | '/admin/audit'
-    | '/admin/roles'
+    | '/admin/permissions'
     | '/n/$network'
     | '/admin/'
+    | '/admin/roles/$roleId'
     | '/admin/users/$userId'
+    | '/admin/roles/'
     | '/admin/users/'
     | '/n/$network/'
   fileRoutesByTo: FileRoutesByTo
@@ -187,9 +207,11 @@ export interface FileRouteTypes {
     | '/mock/logout'
     | '/'
     | '/admin/audit'
-    | '/admin/roles'
+    | '/admin/permissions'
     | '/admin'
+    | '/admin/roles/$roleId'
     | '/admin/users/$userId'
+    | '/admin/roles'
     | '/admin/users'
     | '/n/$network'
   id:
@@ -204,10 +226,12 @@ export interface FileRouteTypes {
     | '/mock/logout'
     | '/_app/'
     | '/_app/admin/audit'
-    | '/_app/admin/roles'
+    | '/_app/admin/permissions'
     | '/_app/n/$network'
     | '/_app/admin/'
+    | '/_app/admin/roles/$roleId'
     | '/_app/admin/users/$userId'
+    | '/_app/admin/roles/'
     | '/_app/admin/users/'
     | '/_app/n/$network/'
   fileRoutesById: FileRoutesById
@@ -302,11 +326,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAdminAuditRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/admin/roles': {
-      id: '/_app/admin/roles'
-      path: '/admin/roles'
-      fullPath: '/admin/roles'
-      preLoaderRoute: typeof AppAdminRolesRouteImport
+    '/_app/admin/permissions': {
+      id: '/_app/admin/permissions'
+      path: '/admin/permissions'
+      fullPath: '/admin/permissions'
+      preLoaderRoute: typeof AppAdminPermissionsRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/n/$network': {
@@ -314,6 +338,20 @@ declare module '@tanstack/react-router' {
       path: '/n/$network'
       fullPath: '/n/$network'
       preLoaderRoute: typeof AppNNetworkRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/admin/roles/': {
+      id: '/_app/admin/roles/'
+      path: '/admin/roles'
+      fullPath: '/admin/roles/'
+      preLoaderRoute: typeof AppAdminRolesIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/admin/roles/$roleId': {
+      id: '/_app/admin/roles/$roleId'
+      path: '/admin/roles/$roleId'
+      fullPath: '/admin/roles/$roleId'
+      preLoaderRoute: typeof AppAdminRolesRoleIdRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/admin/users/': {
@@ -355,20 +393,24 @@ const AppNNetworkRouteWithChildren = AppNNetworkRoute._addFileChildren(
 interface AppRouteChildren {
   AppIndexRoute: typeof AppIndexRoute
   AppAdminAuditRoute: typeof AppAdminAuditRoute
-  AppAdminRolesRoute: typeof AppAdminRolesRoute
+  AppAdminPermissionsRoute: typeof AppAdminPermissionsRoute
   AppNNetworkRoute: typeof AppNNetworkRouteWithChildren
   AppAdminIndexRoute: typeof AppAdminIndexRoute
+  AppAdminRolesRoleIdRoute: typeof AppAdminRolesRoleIdRoute
   AppAdminUsersUserIdRoute: typeof AppAdminUsersUserIdRoute
+  AppAdminRolesIndexRoute: typeof AppAdminRolesIndexRoute
   AppAdminUsersIndexRoute: typeof AppAdminUsersIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppIndexRoute: AppIndexRoute,
   AppAdminAuditRoute: AppAdminAuditRoute,
-  AppAdminRolesRoute: AppAdminRolesRoute,
+  AppAdminPermissionsRoute: AppAdminPermissionsRoute,
   AppNNetworkRoute: AppNNetworkRouteWithChildren,
   AppAdminIndexRoute: AppAdminIndexRoute,
+  AppAdminRolesRoleIdRoute: AppAdminRolesRoleIdRoute,
   AppAdminUsersUserIdRoute: AppAdminUsersUserIdRoute,
+  AppAdminRolesIndexRoute: AppAdminRolesIndexRoute,
   AppAdminUsersIndexRoute: AppAdminUsersIndexRoute,
 }
 

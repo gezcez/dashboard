@@ -46,7 +46,9 @@
     },
     "emptyTitle": "No users yet",
     "noMatchTitle": "No users match",
-    "noMatchBody": "Try a different search or clear the filters."
+    "noMatchBody": "Try a different search or clear the filters.",
+    "network": "Network",
+    "role": "Role"
   },
   "user": {
     "eyebrow": "User",
@@ -151,6 +153,37 @@
       "level": "Level",
       "members": "Members",
       "permissions": "Permissions"
+    },
+    "create": "New role",
+    "views": {
+      "list": "Roles",
+      "matrix": "Permission matrix"
+    },
+    "chip": {
+      "counts": "{{members}} members · {{permissions}} permissions"
+    },
+    "form": {
+      "createTitle": "New role",
+      "editTitle": "Edit {{name}}",
+      "body": "Roles are global; you assign them per network. Saving needs a recent sign-in.",
+      "key": "Key",
+      "keyHint": "Lowercase letters, digits and _. Can't be changed later.",
+      "name": "Name",
+      "description": "Description",
+      "level": "Level",
+      "levelHint": "1 to {{max}}. A role can only manage roles below its level.",
+      "keyTaken": "A role with this key already exists.",
+      "invalid": {
+        "key": "Use 2 to 32 lowercase letters, digits or _, starting with a letter.",
+        "name": "Use 2 to 60 characters.",
+        "description": "Use at most 300 characters.",
+        "level": "Pick a whole number in the allowed range."
+      },
+      "create": "Create role",
+      "save": "Save role",
+      "created": "Created {{name}}.",
+      "saved": "Saved {{name}}.",
+      "failed": "The role wasn't saved. Try again."
     }
   },
   "audit": {
@@ -184,5 +217,99 @@
       "after": "After",
       "noChanges": "No field changes recorded for this event."
     }
+  },
+  "role": {
+    "eyebrow": "Role",
+    "back": "All roles",
+    "edit": "Edit role",
+    "details": "Details",
+    "created": "Created",
+    "updated": "Updated",
+    "global": "Global",
+    "membersByNetwork_one": "{{count}} member by network",
+    "membersByNetwork_other": "{{count}} members by network",
+    "noMembers": "Nobody holds this role yet.",
+    "memberCount_one": "{{formatted}} member",
+    "memberCount_other": "{{formatted}} members",
+    "permissions": "Permissions",
+    "notFoundTitle": "Role not found",
+    "notFoundBody": "This role doesn't exist or was deleted."
+  },
+  "matrix": {
+    "title": "Permission matrix",
+    "permission": "Permission",
+    "filter": "Filter permissions…",
+    "hint": "Changes are staged until you review and save them. Arrow keys move, Space toggles.",
+    "readOnly": "Read only: you need roles.write to change grants.",
+    "pending": "Unsaved changes",
+    "summary": "{{grants}}, {{revokes}}",
+    "grants_one": "{{count}} grant",
+    "grants_other": "{{count}} grants",
+    "revokes_one": "{{count}} revoke",
+    "revokes_other": "{{count}} revokes",
+    "discard": "Discard",
+    "review": "Review changes",
+    "discardConfirm": "You have unsaved permission changes. Leave and discard them?",
+    "reviewTitle_one": "Review {{count}} change",
+    "reviewTitle_other": "Review {{count}} changes",
+    "reviewBody": "Each change is applied on its own; any that fail stay staged.",
+    "reviewDangerous_one": "{{count}} change touches a sudo or global permission (in red). Each change is applied on its own; any that fail stay staged.",
+    "reviewDangerous_other": "{{count}} changes touch sudo or global permissions (in red). Each change is applied on its own; any that fail stay staged.",
+    "changes": "Staged changes",
+    "grantLine": "Grant {{key}} to {{role}}",
+    "revokeLine": "Revoke {{key}} from {{role}}",
+    "escalationWarning": "You're granting a permission that lets holders change roles or permissions. Make sure the role's members should have that.",
+    "save_one": "Save {{count}} change",
+    "save_other": "Save {{count}} changes",
+    "saved_one": "Saved {{count}} change.",
+    "saved_other": "Saved {{count}} changes.",
+    "partial": "{{ok}} saved, {{failed}} failed. The failed ones are still staged.",
+    "failed": "The changes weren't saved. Try again.",
+    "disabled": {
+      "immutable": "Built-in role: grants can't be changed.",
+      "not_held": "You can't grant a permission you don't hold.",
+      "level": "This role is at or above your level.",
+      "read_only": "Read only."
+    }
+  },
+  "permissions": {
+    "eyebrow": "Platform",
+    "title": "Permission registry",
+    "intro": "Every permission the backend registered at boot, with its routes and the roles that hold it. Code is the source of truth.",
+    "search": "Search keys, descriptions or routes",
+    "show": "Show",
+    "noMatch": "No permissions match.",
+    "filters": {
+      "orphaned": "Orphaned",
+      "sudo": "Needs sudo",
+      "global": "Global scope",
+      "network": "Network scope"
+    },
+    "scope": {
+      "global": "Global",
+      "network": "Network"
+    },
+    "sudo": "Needs sudo",
+    "unknown": "Not in the registry.",
+    "orphaned": "Orphaned",
+    "orphanBanner_one": "{{count}} key has no routes since the last boot. Delete it once nothing needs it.",
+    "orphanBanner_other": "{{count}} keys have no routes since the last boot. Delete them once nothing needs them.",
+    "columns": {
+      "key": "Permission",
+      "routes": "Routes",
+      "roles": "Held by",
+      "seen": "Registry",
+      "actions": "Actions"
+    },
+    "noRoutes": "No routes",
+    "firstSeen": "Since {{date}}",
+    "lastSeen": "Seen {{when}}",
+    "orphanedAt": "Orphaned {{when}}",
+    "delete": "Delete key",
+    "deleteTitle": "Delete {{key}}?",
+    "deleteEffect_one": "Removes the key and its grant from {{count}} role. It can't be undone; a deploy that uses the key again re-registers it with no grants.",
+    "deleteEffect_other": "Removes the key and its grants from {{count}} roles. It can't be undone; a deploy that uses the key again re-registers it with no grants.",
+    "deleted": "Deleted {{key}}.",
+    "deleteFailed": "The key wasn't deleted. Try again."
   }
 }

@@ -1,6 +1,6 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 import { useTranslation } from "react-i18next"
-import type { Page } from "@/api/pagination"
+import { PAGE_LIMITS, type Page } from "@/api/pagination"
 import { Button } from "@/components/ui/button"
 import { formatNumber } from "@/lib/format"
 
@@ -8,9 +8,14 @@ import { formatNumber } from "@/lib/format"
 export function CursorPager({
   page,
   onCursor,
+  limit,
+  onLimit,
 }: {
   page: Pick<Page<unknown>, "next_cursor" | "prev_cursor" | "total"> | undefined
   onCursor: (cursor: string | undefined) => void
+  /** With onLimit, a rows-per-page select (25 to 200) is shown. */
+  limit?: number
+  onLimit?: (limit: number) => void
 }) {
   const { t } = useTranslation()
   const total = page?.total
@@ -23,7 +28,25 @@ export function CursorPager({
             ? t("table.totalMany")
             : t("table.total", { count: total, formatted: formatNumber(total) })}
       </p>
-      <div className="flex gap-1">
+      <div className="flex items-center gap-1">
+        {onLimit && (
+          <label className="mr-2 flex items-center gap-2 text-xs text-muted-foreground">
+            {t("table.perPage")}
+            <select
+              value={limit ?? PAGE_LIMITS[1]}
+              onChange={(e) => {
+                onLimit(Number(e.target.value))
+              }}
+              className="tabular h-8 rounded-full border bg-card px-2 text-xs text-foreground focus-visible:outline-2 focus-visible:outline-ring"
+            >
+              {PAGE_LIMITS.map((n) => (
+                <option key={n} value={n}>
+                  {n}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
         <Button
           variant="ghost"
           size="icon-sm"

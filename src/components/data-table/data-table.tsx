@@ -6,7 +6,8 @@ import {
   type RowData,
 } from "@tanstack/react-table"
 import { ArrowDownIcon, ArrowUpDownIcon, ArrowUpIcon, ChevronRightIcon } from "lucide-react"
-import { Fragment, useState, type ReactNode } from "react"
+import { useWindowVirtualizer } from "@tanstack/react-virtual"
+import { Fragment, useLayoutEffect, useRef, useState, type ReactNode } from "react"
 import { useTranslation } from "react-i18next"
 import { isApiError } from "@/api/envelope"
 import { ErrorState } from "@/components/states/states"
@@ -54,7 +55,11 @@ export interface DataTableProps<T> {
   skeletonRows?: number
   /** Expandable rows: a toggle column is added and this renders under an open row. */
   renderDetail?: (row: T) => ReactNode
+  /** Window-virtualised rows once a page holds more than 60 (plan 8.3: audit, poll log). */
+  virtualize?: boolean
 }
+
+const VIRTUAL_MIN_ROWS = 60
 
 /**
  * Server-driven table: rows, sort and paging come from the API (manual mode); state lives in the
@@ -75,6 +80,7 @@ export function DataTable<T>({
   caption,
   skeletonRows = 8,
   renderDetail,
+  virtualize = false,
 }: DataTableProps<T>) {
   const { t } = useTranslation()
   const [open, setOpen] = useState<ReadonlySet<string>>(new Set())
@@ -95,6 +101,71 @@ export function DataTable<T>({
     manualPagination: true,
   })
   const current = parseSort(sort)
+  const bodyRows = table.getRowModel().rows
+  const virtual = virtualize && !isPending && bodyRows.length > VIRTUAL_MIN_ROWS
+  const tableRef = useRef<HTMLTableElement>(null)
+  const [scrollMargin, setScrollMargin] = useState(0)
+  useLayoutEffect(() => {
+    if (virtual && tableRef.current)
+      setScrollMargin(tableRef.current.getBoundingClientRect().top + window.scrollY)
+  }, [virtual, bodyRows.length])
+  const virtualizer = useWindowVirtualizer({
+    count: virtual ? bodyRows.length : 0,
+    estimateSize: () => 45,
+    overscan: 12,
+    scrollMargin,
+  })
+
+  type Row = (typeof bodyRows)[number]
+  const rowContent = (row: Row) => (
+    <>
+      <TableRow data-state={open.has(row.id) ? "open" : undefined}>
+        {renderDetail && (
+          <TableCell className="w-8 pr-0">
+            <button
+              type="button"
+              className="rounded-md p-1 text-muted-foreground hover:bg-secondary hover:text-foreground"
+              aria-expanded={open.has(row.id)}
+              aria-controls={`detail-${row.id}`}
+              aria-label={t("table.toggleDetails")}
+              onClick={() => {
+                toggle(row.id)
+              }}
+            >
+              <ChevronRightIcon
+                className={cn("size-4 transition-transform", open.has(row.id) && "rotate-90")}
+              />
+            </button>
+          </TableCell>
+        )}
+        {row.getVisibleCells().map((cell) => {
+          const meta = cell.column.columnDef.meta
+          return (
+            <TableCell
+              key={cell.id}
+              className={cn(meta?.className, meta?.hideOnMobile && "hidden sm:table-cell")}
+            >
+              {flexRender(cell.column.columnDef.cell, cell.getContext())}
+            </TableCell>
+          )
+        })}
+      </TableRow>
+      {renderDetail && open.has(row.id) && (
+        <TableRow id={`detail-${row.id}`} className="bg-muted/40 hover:bg-muted/40">
+          <TableCell colSpan={colSpan} className="whitespace-normal">
+            {renderDetail(row.original)}
+          </TableCell>
+        </TableRow>
+      )}
+    </>
+  )
+  const renderRow = (row: Row) => <Fragment key={row.id}>{rowContent(row)}</Fragment>
+  const items = virtualizer.getVirtualItems()
+  const padTop = items.length ? (items[0]?.start ?? 0) - virtualizer.options.scrollMargin : 0
+  const padBottom = items.length
+    ? virtualizer.getTotalSize() -
+      ((items[items.length - 1]?.end ?? 0) - virtualizer.options.scrollMargin)
+    : 0
 
   if (error && !rows) {
     return (
@@ -109,7 +180,11 @@ export function DataTable<T>({
 
   return (
     <div className="rounded-2xl border bg-card">
-      <Table aria-busy={isPending || isFetching} className={cn(isFetching && "opacity-70")}>
+      <Table
+        ref={tableRef}
+        aria-busy={isPending || isFetching}
+        className={cn(isFetching && "opacity-70")}
+      >
         <caption className="sr-only">{caption}</caption>
         <TableHeader>
           {table.getHeaderGroups().map((group) => (
@@ -175,55 +250,32 @@ export function DataTable<T>({
                   ))}
                 </TableRow>
               ))
-            : table.getRowModel().rows.map((row) => (
-                <Fragment key={row.id}>
-                  <TableRow data-state={open.has(row.id) ? "open" : undefined}>
-                    {renderDetail && (
-                      <TableCell className="w-8 pr-0">
-                        <button
-                          type="button"
-                          className="rounded-md p-1 text-muted-foreground hover:bg-secondary hover:text-foreground"
-                          aria-expanded={open.has(row.id)}
-                          aria-controls={`detail-${row.id}`}
-                          aria-label={t("table.toggleDetails")}
-                          onClick={() => {
-                            toggle(row.id)
-                          }}
-                        >
-                          <ChevronRightIcon
-                            className={cn(
-                              "size-4 transition-transform",
-                              open.has(row.id) && "rotate-90",
-                            )}
-                          />
-                        </button>
-                      </TableCell>
-                    )}
-                    {row.getVisibleCells().map((cell) => {
-                      const meta = cell.column.columnDef.meta
-                      return (
-                        <TableCell
-                          key={cell.id}
-                          className={cn(
-                            meta?.className,
-                            meta?.hideOnMobile && "hidden sm:table-cell",
-                          )}
-                        >
-                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                        </TableCell>
-                      )
-                    })}
-                  </TableRow>
-                  {renderDetail && open.has(row.id) && (
-                    <TableRow id={`detail-${row.id}`} className="bg-muted/40 hover:bg-muted/40">
-                      <TableCell colSpan={colSpan} className="whitespace-normal">
-                        {renderDetail(row.original)}
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </Fragment>
-              ))}
+            : !virtual && bodyRows.map((row) => renderRow(row))}
         </TableBody>
+        {virtual && (
+          <>
+            {padTop > 0 && (
+              <tbody aria-hidden>
+                <tr style={{ height: padTop }} />
+              </tbody>
+            )}
+            {items.map((item) => {
+              const row = bodyRows[item.index]
+              if (!row) return null
+              // One <tbody> per row so an open detail row is measured with it.
+              return (
+                <tbody key={row.id} data-index={item.index} ref={virtualizer.measureElement}>
+                  {rowContent(row)}
+                </tbody>
+              )
+            })}
+            {padBottom > 0 && (
+              <tbody aria-hidden>
+                <tr style={{ height: padBottom }} />
+              </tbody>
+            )}
+          </>
+        )}
       </Table>
       {footer && <div className="border-t px-3 py-2">{footer}</div>}
     </div>

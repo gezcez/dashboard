@@ -1,5 +1,6 @@
 import {
   GaugeIcon,
+  KeyRoundIcon,
   LayoutDashboardIcon,
   ScrollTextIcon,
   ShieldCheckIcon,
@@ -59,6 +60,14 @@ export const PAGES = {
     group: "platform",
     label: "nav.roles",
     icon: ShieldCheckIcon,
+  },
+  "admin.permissions": {
+    to: "/admin/permissions",
+    perm: "permissions.read",
+    scope: "global",
+    group: "platform",
+    label: "nav.permissions",
+    icon: KeyRoundIcon,
   },
   "admin.audit": {
     to: "/admin/audit",

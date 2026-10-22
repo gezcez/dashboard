@@ -38,3 +38,21 @@ export class ForbiddenError extends Error {
     this.networkName = networkName
   }
 }
+
+/** Highest role level the viewer holds in a scope (global roles count everywhere). */
+export function levelOf(me: Me | undefined, scope: Scope): number {
+  if (!me) return 0
+  const global = me.global.roles.map((r) => r.level)
+  const network =
+    scope === "global"
+      ? []
+      : (me.networks
+          .find((n) => n.id === scope.network || n.slug === scope.network)
+          ?.roles.map((r) => r.level) ?? [])
+  return Math.max(0, ...global, ...network)
+}
+
+/** Root bypasses level rules in the backend (audited), so the UI must not pre-filter for it. */
+export function isRoot(me: Me | undefined): boolean {
+  return me?.global.roles.some((r) => r.key === "root") ?? false
+}

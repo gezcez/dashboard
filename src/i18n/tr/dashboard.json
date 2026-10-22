@@ -46,7 +46,9 @@
     },
     "emptyTitle": "Henüz kullanıcı yok",
     "noMatchTitle": "Eşleşen kullanıcı yok",
-    "noMatchBody": "Farklı bir arama deneyin veya filtreleri temizleyin."
+    "noMatchBody": "Farklı bir arama deneyin veya filtreleri temizleyin.",
+    "network": "Ağ",
+    "role": "Rol"
   },
   "user": {
     "eyebrow": "Kullanıcı",
@@ -151,6 +153,37 @@
       "level": "Seviye",
       "members": "Üye",
       "permissions": "İzin"
+    },
+    "create": "Yeni rol",
+    "views": {
+      "list": "Roller",
+      "matrix": "İzin matrisi"
+    },
+    "chip": {
+      "counts": "{{members}} üye · {{permissions}} izin"
+    },
+    "form": {
+      "createTitle": "Yeni rol",
+      "editTitle": "{{name}} rolünü düzenle",
+      "body": "Roller geneldir; ağ bazında atanır. Kaydetmek için yakın zamanda giriş yapmış olmanız gerekir.",
+      "key": "Anahtar",
+      "keyHint": "Küçük harf, rakam ve _. Sonradan değiştirilemez.",
+      "name": "Ad",
+      "description": "Açıklama",
+      "level": "Seviye",
+      "levelHint": "1 ile {{max}} arası. Bir rol yalnızca kendi seviyesinin altındaki rolleri yönetebilir.",
+      "keyTaken": "Bu anahtarla bir rol zaten var.",
+      "invalid": {
+        "key": "Harfle başlayan 2 ile 32 karakter arası küçük harf, rakam veya _ kullanın.",
+        "name": "2 ile 60 karakter arası kullanın.",
+        "description": "En fazla 300 karakter kullanın.",
+        "level": "İzin verilen aralıkta bir tam sayı seçin."
+      },
+      "create": "Rol oluştur",
+      "save": "Rolü kaydet",
+      "created": "{{name}} oluşturuldu.",
+      "saved": "{{name}} kaydedildi.",
+      "failed": "Rol kaydedilemedi. Tekrar deneyin."
     }
   },
   "audit": {
@@ -184,5 +217,99 @@
       "after": "Sonra",
       "noChanges": "Bu kayıt için alan değişikliği yok."
     }
+  },
+  "role": {
+    "eyebrow": "Rol",
+    "back": "Tüm roller",
+    "edit": "Rolü düzenle",
+    "details": "Ayrıntılar",
+    "created": "Oluşturulma",
+    "updated": "Güncellenme",
+    "global": "Genel",
+    "membersByNetwork_one": "Ağlara göre {{count}} üye",
+    "membersByNetwork_other": "Ağlara göre {{count}} üye",
+    "noMembers": "Bu role henüz kimse sahip değil.",
+    "memberCount_one": "{{formatted}} üye",
+    "memberCount_other": "{{formatted}} üye",
+    "permissions": "İzinler",
+    "notFoundTitle": "Rol bulunamadı",
+    "notFoundBody": "Bu rol yok ya da silinmiş."
+  },
+  "matrix": {
+    "title": "İzin matrisi",
+    "permission": "İzin",
+    "filter": "İzinleri filtreleyin…",
+    "hint": "Değişiklikler, gözden geçirip kaydedene kadar bekletilir. Ok tuşlarıyla gezinin, Boşluk ile değiştirin.",
+    "readOnly": "Salt okunur: izinleri değiştirmek için roles.write gerekir.",
+    "pending": "Kaydedilmemiş değişiklikler",
+    "summary": "{{grants}}, {{revokes}}",
+    "grants_one": "{{count}} verme",
+    "grants_other": "{{count}} verme",
+    "revokes_one": "{{count}} geri alma",
+    "revokes_other": "{{count}} geri alma",
+    "discard": "Vazgeç",
+    "review": "Değişiklikleri gözden geçir",
+    "discardConfirm": "Kaydedilmemiş izin değişiklikleriniz var. Sayfadan çıkıp bunları silmek istiyor musunuz?",
+    "reviewTitle_one": "{{count}} değişikliği gözden geçirin",
+    "reviewTitle_other": "{{count}} değişikliği gözden geçirin",
+    "reviewBody": "Her değişiklik ayrı uygulanır; başarısız olanlar bekletilmeye devam eder.",
+    "reviewDangerous_one": "{{count}} değişiklik sudo veya genel bir izni etkiliyor (kırmızı). Her değişiklik ayrı uygulanır; başarısız olanlar bekletilmeye devam eder.",
+    "reviewDangerous_other": "{{count}} değişiklik sudo veya genel izinleri etkiliyor (kırmızı). Her değişiklik ayrı uygulanır; başarısız olanlar bekletilmeye devam eder.",
+    "changes": "Bekleyen değişiklikler",
+    "grantLine": "{{role}} rolüne {{key}} ver",
+    "revokeLine": "{{role}} rolünden {{key}} al",
+    "escalationWarning": "Sahiplerinin rolleri veya izinleri değiştirmesine olanak tanıyan bir izin veriyorsunuz. Rolün üyelerinin buna sahip olması gerektiğinden emin olun.",
+    "save_one": "{{count}} değişikliği kaydet",
+    "save_other": "{{count}} değişikliği kaydet",
+    "saved_one": "{{count}} değişiklik kaydedildi.",
+    "saved_other": "{{count}} değişiklik kaydedildi.",
+    "partial": "{{ok}} kaydedildi, {{failed}} başarısız. Başarısız olanlar hâlâ bekliyor.",
+    "failed": "Değişiklikler kaydedilemedi. Tekrar deneyin.",
+    "disabled": {
+      "immutable": "Yerleşik rol: izinleri değiştirilemez.",
+      "not_held": "Sahip olmadığınız bir izni veremezsiniz.",
+      "level": "Bu rol sizin seviyenizde veya üstünde.",
+      "read_only": "Salt okunur."
+    }
+  },
+  "permissions": {
+    "eyebrow": "Platform",
+    "title": "İzin kaydı",
+    "intro": "Arka ucun açılışta kaydettiği tüm izinler; rotaları ve sahip olan rollerle birlikte. Doğruluk kaynağı koddur.",
+    "search": "Anahtar, açıklama veya rota arayın",
+    "show": "Göster",
+    "noMatch": "Eşleşen izin yok.",
+    "filters": {
+      "orphaned": "Sahipsiz",
+      "sudo": "Sudo gerektirir",
+      "global": "Genel kapsam",
+      "network": "Ağ kapsamı"
+    },
+    "scope": {
+      "global": "Genel",
+      "network": "Ağ"
+    },
+    "sudo": "Sudo gerektirir",
+    "unknown": "Kayıtta yok.",
+    "orphaned": "Sahipsiz",
+    "orphanBanner_one": "{{count}} anahtarın son açılıştan beri rotası yok. Artık gerekmediğinde silin.",
+    "orphanBanner_other": "{{count}} anahtarın son açılıştan beri rotası yok. Artık gerekmediğinde silin.",
+    "columns": {
+      "key": "İzin",
+      "routes": "Rotalar",
+      "roles": "Sahip roller",
+      "seen": "Kayıt",
+      "actions": "İşlemler"
+    },
+    "noRoutes": "Rota yok",
+    "firstSeen": "{{date}} tarihinden beri",
+    "lastSeen": "Görülme: {{when}}",
+    "orphanedAt": "Sahipsiz: {{when}}",
+    "delete": "Anahtarı sil",
+    "deleteTitle": "{{key}} silinsin mi?",
+    "deleteEffect_one": "Anahtarı ve {{count}} roldeki iznini kaldırır. Geri alınamaz; anahtarı yeniden kullanan bir sürüm onu izinsiz olarak yeniden kaydeder.",
+    "deleteEffect_other": "Anahtarı ve {{count}} roldeki iznini kaldırır. Geri alınamaz; anahtarı yeniden kullanan bir sürüm onu izinsiz olarak yeniden kaydeder.",
+    "deleted": "{{key}} silindi.",
+    "deleteFailed": "Anahtar silinemedi. Tekrar deneyin."
   }
 }

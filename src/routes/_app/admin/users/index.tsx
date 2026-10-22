@@ -10,18 +10,23 @@ import { CursorPager } from "@/components/data-table/cursor-pager"
 import { DataTable } from "@/components/data-table/data-table"
 import { FilterBar, SearchFilter, SelectFilter } from "@/components/data-table/filters"
 import { USER_STATUSES, UserStatusBadge } from "@/components/entity/user-status-badge"
+import { rolesQuery } from "@/components/entity/role-chip"
 import { UserChip } from "@/components/entity/user-chip"
 import { PageHeader } from "@/components/layout/page-header"
 import { EmptyState } from "@/components/states/states"
 import { Button } from "@/components/ui/button"
 import { apiQuery } from "@/lib/api"
 import { formatDateTime, formatNumber, formatRelative } from "@/lib/format"
+import { useMe } from "@/lib/me"
 import { assertPage } from "@/lib/pages"
+import { can } from "@/lib/permissions"
 
 type User = components["schemas"]["DashUserListItem"]
 
 const searchSchema = tableSearchSchema.extend({
   status: z.enum(["active", "unverified", "banned", "pending_deletion"]).optional(),
+  role: z.string().optional(),
+  network_id: z.coerce.number().int().optional(),
 })
 type Search = z.infer<typeof searchSchema>
 
@@ -49,7 +54,15 @@ function UsersPage() {
       search: (prev) => ({ ...prev, cursor: undefined, ...patch }),
       replace: true,
     })
-  const filtered = Boolean(search.q || search.status)
+  const filtered = Boolean(search.q || search.status || search.role || search.network_id)
+  const roles = useQuery(rolesQuery()).data
+  const { data: me } = useMe()
+  const readAll = can(me, "networks.read.all", "global") === true
+  const allNetworks = useQuery({
+    ...apiQuery("/v1/dash/networks", { params: { query: { limit: 200 } } }),
+    enabled: readAll,
+  }).data?.items
+  const networks = readAll ? allNetworks : me?.networks
 
   const columns = useMemo<ColumnDef<User>[]>(
     () => [
@@ -119,6 +132,24 @@ function UsersPage() {
             setSearch({ status })
           }}
         />
+        <SelectFilter
+          label={t("users.role")}
+          value={search.role}
+          options={[...(roles ?? [])]
+            .sort((a, b) => b.level - a.level)
+            .map((r) => ({ value: r.key, label: r.name }))}
+          onChange={(role) => {
+            setSearch({ role })
+          }}
+        />
+        <SelectFilter
+          label={t("users.network")}
+          value={search.network_id === undefined ? undefined : String(search.network_id)}
+          options={(networks ?? []).map((n) => ({ value: String(n.id), label: n.name }))}
+          onChange={(id) => {
+            setSearch({ network_id: id === undefined ? undefined : Number(id) })
+          }}
+        />
       </FilterBar>
       <DataTable
         caption={t("users.title")}
@@ -141,7 +172,12 @@ function UsersPage() {
                 <Button
                   variant="outline"
                   onClick={() => {
-                    setSearch({ q: undefined, status: undefined })
+                    setSearch({
+                      q: undefined,
+                      status: undefined,
+                      role: undefined,
+                      network_id: undefined,
+                    })
                   }}
                 >
                   {t("table.clearFilters", { ns: "common" })}

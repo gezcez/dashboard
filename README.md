@@ -51,14 +51,25 @@ and again at boot (`src/env.ts`). There is no hard-coded environment anywhere. M
 - **Routes** (`src/routes/`, file-based): `/login`, `/auth/callback`, `/auth/step-up` (popup),
   `/auth/logged-out`, and the signed-in shell `_app` with `/` (redirects to your first network or
   the platform overview), `/n/$network/...` (network-scoped pages, network in the URL) and
-  `/admin/...` (platform pages: overview, users and user detail, roles, audit log). `/ui-kit` is a
+  `/admin/...` (platform pages: overview, users and user detail, roles and role detail with the
+  permission matrix, permission registry, audit log). `/ui-kit` is a
   dev-only component gallery.
 - **Pages and permissions** (`src/lib/pages.ts`): one table lists every page with its permission
   key and scope. The sidebar, the command palette (Ctrl+K), the `/` redirect and each route's
   `beforeLoad` guard read it, so hidden nav and blocked routes cannot disagree. A blocked route
   renders a 403 in place that names the missing permission.
 - **Server tables** (`src/components/data-table/`): TanStack Table in manual mode; search, filters,
-  sort and cursor live in the URL, so every view is linkable and the back button works.
+  sort and cursor live in the URL, so every view is linkable and the back button works. Pages of
+  up to 200 rows (audit) render through a window virtualiser (`virtualize` prop).
+- **Entity chips** (`src/components/entity/`): `UserChip`, `RoleChip`, `PermissionChip`,
+  `NetworkChip` and `AuditInfo` link to the entity and show a hover card. Cards read cached list
+  queries (roles, permissions) or one lazily fetched user, never a request per chip on render.
+- **Confirmations** (`src/components/confirm/`): `ConfirmDialog` covers plan levels L2 (effect in
+  words, required reason) and L3 (type the name to confirm).
+- **Permission matrix** (`src/components/roles/`): toggles are staged in a
+  `Map<"roleId:key", "grant" | "revoke">`; Review lists the diff in words (sudo and global keys in
+  red) and Save sends one sudo batch. Failed operations stay staged. The diff logic lives in
+  `matrix-diff.ts` with unit tests.
 - **Sudo actions** (`src/lib/sudo.ts`): `runWithSudo` asks for a fresh sign-in before an
   `x-gezcez-sudo` operation (step-up popup via `auth.stepUp`, redirect if blocked), retries once
   on `AUTH_STEP_UP_REQUIRED`, and the top bar counts down the 10 minute window.

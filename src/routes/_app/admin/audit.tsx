@@ -244,6 +244,7 @@ function AuditPage() {
           setSearch({ sort })
         }}
         renderDetail={(e) => <AuditDetail entry={e} />}
+        virtualize
         empty={
           <EmptyState
             title={filtered ? t("audit.noMatchTitle") : t("audit.emptyTitle")}
@@ -272,6 +273,10 @@ function AuditPage() {
             onCursor={(cursor) =>
               void navigate({ search: (prev) => ({ ...prev, cursor }), resetScroll: true })
             }
+            limit={search.limit}
+            onLimit={(limit) => {
+              setSearch({ limit })
+            }}
           />
         }
       />
