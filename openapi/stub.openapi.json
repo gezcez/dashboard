@@ -5,6 +5,7 @@
     "version": "0.0.0-stub",
     "description": "HAND-WRITTEN STUB for the dashboard until the backend publishes /openapi.json. Shapes follow backend.md sections 3.3, 6.4, 7.0 and 7.2. Replace with `bun run api:gen` against the real spec."
   },
+  "x-gezcez-stub-fragments": ["stub-transit.openapi.json"],
   "servers": [
     {
       "url": "https://api.gezcez.com"

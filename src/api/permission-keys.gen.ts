@@ -93,6 +93,11 @@ export const OPERATION_AUTH = {
     "scope": "global",
     "sudo": false
   },
+  "GET /v1/dash/cities": {
+    "key": "catalog.read",
+    "scope": "global",
+    "sudo": false
+  },
   "GET /v1/dash/email/deliveries": {
     "key": "email.read",
     "scope": "global",
@@ -118,8 +123,48 @@ export const OPERATION_AUTH = {
     "scope": "network",
     "sudo": false
   },
+  "GET /v1/dash/networks/{networkId}/analytics/{metric}": {
+    "key": "analytics.read",
+    "scope": "network",
+    "sudo": false
+  },
+  "GET /v1/dash/networks/{networkId}/analytics/{metric}/export": {
+    "key": "analytics.export",
+    "scope": "network",
+    "sudo": false
+  },
   "GET /v1/dash/networks/{networkId}/audit": {
     "key": "audit.read",
+    "scope": "network",
+    "sudo": false
+  },
+  "GET /v1/dash/networks/{networkId}/bindings": {
+    "key": "catalog.read",
+    "scope": "network",
+    "sudo": false
+  },
+  "GET /v1/dash/networks/{networkId}/bindings/{bindingId}": {
+    "key": "catalog.read",
+    "scope": "network",
+    "sudo": false
+  },
+  "GET /v1/dash/networks/{networkId}/bindings/{bindingId}/polls": {
+    "key": "tracker.read",
+    "scope": "network",
+    "sudo": false
+  },
+  "GET /v1/dash/networks/{networkId}/bindings/{bindingId}/series": {
+    "key": "tracker.read",
+    "scope": "network",
+    "sudo": false
+  },
+  "GET /v1/dash/networks/{networkId}/bindings/{bindingId}/stats": {
+    "key": "tracker.read",
+    "scope": "network",
+    "sudo": false
+  },
+  "GET /v1/dash/networks/{networkId}/issues": {
+    "key": "catalog.read",
     "scope": "network",
     "sudo": false
   },
@@ -143,6 +188,26 @@ export const OPERATION_AUTH = {
     "scope": "network",
     "sudo": false
   },
+  "GET /v1/dash/networks/{networkId}/replay": {
+    "key": "vehicles.history.read",
+    "scope": "network",
+    "sudo": false
+  },
+  "GET /v1/dash/networks/{networkId}/sync-runs": {
+    "key": "catalog.read",
+    "scope": "network",
+    "sudo": false
+  },
+  "GET /v1/dash/networks/{networkId}/tracker": {
+    "key": "tracker.read",
+    "scope": "network",
+    "sudo": false
+  },
+  "GET /v1/dash/networks/{networkId}/vehicles/{vehicleId}/track": {
+    "key": "vehicles.live.read",
+    "scope": "network",
+    "sudo": false
+  },
   "GET /v1/dash/overview": {
     "key": "system.health.read",
     "scope": "global",
@@ -155,6 +220,16 @@ export const OPERATION_AUTH = {
   },
   "GET /v1/dash/permissions/registry": {
     "key": "permissions.read",
+    "scope": "global",
+    "sudo": false
+  },
+  "GET /v1/dash/providers": {
+    "key": "providers.read",
+    "scope": "global",
+    "sudo": false
+  },
+  "GET /v1/dash/providers/{key}": {
+    "key": "providers.read",
     "scope": "global",
     "sudo": false
   },
@@ -175,6 +250,11 @@ export const OPERATION_AUTH = {
   },
   "GET /v1/dash/system/health": {
     "key": "system.health.read",
+    "scope": "global",
+    "sudo": false
+  },
+  "GET /v1/dash/tracker/status": {
+    "key": "tracker.read",
     "scope": "global",
     "sudo": false
   },
@@ -213,6 +293,16 @@ export const OPERATION_AUTH = {
     "scope": "global",
     "sudo": false
   },
+  "PATCH /v1/dash/networks/{networkId}/bindings/{bindingId}/config": {
+    "key": "tracker.config.write",
+    "scope": "network",
+    "sudo": true
+  },
+  "PATCH /v1/dash/networks/{networkId}/issues": {
+    "key": "catalog.write",
+    "scope": "network",
+    "sudo": false
+  },
   "PATCH /v1/dash/roles/{roleId}": {
     "key": "roles.write",
     "scope": "global",
@@ -243,10 +333,25 @@ export const OPERATION_AUTH = {
     "scope": "global",
     "sudo": false
   },
+  "POST /v1/dash/networks/{networkId}/bindings/{bindingId}/control": {
+    "key": "tracker.control",
+    "scope": "network",
+    "sudo": false
+  },
+  "POST /v1/dash/networks/{networkId}/bindings/{bindingId}/sync": {
+    "key": "catalog.sync",
+    "scope": "network",
+    "sudo": false
+  },
   "POST /v1/dash/networks/{networkId}/members/{userId}/roles": {
     "key": "members.roles.write",
     "scope": "network",
     "sudo": false
+  },
+  "POST /v1/dash/providers/{key}/kill": {
+    "key": "providers.kill",
+    "scope": "global",
+    "sudo": true
   },
   "POST /v1/dash/roles": {
     "key": "roles.write",

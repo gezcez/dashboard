@@ -1,4 +1,5 @@
 import { readFile } from "node:fs/promises"
+import { dirname, join } from "node:path"
 import openapiTS, { astToString } from "openapi-typescript"
 
 /**
@@ -25,6 +26,7 @@ type JsonObject = Record<string, unknown>
 
 export type OpenApiDoc = {
   info?: { title?: string; version?: string }
+  "x-gezcez-stub-fragments"?: string[]
   paths?: Record<string, Record<string, JsonObject | undefined>>
   components?: { schemas?: Record<string, { enum?: unknown[] } | undefined> }
 }
@@ -35,7 +37,45 @@ export async function loadSpec(source: string): Promise<OpenApiDoc> {
     if (!res.ok) throw new Error(`GET ${source} failed: ${res.status} ${res.statusText}`)
     return (await res.json()) as OpenApiDoc
   }
-  return JSON.parse(await readFile(source, "utf8")) as OpenApiDoc
+  const doc = JSON.parse(await readFile(source, "utf8")) as OpenApiDoc
+  const fragments = doc["x-gezcez-stub-fragments"] ?? []
+  for (const fragment of fragments) {
+    const path = join(dirname(source), fragment)
+    mergeFragment(doc, JSON.parse(await readFile(path, "utf8")) as OpenApiDoc, fragment)
+  }
+  delete doc["x-gezcez-stub-fragments"]
+  return doc
+}
+
+/** Enum schemas a fragment may extend (values are unioned) instead of redefining. */
+const MERGEABLE_ENUMS = new Set(["ErrorCode", "PermissionKey"])
+
+/**
+ * Local stubs only: `x-gezcez-stub-fragments` in stub.openapi.json lists sibling files whose
+ * paths and component schemas are merged in, so separate areas of the stub (admin, transit) can
+ * be edited without touching one big file. A duplicate operation or schema is an error.
+ */
+export function mergeFragment(doc: OpenApiDoc, fragment: OpenApiDoc, name: string): void {
+  doc.paths ??= {}
+  for (const [path, item] of Object.entries(fragment.paths ?? {})) {
+    const target = (doc.paths[path] ??= {})
+    for (const [method, operation] of Object.entries(item)) {
+      if (target[method]) throw new Error(`${name}: ${method.toUpperCase()} ${path} already exists`)
+      target[method] = operation
+    }
+  }
+  doc.components ??= {}
+  const schemas = (doc.components.schemas ??= {})
+  for (const [key, schema] of Object.entries(fragment.components?.schemas ?? {})) {
+    const existing = schemas[key]
+    if (existing && MERGEABLE_ENUMS.has(key) && existing.enum && schema?.enum) {
+      existing.enum = [...new Set([...existing.enum, ...schema.enum])]
+    } else if (existing) {
+      throw new Error(`${name}: schema ${key} already exists`)
+    } else {
+      schemas[key] = schema
+    }
+  }
 }
 
 const METHODS = ["get", "put", "post", "delete", "patch"] as const
