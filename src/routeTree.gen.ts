@@ -20,6 +20,8 @@ import { Route as MockAuthorizeRouteImport } from './routes/mock/authorize'
 import { Route as MockLogoutRouteImport } from './routes/mock/logout'
 import { Route as AppAdminIndexRouteImport } from './routes/_app/admin/index'
 import { Route as AppAdminAuditRouteImport } from './routes/_app/admin/audit'
+import { Route as AppAdminEmailRouteImport } from './routes/_app/admin/email'
+import { Route as AppAdminModerationRouteImport } from './routes/_app/admin/moderation'
 import { Route as AppAdminPermissionsRouteImport } from './routes/_app/admin/permissions'
 import { Route as AppNNetworkRouteImport } from './routes/_app/n/$network'
 import { Route as AppAdminAppsIndexRouteImport } from './routes/_app/admin/apps/index'
@@ -84,6 +86,16 @@ const AppAdminIndexRoute = AppAdminIndexRouteImport.update({
 const AppAdminAuditRoute = AppAdminAuditRouteImport.update({
   id: '/admin/audit',
   path: '/admin/audit',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAdminEmailRoute = AppAdminEmailRouteImport.update({
+  id: '/admin/email',
+  path: '/admin/email',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAdminModerationRoute = AppAdminModerationRouteImport.update({
+  id: '/admin/moderation',
+  path: '/admin/moderation',
   getParentRoute: () => AppRoute,
 } as any)
 const AppAdminPermissionsRoute = AppAdminPermissionsRouteImport.update({
@@ -152,6 +164,8 @@ export interface FileRoutesByFullPath {
   '/mock/authorize': typeof MockAuthorizeRoute
   '/mock/logout': typeof MockLogoutRoute
   '/admin/audit': typeof AppAdminAuditRoute
+  '/admin/email': typeof AppAdminEmailRoute
+  '/admin/moderation': typeof AppAdminModerationRoute
   '/admin/permissions': typeof AppAdminPermissionsRoute
   '/n/$network': typeof AppNNetworkRouteWithChildren
   '/admin/': typeof AppAdminIndexRoute
@@ -175,6 +189,8 @@ export interface FileRoutesByTo {
   '/mock/logout': typeof MockLogoutRoute
   '/': typeof AppIndexRoute
   '/admin/audit': typeof AppAdminAuditRoute
+  '/admin/email': typeof AppAdminEmailRoute
+  '/admin/moderation': typeof AppAdminModerationRoute
   '/admin/permissions': typeof AppAdminPermissionsRoute
   '/admin': typeof AppAdminIndexRoute
   '/admin/apps/$appId': typeof AppAdminAppsAppIdRoute
@@ -199,6 +215,8 @@ export interface FileRoutesById {
   '/mock/logout': typeof MockLogoutRoute
   '/_app/': typeof AppIndexRoute
   '/_app/admin/audit': typeof AppAdminAuditRoute
+  '/_app/admin/email': typeof AppAdminEmailRoute
+  '/_app/admin/moderation': typeof AppAdminModerationRoute
   '/_app/admin/permissions': typeof AppAdminPermissionsRoute
   '/_app/n/$network': typeof AppNNetworkRouteWithChildren
   '/_app/admin/': typeof AppAdminIndexRoute
@@ -224,6 +242,8 @@ export interface FileRouteTypes {
     | '/mock/authorize'
     | '/mock/logout'
     | '/admin/audit'
+    | '/admin/email'
+    | '/admin/moderation'
     | '/admin/permissions'
     | '/n/$network'
     | '/admin/'
@@ -247,6 +267,8 @@ export interface FileRouteTypes {
     | '/mock/logout'
     | '/'
     | '/admin/audit'
+    | '/admin/email'
+    | '/admin/moderation'
     | '/admin/permissions'
     | '/admin'
     | '/admin/apps/$appId'
@@ -270,6 +292,8 @@ export interface FileRouteTypes {
     | '/mock/logout'
     | '/_app/'
     | '/_app/admin/audit'
+    | '/_app/admin/email'
+    | '/_app/admin/moderation'
     | '/_app/admin/permissions'
     | '/_app/n/$network'
     | '/_app/admin/'
@@ -374,6 +398,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAdminAuditRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/admin/email': {
+      id: '/_app/admin/email'
+      path: '/admin/email'
+      fullPath: '/admin/email'
+      preLoaderRoute: typeof AppAdminEmailRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/admin/moderation': {
+      id: '/_app/admin/moderation'
+      path: '/admin/moderation'
+      fullPath: '/admin/moderation'
+      preLoaderRoute: typeof AppAdminModerationRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/admin/permissions': {
       id: '/_app/admin/permissions'
       path: '/admin/permissions'
@@ -473,6 +511,8 @@ const AppNNetworkRouteWithChildren = AppNNetworkRoute._addFileChildren(
 interface AppRouteChildren {
   AppIndexRoute: typeof AppIndexRoute
   AppAdminAuditRoute: typeof AppAdminAuditRoute
+  AppAdminEmailRoute: typeof AppAdminEmailRoute
+  AppAdminModerationRoute: typeof AppAdminModerationRoute
   AppAdminPermissionsRoute: typeof AppAdminPermissionsRoute
   AppNNetworkRoute: typeof AppNNetworkRouteWithChildren
   AppAdminIndexRoute: typeof AppAdminIndexRoute
@@ -487,6 +527,8 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppIndexRoute: AppIndexRoute,
   AppAdminAuditRoute: AppAdminAuditRoute,
+  AppAdminEmailRoute: AppAdminEmailRoute,
+  AppAdminModerationRoute: AppAdminModerationRoute,
   AppAdminPermissionsRoute: AppAdminPermissionsRoute,
   AppNNetworkRoute: AppNNetworkRouteWithChildren,
   AppAdminIndexRoute: AppAdminIndexRoute,

@@ -399,7 +399,25 @@
       "unban": "Unban",
       "warn": "Warning",
       "note": "Note"
-    }
+    },
+    "eyebrow": "Platform",
+    "title": "Moderation",
+    "intro": "Active bans with their expiry, and every ban, unban, warning and note.",
+    "views": {
+      "active": "Active bans",
+      "timeline": "Timeline"
+    },
+    "search": "Search by user or reason",
+    "columns": {
+      "user": "User",
+      "action": "Action",
+      "reason": "Reason",
+      "until": "Ends",
+      "by": "By"
+    },
+    "permanent": "Permanent",
+    "noActive": "Nobody is banned right now.",
+    "noActions": "No moderation actions match."
   },
   "email": {
     "status": {
@@ -418,6 +436,58 @@
       "to": "To",
       "user": "User",
       "locale": "Language"
+    },
+    "eyebrow": "Platform",
+    "title": "Email",
+    "intro": "Templates live in the backend code. Preview them, send yourself a test, and follow deliveries and suppressions.",
+    "tabs": {
+      "templates": "Templates",
+      "deliveries": "Deliveries",
+      "suppressions": "Suppressions"
+    },
+    "templates": {
+      "list": "Templates",
+      "locale": "Language",
+      "preview": "Preview",
+      "html": "HTML",
+      "text": "Plain text",
+      "previewFrame": "Preview of the {{key}} email",
+      "previewFailed": "The preview couldn't be rendered."
+    },
+    "test": {
+      "title": "Send a test",
+      "recipient": "Recipient",
+      "toMe": "To my verified address",
+      "toOther": "To another address",
+      "address": "Address",
+      "audited": "Sending to another address is recorded in the audit log.",
+      "send": "Send test email",
+      "sent": "Test sent to {{to}}.",
+      "failed": "The test email wasn't sent. Try again."
+    },
+    "deliveries": {
+      "search": "Search recipient, subject or id",
+      "empty": "No emails sent yet.",
+      "noMatch": "No deliveries match."
+    },
+    "suppressions": {
+      "search": "Search addresses",
+      "empty": "No suppressed addresses.",
+      "address": "Address",
+      "reason": "Reason",
+      "detail": "Detail",
+      "since": "Since",
+      "actions": "Actions",
+      "remove": "Remove",
+      "reasons": {
+        "bounce": "Bounce",
+        "complaint": "Complaint",
+        "manual": "Manual"
+      },
+      "removeTitle": "Remove {{email}} from suppressions?",
+      "removeEffect": "Emails to this address are sent again. If it still bounces, it comes back here.",
+      "removed": "Suppression removed.",
+      "failed": "The suppression wasn't removed. Try again."
     }
   },
   "members": {

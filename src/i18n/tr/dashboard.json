@@ -399,7 +399,25 @@
       "unban": "Yasak kaldırma",
       "warn": "Uyarı",
       "note": "Not"
-    }
+    },
+    "eyebrow": "Platform",
+    "title": "Moderasyon",
+    "intro": "Bitiş tarihleriyle etkin yasaklar ve tüm yasak, yasak kaldırma, uyarı ve notlar.",
+    "views": {
+      "active": "Etkin yasaklar",
+      "timeline": "Zaman çizelgesi"
+    },
+    "search": "Kullanıcı veya gerekçeyle arayın",
+    "columns": {
+      "user": "Kullanıcı",
+      "action": "İşlem",
+      "reason": "Gerekçe",
+      "until": "Bitiş",
+      "by": "Yapan"
+    },
+    "permanent": "Kalıcı",
+    "noActive": "Şu anda yasaklı kimse yok.",
+    "noActions": "Eşleşen moderasyon işlemi yok."
   },
   "email": {
     "status": {
@@ -418,6 +436,58 @@
       "to": "Alıcı",
       "user": "Kullanıcı",
       "locale": "Dil"
+    },
+    "eyebrow": "Platform",
+    "title": "E-posta",
+    "intro": "Şablonlar arka uç kodunda tutulur. Önizleyin, kendinize test gönderin, teslimatları ve engellemeleri izleyin.",
+    "tabs": {
+      "templates": "Şablonlar",
+      "deliveries": "Teslimatlar",
+      "suppressions": "Engellemeler"
+    },
+    "templates": {
+      "list": "Şablonlar",
+      "locale": "Dil",
+      "preview": "Önizleme",
+      "html": "HTML",
+      "text": "Düz metin",
+      "previewFrame": "{{key}} e-postasının önizlemesi",
+      "previewFailed": "Önizleme oluşturulamadı."
+    },
+    "test": {
+      "title": "Test gönderin",
+      "recipient": "Alıcı",
+      "toMe": "Doğrulanmış adresime",
+      "toOther": "Başka bir adrese",
+      "address": "Adres",
+      "audited": "Başka bir adrese gönderim denetim kaydına yazılır.",
+      "send": "Test e-postası gönder",
+      "sent": "Test {{to}} adresine gönderildi.",
+      "failed": "Test e-postası gönderilemedi. Tekrar deneyin."
+    },
+    "deliveries": {
+      "search": "Alıcı, konu veya kimlik arayın",
+      "empty": "Henüz e-posta gönderilmedi.",
+      "noMatch": "Eşleşen teslimat yok."
+    },
+    "suppressions": {
+      "search": "Adreslerde arayın",
+      "empty": "Engellenen adres yok.",
+      "address": "Adres",
+      "reason": "Neden",
+      "detail": "Ayrıntı",
+      "since": "Başlangıç",
+      "actions": "İşlemler",
+      "remove": "Kaldır",
+      "reasons": {
+        "bounce": "Geri dönme",
+        "complaint": "Şikâyet",
+        "manual": "Elle"
+      },
+      "removeTitle": "{{email}} engellemelerden kaldırılsın mı?",
+      "removeEffect": "Bu adrese yeniden e-posta gönderilir. Hâlâ geri dönerse buraya geri gelir.",
+      "removed": "Engelleme kaldırıldı.",
+      "failed": "Engelleme kaldırılamadı. Tekrar deneyin."
     }
   },
   "members": {
