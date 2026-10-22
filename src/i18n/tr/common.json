@@ -1,4 +1,6 @@
 {
+  "brand": "gezcez",
+  "brandSuffix": "dash",
   "appName": "gezcez yönetim paneli",
   "loading": "Yükleniyor…",
   "retry": "Tekrar deneyin",
@@ -75,8 +77,8 @@
   },
   "states": {
     "forbiddenTitle": "Erişim yok",
-    "forbiddenBody": "Burada {{permission}} izniniz yok.",
-    "forbiddenBodyNetwork": "{{network}} ağında {{permission}} izniniz yok.",
+    "forbiddenBody": "Burada <code>{{permission}}</code> izniniz yok.",
+    "forbiddenBodyNetwork": "{{network}} ağında <code>{{permission}}</code> izniniz yok.",
     "forbiddenHint": "Bu izni içeren bir rol için ağ yöneticisine veya platform yöneticisine başvurun.",
     "notFoundTitle": "Sayfa bulunamadı",
     "notFoundBody": "Bu sayfa yok ya da taşındı.",
@@ -90,5 +92,17 @@
   },
   "time": {
     "never": "Hiç"
+  },
+  "topbar": {
+    "breadcrumb": "Konum",
+    "platform": "Platform"
+  },
+  "stepUp": {
+    "title": "Kimliğinizi doğrulayın",
+    "body": "Bu işlem için yakın zamanda giriş yapmış olmanız gerekiyor. Kodla doğrulayacağınız küçük bir pencere açılır; ardından işlem devam eder.",
+    "confirm": "Doğrula",
+    "redirected": "Doğrulandınız. İşlemi yeniden başlatın.",
+    "elevated": "Yetkili {{time}}",
+    "endElevation": "Yetkili modu bitirin"
   }
 }

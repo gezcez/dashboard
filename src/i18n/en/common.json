@@ -1,4 +1,6 @@
 {
+  "brand": "gezcez",
+  "brandSuffix": "dash",
   "appName": "gezcez dashboard",
   "loading": "Loading…",
   "retry": "Try again",
@@ -75,8 +77,8 @@
   },
   "states": {
     "forbiddenTitle": "No access",
-    "forbiddenBody": "You don't have the {{permission}} permission here.",
-    "forbiddenBodyNetwork": "You don't have the {{permission}} permission in {{network}}.",
+    "forbiddenBody": "You don't have the <code>{{permission}}</code> permission here.",
+    "forbiddenBodyNetwork": "You don't have the <code>{{permission}}</code> permission in {{network}}.",
     "forbiddenHint": "Ask a network admin or a platform admin for a role that includes it.",
     "notFoundTitle": "Page not found",
     "notFoundBody": "This page doesn't exist or was moved.",
@@ -90,5 +92,17 @@
   },
   "time": {
     "never": "Never"
+  },
+  "topbar": {
+    "breadcrumb": "Breadcrumb",
+    "platform": "Platform"
+  },
+  "stepUp": {
+    "title": "Confirm it's you",
+    "body": "This action needs a recent sign-in. A small window opens where you confirm with a code; then the action continues.",
+    "confirm": "Confirm it's me",
+    "redirected": "You're verified. Run the action again.",
+    "elevated": "Elevated {{time}}",
+    "endElevation": "End elevated mode"
   }
 }

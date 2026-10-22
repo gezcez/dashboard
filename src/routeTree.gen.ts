@@ -9,12 +9,26 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppRouteImport } from './routes/_app'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as UiKitRouteImport } from './routes/ui-kit'
+import { Route as AppIndexRouteImport } from './routes/_app/index'
+import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
+import { Route as AuthLoggedOutRouteImport } from './routes/auth/logged-out'
+import { Route as AuthStepUpRouteImport } from './routes/auth/step-up'
+import { Route as MockAuthorizeRouteImport } from './routes/mock/authorize'
+import { Route as MockLogoutRouteImport } from './routes/mock/logout'
+import { Route as AppAdminIndexRouteImport } from './routes/_app/admin/index'
+import { Route as AppNNetworkRouteImport } from './routes/_app/n/$network'
+import { Route as AppNNetworkIndexRouteImport } from './routes/_app/n/$network/index'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AppRoute = AppRouteImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const UiKitRoute = UiKitRouteImport.update({
@@ -22,40 +36,159 @@ const UiKitRoute = UiKitRouteImport.update({
   path: '/ui-kit',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AuthCallbackRoute = AuthCallbackRouteImport.update({
+  id: '/auth/callback',
+  path: '/auth/callback',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthLoggedOutRoute = AuthLoggedOutRouteImport.update({
+  id: '/auth/logged-out',
+  path: '/auth/logged-out',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthStepUpRoute = AuthStepUpRouteImport.update({
+  id: '/auth/step-up',
+  path: '/auth/step-up',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MockAuthorizeRoute = MockAuthorizeRouteImport.update({
+  id: '/mock/authorize',
+  path: '/mock/authorize',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MockLogoutRoute = MockLogoutRouteImport.update({
+  id: '/mock/logout',
+  path: '/mock/logout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppAdminIndexRoute = AppAdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppNNetworkRoute = AppNNetworkRouteImport.update({
+  id: '/n/$network',
+  path: '/n/$network',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppNNetworkIndexRoute = AppNNetworkIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppNNetworkRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof AppIndexRoute
+  '/login': typeof LoginRoute
   '/ui-kit': typeof UiKitRoute
+  '/auth/callback': typeof AuthCallbackRoute
+  '/auth/logged-out': typeof AuthLoggedOutRoute
+  '/auth/step-up': typeof AuthStepUpRoute
+  '/mock/authorize': typeof MockAuthorizeRoute
+  '/mock/logout': typeof MockLogoutRoute
+  '/n/$network': typeof AppNNetworkRouteWithChildren
+  '/admin/': typeof AppAdminIndexRoute
+  '/n/$network/': typeof AppNNetworkIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/login': typeof LoginRoute
   '/ui-kit': typeof UiKitRoute
+  '/auth/callback': typeof AuthCallbackRoute
+  '/auth/logged-out': typeof AuthLoggedOutRoute
+  '/auth/step-up': typeof AuthStepUpRoute
+  '/mock/authorize': typeof MockAuthorizeRoute
+  '/mock/logout': typeof MockLogoutRoute
+  '/': typeof AppIndexRoute
+  '/admin': typeof AppAdminIndexRoute
+  '/n/$network': typeof AppNNetworkIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/_app': typeof AppRouteWithChildren
+  '/login': typeof LoginRoute
   '/ui-kit': typeof UiKitRoute
+  '/auth/callback': typeof AuthCallbackRoute
+  '/auth/logged-out': typeof AuthLoggedOutRoute
+  '/auth/step-up': typeof AuthStepUpRoute
+  '/mock/authorize': typeof MockAuthorizeRoute
+  '/mock/logout': typeof MockLogoutRoute
+  '/_app/': typeof AppIndexRoute
+  '/_app/n/$network': typeof AppNNetworkRouteWithChildren
+  '/_app/admin/': typeof AppAdminIndexRoute
+  '/_app/n/$network/': typeof AppNNetworkIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/ui-kit'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/ui-kit'
+    | '/auth/callback'
+    | '/auth/logged-out'
+    | '/auth/step-up'
+    | '/mock/authorize'
+    | '/mock/logout'
+    | '/n/$network'
+    | '/admin/'
+    | '/n/$network/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/ui-kit'
-  id: '__root__' | '/' | '/ui-kit'
+  to:
+    | '/login'
+    | '/ui-kit'
+    | '/auth/callback'
+    | '/auth/logged-out'
+    | '/auth/step-up'
+    | '/mock/authorize'
+    | '/mock/logout'
+    | '/'
+    | '/admin'
+    | '/n/$network'
+  id:
+    | '__root__'
+    | '/_app'
+    | '/login'
+    | '/ui-kit'
+    | '/auth/callback'
+    | '/auth/logged-out'
+    | '/auth/step-up'
+    | '/mock/authorize'
+    | '/mock/logout'
+    | '/_app/'
+    | '/_app/n/$network'
+    | '/_app/admin/'
+    | '/_app/n/$network/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
+  LoginRoute: typeof LoginRoute
   UiKitRoute: typeof UiKitRoute
+  AuthCallbackRoute: typeof AuthCallbackRoute
+  AuthLoggedOutRoute: typeof AuthLoggedOutRoute
+  AuthStepUpRoute: typeof AuthStepUpRoute
+  MockAuthorizeRoute: typeof MockAuthorizeRoute
+  MockLogoutRoute: typeof MockLogoutRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
+    '/_app': {
+      id: '/_app'
+      path: ''
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ui-kit': {
@@ -65,12 +198,107 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UiKitRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/': {
+      id: '/_app/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/auth/callback': {
+      id: '/auth/callback'
+      path: '/auth/callback'
+      fullPath: '/auth/callback'
+      preLoaderRoute: typeof AuthCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/logged-out': {
+      id: '/auth/logged-out'
+      path: '/auth/logged-out'
+      fullPath: '/auth/logged-out'
+      preLoaderRoute: typeof AuthLoggedOutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/step-up': {
+      id: '/auth/step-up'
+      path: '/auth/step-up'
+      fullPath: '/auth/step-up'
+      preLoaderRoute: typeof AuthStepUpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mock/authorize': {
+      id: '/mock/authorize'
+      path: '/mock/authorize'
+      fullPath: '/mock/authorize'
+      preLoaderRoute: typeof MockAuthorizeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mock/logout': {
+      id: '/mock/logout'
+      path: '/mock/logout'
+      fullPath: '/mock/logout'
+      preLoaderRoute: typeof MockLogoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_app/admin/': {
+      id: '/_app/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AppAdminIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/n/$network': {
+      id: '/_app/n/$network'
+      path: '/n/$network'
+      fullPath: '/n/$network'
+      preLoaderRoute: typeof AppNNetworkRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/n/$network/': {
+      id: '/_app/n/$network/'
+      path: '/'
+      fullPath: '/n/$network/'
+      preLoaderRoute: typeof AppNNetworkIndexRouteImport
+      parentRoute: typeof AppNNetworkRoute
+    }
   }
 }
 
+interface AppNNetworkRouteChildren {
+  AppNNetworkIndexRoute: typeof AppNNetworkIndexRoute
+}
+
+const AppNNetworkRouteChildren: AppNNetworkRouteChildren = {
+  AppNNetworkIndexRoute: AppNNetworkIndexRoute,
+}
+
+const AppNNetworkRouteWithChildren = AppNNetworkRoute._addFileChildren(
+  AppNNetworkRouteChildren,
+)
+
+interface AppRouteChildren {
+  AppIndexRoute: typeof AppIndexRoute
+  AppNNetworkRoute: typeof AppNNetworkRouteWithChildren
+  AppAdminIndexRoute: typeof AppAdminIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppIndexRoute: AppIndexRoute,
+  AppNNetworkRoute: AppNNetworkRouteWithChildren,
+  AppAdminIndexRoute: AppAdminIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
+  LoginRoute: LoginRoute,
   UiKitRoute: UiKitRoute,
+  AuthCallbackRoute: AuthCallbackRoute,
+  AuthLoggedOutRoute: AuthLoggedOutRoute,
+  AuthStepUpRoute: AuthStepUpRoute,
+  MockAuthorizeRoute: MockAuthorizeRoute,
+  MockLogoutRoute: MockLogoutRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
