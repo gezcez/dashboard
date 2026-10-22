@@ -1,4 +1,11 @@
-import { GaugeIcon, LayoutDashboardIcon, type LucideIcon } from "lucide-react"
+import {
+  GaugeIcon,
+  LayoutDashboardIcon,
+  ScrollTextIcon,
+  ShieldCheckIcon,
+  UsersIcon,
+  type LucideIcon,
+} from "lucide-react"
 import type { ParseKeys } from "i18next"
 import type { FileRoutesByTo } from "@/routeTree.gen"
 import { can, ForbiddenError, type PermissionKey } from "./permissions"
@@ -36,6 +43,30 @@ export const PAGES = {
     group: "platform",
     label: "nav.systemOverview",
     icon: GaugeIcon,
+  },
+  "admin.users": {
+    to: "/admin/users",
+    perm: "users.read",
+    scope: "global",
+    group: "platform",
+    label: "nav.users",
+    icon: UsersIcon,
+  },
+  "admin.roles": {
+    to: "/admin/roles",
+    perm: "roles.read",
+    scope: "global",
+    group: "platform",
+    label: "nav.roles",
+    icon: ShieldCheckIcon,
+  },
+  "admin.audit": {
+    to: "/admin/audit",
+    perm: "audit.read",
+    scope: "global",
+    group: "platform",
+    label: "nav.audit",
+    icon: ScrollTextIcon,
   },
 } as const satisfies Record<string, PageDef>
 

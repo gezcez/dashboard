@@ -103,6 +103,24 @@
     "confirm": "Doğrula",
     "redirected": "Doğrulandınız. İşlemi yeniden başlatın.",
     "elevated": "Yetkili {{time}}",
-    "endElevation": "Yetkili modu bitirin"
+    "endElevation": "Yetkili modu bitirin",
+    "cancelled": "Onay penceresi işlem bitmeden kapandı. Hazır olduğunuzda tekrar deneyin.",
+    "failed": "Onay tamamlanmadı. Tekrar deneyin.",
+    "waiting": "Onay bekleniyor…"
+  },
+  "table": {
+    "pagination": "Sayfalama",
+    "prev": "Önceki sayfa",
+    "next": "Sonraki sayfa",
+    "total_one": "{{formatted}} sonuç",
+    "total_other": "{{formatted}} sonuç",
+    "totalMany": "10.000+ sonuç",
+    "any": "Tümü",
+    "clearSearch": "Aramayı temizle",
+    "clearFilters": "Filtreleri temizle",
+    "sortedAsc": "artan sıralı",
+    "sortedDesc": "azalan sıralı",
+    "details": "Ayrıntılar",
+    "toggleDetails": "Ayrıntıları göster veya gizle"
   }
 }

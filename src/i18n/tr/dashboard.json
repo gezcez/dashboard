@@ -24,5 +24,165 @@
     "version": "Sürüm {{version}} ({{sha}}) · mod {{mode}}",
     "recentEvents": "Son olaylar",
     "noEvents": "Henüz olay yok."
+  },
+  "userStatus": {
+    "active": "Aktif",
+    "unverified": "Doğrulanmamış",
+    "banned": "Yasaklı",
+    "pending_deletion": "Silinmeyi bekliyor"
+  },
+  "users": {
+    "eyebrow": "Platform",
+    "title": "Kullanıcılar",
+    "intro": "Tüm gezcez hesapları. Ad, kullanıcı adı, e-posta veya kimlikle arayın.",
+    "search": "Kullanıcı ara",
+    "columns": {
+      "user": "Kullanıcı",
+      "email": "E-posta",
+      "status": "Durum",
+      "roles": "Roller",
+      "lastActive": "Son etkinlik",
+      "joined": "Katılım"
+    },
+    "emptyTitle": "Henüz kullanıcı yok",
+    "noMatchTitle": "Eşleşen kullanıcı yok",
+    "noMatchBody": "Farklı bir arama deneyin veya filtreleri temizleyin."
+  },
+  "user": {
+    "eyebrow": "Kullanıcı",
+    "back": "Tüm kullanıcılar",
+    "notFoundTitle": "Kullanıcı bulunamadı",
+    "notFoundBody": "Bu hesap yok veya silinmiş.",
+    "tabs": {
+      "profile": "Profil",
+      "roles": "Roller",
+      "moderation": "Moderasyon"
+    },
+    "profile": {
+      "account": "Hesap",
+      "displayName": "Görünen ad",
+      "username": "Kullanıcı adı",
+      "email": "E-posta",
+      "language": "Dil",
+      "joined": "Katılım",
+      "lastActive": "Son etkinlik",
+      "verified": "Doğrulandı",
+      "unverified": "Doğrulanmadı",
+      "reveal": "Göster",
+      "revealHint": "Tam adresi gösterir. Bu işlem denetim kaydına yazılır.",
+      "revealFailed": "E-posta gösterilemedi.",
+      "signIn": "Giriş yöntemleri",
+      "methods": {
+        "emailCode": "E-posta kodu",
+        "password": "Şifre",
+        "passkeys_one": "{{count}} geçiş anahtarı",
+        "passkeys_other": "{{count}} geçiş anahtarı"
+      },
+      "activity": "Etkinlik",
+      "activityBody": "Bu hesaba veya bu hesapla yapılan her işlem denetim kaydında.",
+      "openAudit": "Denetim kaydında aç",
+      "locales": {
+        "tr": "Türkçe",
+        "en": "İngilizce"
+      }
+    },
+    "roles": {
+      "empty": "Bu kullanıcının panel rolü yok.",
+      "role": "Rol",
+      "scope": "Kapsam",
+      "grantedBy": "Veren",
+      "grantedAt": "Verilme",
+      "global": "Genel",
+      "system": "Sistem"
+    },
+    "moderation": {
+      "banned": "Yasaklı",
+      "notBanned": "Yasaklı değil",
+      "notBannedBody": "Bu hesap normal şekilde giriş yapıp gezcez'i kullanabilir.",
+      "until": "Bitiş",
+      "publicReason": "Kullanıcıya gösterilen neden",
+      "privateReason": "İç not",
+      "by": "Yasaklayan"
+    },
+    "ban": {
+      "action": "Kullanıcıyı yasakla",
+      "title": "{{name}} yasaklansın mı?",
+      "body": "Tüm cihazlarda oturumu kapanır ve yasak bitene kadar giriş yapamaz. Bu işlem için yakın zamanda giriş yapmış olmanız gerekir.",
+      "duration": "Süre",
+      "durations": {
+        "1d": "1 gün",
+        "7d": "7 gün",
+        "30d": "30 gün",
+        "permanent": "Süresiz"
+      },
+      "publicReason": "Kullanıcıya gösterilen neden",
+      "publicReasonHint": "3 ile 500 karakter. Kullanıcı giriş yapmaya çalıştığında bunu görür.",
+      "publicReasonError": "3 ile 500 karakter arasında bir neden yazın.",
+      "privateReason": "İç not (isteğe bağlı)",
+      "privateReasonHint": "Yalnızca ekip görür.",
+      "confirm": "Kullanıcıyı yasakla",
+      "pending": "Yasaklanıyor…",
+      "done": "{{name}} yasaklandı.",
+      "failed": "Kullanıcı yasaklanamadı."
+    },
+    "unban": {
+      "action": "Yasağı kaldır",
+      "title": "{{name}} için yasak kaldırılsın mı?",
+      "body": "Hemen yeniden giriş yapabilir.",
+      "confirm": "Yasağı kaldır",
+      "pending": "Kaldırılıyor…",
+      "done": "{{name}} için yasak kaldırıldı.",
+      "failed": "Yasak kaldırılamadı.",
+      "reason": "Neden",
+      "reasonHint": "En az 3 karakter. Denetim kaydına yazılır."
+    }
+  },
+  "roles": {
+    "eyebrow": "Platform",
+    "title": "Roller",
+    "intro": "Roller izinleri bir araya getirir. Bir rol yalnızca kendi seviyesinin altındaki rolleri yönetebilir.",
+    "empty": "Tanımlı rol yok.",
+    "level": "seviye {{level}}",
+    "builtIn": "Yerleşik",
+    "builtInHint": "Yerleşik roller yeniden adlandırılamaz veya silinemez.",
+    "columns": {
+      "role": "Rol",
+      "description": "Açıklama",
+      "level": "Seviye",
+      "members": "Üye",
+      "permissions": "İzin"
+    }
+  },
+  "audit": {
+    "eyebrow": "Platform",
+    "title": "Denetim kaydı",
+    "intro": "Her yönetici işlemi, kimin yaptığı ve neyin değiştiği. Farkı görmek için bir satırı açın.",
+    "search": "İşlem, kişi, hedef veya istek kimliği ara",
+    "export": "Sayfayı CSV olarak indir",
+    "targetType": "Hedef türü",
+    "targetFilter": "Hedef {{id}}",
+    "clearTarget": "Hedef filtresini temizle",
+    "system": "Sistem",
+    "emptyTitle": "Henüz denetim kaydı yok",
+    "noMatchTitle": "Eşleşen kayıt yok",
+    "columns": {
+      "when": "Zaman",
+      "action": "İşlem",
+      "actor": "Yapan",
+      "target": "Hedef",
+      "network": "Ağ"
+    },
+    "detail": {
+      "at": "Zaman",
+      "id": "Kayıt kimliği",
+      "requestId": "İstek kimliği",
+      "ip": "IP öneki",
+      "target": "Hedef",
+      "changes": "Değişiklikler",
+      "field": "Alan",
+      "before": "Önce",
+      "after": "Sonra",
+      "noChanges": "Bu kayıt için alan değişikliği yok."
+    }
   }
 }

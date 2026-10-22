@@ -51,11 +51,17 @@ and again at boot (`src/env.ts`). There is no hard-coded environment anywhere. M
 - **Routes** (`src/routes/`, file-based): `/login`, `/auth/callback`, `/auth/step-up` (popup),
   `/auth/logged-out`, and the signed-in shell `_app` with `/` (redirects to your first network or
   the platform overview), `/n/$network/...` (network-scoped pages, network in the URL) and
-  `/admin/...` (platform pages). `/ui-kit` is a dev-only component gallery.
+  `/admin/...` (platform pages: overview, users and user detail, roles, audit log). `/ui-kit` is a
+  dev-only component gallery.
 - **Pages and permissions** (`src/lib/pages.ts`): one table lists every page with its permission
   key and scope. The sidebar, the command palette (Ctrl+K), the `/` redirect and each route's
   `beforeLoad` guard read it, so hidden nav and blocked routes cannot disagree. A blocked route
   renders a 403 in place that names the missing permission.
+- **Server tables** (`src/components/data-table/`): TanStack Table in manual mode; search, filters,
+  sort and cursor live in the URL, so every view is linkable and the back button works.
+- **Sudo actions** (`src/lib/sudo.ts`): `runWithSudo` asks for a fresh sign-in before an
+  `x-gezcez-sudo` operation (step-up popup via `auth.stepUp`, redirect if blocked), retries once
+  on `AUTH_STEP_UP_REQUIRED`, and the top bar counts down the 10 minute window.
 - **Shell** (`src/components/shell/`): navy sidebar, network switcher, breadcrumbs, theme toggle,
   user menu (language, theme, sign out), session-expired banner.
 
@@ -72,6 +78,10 @@ persona picker (PKCE is still verified):
 | Elif Kaya     | network admin in Kocaeli              | `/n/kocaeli`               |
 | Murat Demir   | analyst in Kocaeli, viewer in Sakarya | `/n/kocaeli`, 403 on admin |
 | Zeynep Arslan | global moderator (users, audit)       | platform pages             |
+
+To try the step-up popup without waiting ten minutes, age the mock sign-in in the console
+(`s = JSON.parse(localStorage["gz.mock.session"]); s.authTime -= 3600; localStorage["gz.mock.session"] = JSON.stringify(s)`),
+reload, and ban a user.
 
 The mock refresh "cookie" lives in localStorage (`gz.mock.session`). Outside mock mode the
 `/mock/*` routes are 404s and MSW is never started.

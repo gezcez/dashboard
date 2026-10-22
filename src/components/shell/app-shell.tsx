@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils"
 import { SidebarContent } from "./app-sidebar"
 import { CommandPalette } from "./command-palette"
 import { SessionBanner } from "./session-banner"
+import { StepUpDialog } from "./step-up"
 import { TopBar } from "./top-bar"
 
 export function AppShell() {
@@ -41,6 +42,7 @@ export function AppShell() {
         </main>
       </div>
       <CommandPalette open={commandOpen} onOpenChange={setCommandOpen} />
+      <StepUpDialog />
     </div>
   )
 }

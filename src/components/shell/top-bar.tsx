@@ -14,6 +14,7 @@ import { env, isMock } from "@/env"
 import { PAGES, type PageDef } from "@/lib/pages"
 import { usePrefs } from "@/lib/prefs-store"
 import { useResolvedTheme } from "@/lib/theme"
+import { SudoPill } from "./step-up"
 import { useCurrentNetwork, useCurrentPageId } from "./use-shell"
 
 export function TopBar({
@@ -73,6 +74,7 @@ export function TopBar({
       </nav>
 
       <div className="ml-auto flex items-center gap-2">
+        <SudoPill />
         {envBadge && (
           <Badge variant="brand" className="hidden font-mono uppercase sm:inline-flex">
             {envBadge}

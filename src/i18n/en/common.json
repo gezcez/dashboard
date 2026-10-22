@@ -103,6 +103,24 @@
     "confirm": "Confirm it's me",
     "redirected": "You're verified. Run the action again.",
     "elevated": "Elevated {{time}}",
-    "endElevation": "End elevated mode"
+    "endElevation": "End elevated mode",
+    "cancelled": "The confirmation window was closed before you finished. Try again when you're ready.",
+    "failed": "Confirmation didn't complete. Try again.",
+    "waiting": "Waiting for confirmation…"
+  },
+  "table": {
+    "pagination": "Pagination",
+    "prev": "Previous page",
+    "next": "Next page",
+    "total_one": "{{formatted}} result",
+    "total_other": "{{formatted}} results",
+    "totalMany": "10,000+ results",
+    "any": "Any",
+    "clearSearch": "Clear search",
+    "clearFilters": "Clear filters",
+    "sortedAsc": "sorted ascending",
+    "sortedDesc": "sorted descending",
+    "details": "Details",
+    "toggleDetails": "Show or hide details"
   }
 }

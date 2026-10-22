@@ -1,3 +1,4 @@
+import type { QueryClient } from "@tanstack/react-query"
 import { auth } from "@/auth"
 import { createGezcezClient } from "@/api/client"
 import { apiCall, apiQueryOptions, type ArgsFor, type Method, type PathFor } from "@/api/query"
@@ -19,4 +20,14 @@ export function callApi<M extends Method, P extends PathFor<M>>(
   ...args: ArgsFor<M, P>
 ) {
   return apiCall(api, method, path, ...args)
+}
+
+/** Invalidates every cached GET whose path starts with `prefix` (keys are ["api", path, params]). */
+export function invalidateApi(queryClient: QueryClient, prefix: string) {
+  return queryClient.invalidateQueries({
+    predicate: (q) =>
+      q.queryKey[0] === "api" &&
+      typeof q.queryKey[1] === "string" &&
+      q.queryKey[1].startsWith(prefix),
+  })
 }

@@ -1,0 +1,467 @@
+import { useMutation, useQuery } from "@tanstack/react-query"
+import { createFileRoute, Link, notFound } from "@tanstack/react-router"
+import { ArrowLeftIcon, BanIcon, EyeIcon, ScrollTextIcon, ShieldCheckIcon } from "lucide-react"
+import { useState, type ReactNode } from "react"
+import { useTranslation } from "react-i18next"
+import { toast } from "sonner"
+import { z } from "zod"
+import { isApiError } from "@/api/envelope"
+import type { components } from "@/api/schema.gen"
+import { initialsOf, UserChip } from "@/components/entity/user-chip"
+import { UserStatusBadge } from "@/components/entity/user-status-badge"
+import { ErrorState, NotFoundState } from "@/components/states/states"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Eyebrow } from "@/components/ui/eyebrow"
+import { Skeleton } from "@/components/ui/skeleton"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { BanDialog } from "@/components/users/ban-dialog"
+import { UnbanDialog } from "@/components/users/unban-dialog"
+import { apiQuery, callApi } from "@/lib/api"
+import { apiErrorMessage } from "@/lib/errors"
+import { formatDateTime, formatRelative } from "@/lib/format"
+import { assertPage } from "@/lib/pages"
+import { useCan } from "@/lib/permissions"
+
+type DashUser = components["schemas"]["DashUser"]
+
+const TABS = ["profile", "roles", "moderation"] as const
+type Tab = (typeof TABS)[number]
+
+const userQuery = (userId: string) =>
+  apiQuery("/v1/dash/users/{userId}", { params: { path: { userId } } })
+
+export const Route = createFileRoute("/_app/admin/users/$userId")({
+  staticData: { pageId: "admin.users" },
+  validateSearch: z.object({ tab: z.enum(TABS).optional().catch(undefined) }),
+  beforeLoad: ({ context }) => assertPage("admin.users", context),
+  loader: async ({ context, params }) => {
+    try {
+      await context.queryClient.query(userQuery(params.userId))
+    } catch (error) {
+      if (isApiError(error, "NOT_FOUND")) throw notFound()
+      // Other errors render inline with a retry.
+    }
+  },
+  notFoundComponent: UserNotFound,
+  component: UserPage,
+})
+
+function UserNotFound() {
+  const { t } = useTranslation("dashboard")
+  return <NotFoundState title={t("user.notFoundTitle")} body={t("user.notFoundBody")} />
+}
+
+function UserPage() {
+  const { t } = useTranslation("dashboard")
+  const { userId } = Route.useParams()
+  const { tab = "profile" } = Route.useSearch()
+  const navigate = Route.useNavigate()
+  const query = useQuery(userQuery(userId))
+  const canModerate = useCan("moderation.write", "global") === true
+  const [dialog, setDialog] = useState<"ban" | "unban" | null>(null)
+
+  const back = (
+    <Link
+      to="/admin/users"
+      className="mb-4 inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
+    >
+      <ArrowLeftIcon className="size-4" />
+      {t("user.back")}
+    </Link>
+  )
+
+  if (query.isPending) {
+    return (
+      <>
+        {back}
+        <div className="flex items-center gap-4">
+          <Skeleton className="size-14 rounded-2xl" />
+          <div className="grid gap-2">
+            <Skeleton className="h-6 w-48" />
+            <Skeleton className="h-4 w-32" />
+          </div>
+        </div>
+        <Skeleton className="mt-8 h-64 rounded-2xl" />
+      </>
+    )
+  }
+  if (query.error) {
+    return (
+      <>
+        {back}
+        <ErrorState
+          message={isApiError(query.error) ? apiErrorMessage(query.error) : undefined}
+          requestId={isApiError(query.error) ? query.error.requestId : null}
+          onRetry={() => void query.refetch()}
+        />
+      </>
+    )
+  }
+
+  const user = query.data
+  const banned = user.ban !== null
+
+  return (
+    <>
+      {back}
+      <header className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex min-w-0 items-center gap-4">
+          <Avatar className="size-14 rounded-2xl text-lg">
+            <AvatarFallback className="rounded-2xl">{initialsOf(user.display_name)}</AvatarFallback>
+          </Avatar>
+          <div className="min-w-0">
+            <Eyebrow>{t("user.eyebrow")}</Eyebrow>
+            <h1 className="mt-1 flex flex-wrap items-center gap-2 text-2xl font-bold tracking-tight">
+              <span className="truncate">{user.display_name}</span>
+              <UserStatusBadge status={user.status} />
+            </h1>
+            <p className="font-mono text-xs text-muted-foreground">
+              {user.username ? `@${user.username} · ` : ""}
+              {user.id}
+            </p>
+          </div>
+        </div>
+        {canModerate && (
+          <div className="flex gap-2">
+            {banned ? (
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setDialog("unban")
+                }}
+              >
+                <ShieldCheckIcon />
+                {t("user.unban.action")}
+              </Button>
+            ) : (
+              <Button
+                variant="destructive"
+                onClick={() => {
+                  setDialog("ban")
+                }}
+              >
+                <BanIcon />
+                {t("user.ban.action")}
+              </Button>
+            )}
+          </div>
+        )}
+      </header>
+
+      <Tabs
+        value={tab}
+        onValueChange={(value) =>
+          void navigate({
+            search: { tab: value === "profile" ? undefined : (value as Tab) },
+            replace: true,
+          })
+        }
+      >
+        <TabsList>
+          {TABS.map((id) => (
+            <TabsTrigger key={id} value={id}>
+              {t(`user.tabs.${id}`)}
+              {id === "roles" && (
+                <Badge variant="outline" className="ml-1.5 px-1.5 py-0">
+                  {user.roles.length}
+                </Badge>
+              )}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+        <TabsContent value="profile" className="mt-4">
+          <ProfileTab user={user} />
+        </TabsContent>
+        <TabsContent value="roles" className="mt-4">
+          <RolesTab user={user} />
+        </TabsContent>
+        <TabsContent value="moderation" className="mt-4">
+          <ModerationTab
+            user={user}
+            canModerate={canModerate}
+            onBan={() => {
+              setDialog("ban")
+            }}
+            onUnban={() => {
+              setDialog("unban")
+            }}
+          />
+        </TabsContent>
+      </Tabs>
+
+      <BanDialog
+        user={user}
+        open={dialog === "ban"}
+        onOpenChange={(open) => {
+          setDialog(open ? "ban" : null)
+        }}
+      />
+      <UnbanDialog
+        user={user}
+        open={dialog === "unban"}
+        onOpenChange={(open) => {
+          setDialog(open ? "unban" : null)
+        }}
+      />
+    </>
+  )
+}
+
+function Field({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <div className="grid gap-1 py-2.5 sm:grid-cols-[12rem_1fr] sm:gap-4">
+      <dt className="text-sm text-muted-foreground">{label}</dt>
+      <dd className="min-w-0 text-sm">{children}</dd>
+    </div>
+  )
+}
+
+function ProfileTab({ user }: { user: DashUser }) {
+  const { t } = useTranslation("dashboard")
+  const canAudit = useCan("audit.read", "global") === true
+  return (
+    <div className="grid gap-6 xl:grid-cols-[3fr_2fr]">
+      <Card>
+        <CardHeader>
+          <CardTitle>{t("user.profile.account")}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <dl className="divide-y">
+            <Field label={t("user.profile.displayName")}>{user.display_name}</Field>
+            <Field label={t("user.profile.username")}>
+              {user.username ? `@${user.username}` : t("none", { ns: "common" })}
+            </Field>
+            <Field label={t("user.profile.email")}>
+              <EmailField user={user} />
+            </Field>
+            <Field label={t("user.profile.language")}>
+              {t(`user.profile.locales.${user.locale}`)}
+            </Field>
+            <Field label={t("user.profile.joined")}>{formatDateTime(user.created_at)}</Field>
+            <Field label={t("user.profile.lastActive")}>
+              <span title={formatDateTime(user.last_active_at)}>
+                {formatRelative(user.last_active_at)}
+              </span>
+            </Field>
+          </dl>
+        </CardContent>
+      </Card>
+      <div className="grid content-start gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>{t("user.profile.signIn")}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul className="flex flex-wrap gap-2">
+              <MethodBadge
+                on={user.methods.email_code}
+                label={t("user.profile.methods.emailCode")}
+              />
+              <MethodBadge on={user.methods.password} label={t("user.profile.methods.password")} />
+              <MethodBadge
+                on={user.methods.passkeys > 0}
+                label={t("user.profile.methods.passkeys", { count: user.methods.passkeys })}
+              />
+            </ul>
+          </CardContent>
+        </Card>
+        {canAudit && (
+          <Card>
+            <CardHeader>
+              <CardTitle>{t("user.profile.activity")}</CardTitle>
+            </CardHeader>
+            <CardContent className="grid gap-3">
+              <p className="text-sm text-muted-foreground">{t("user.profile.activityBody")}</p>
+              <div>
+                <Button asChild variant="outline" size="sm">
+                  <Link to="/admin/audit" search={{ target_id: user.id }}>
+                    <ScrollTextIcon />
+                    {t("user.profile.openAudit")}
+                  </Link>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+      </div>
+    </div>
+  )
+}
+
+function MethodBadge({ on, label }: { on: boolean; label: string }) {
+  return (
+    <li>
+      <Badge variant={on ? "ok" : "outline"} className={on ? undefined : "line-through opacity-60"}>
+        {label}
+      </Badge>
+    </li>
+  )
+}
+
+/** Masked by default; revealing needs users.pii.read and is audit-logged on the server. */
+function EmailField({ user }: { user: DashUser }) {
+  const { t } = useTranslation("dashboard")
+  const canReveal = useCan("users.pii.read", "global") === true
+  const reveal = useMutation({
+    mutationFn: () =>
+      callApi("post", "/v1/dash/users/{userId}/reveal-email", {
+        params: { path: { userId: user.id } },
+      }),
+    onError: (error) => {
+      toast.error(isApiError(error) ? apiErrorMessage(error) : t("user.profile.revealFailed"))
+    },
+  })
+  return (
+    <span className="flex flex-wrap items-center gap-2">
+      <span className="font-mono text-xs">{reveal.data?.email ?? user.email_masked}</span>
+      {user.email_verified ? (
+        <Badge variant="ok">{t("user.profile.verified")}</Badge>
+      ) : (
+        <Badge variant="warn">{t("user.profile.unverified")}</Badge>
+      )}
+      {canReveal && !reveal.data && (
+        <Button
+          variant="link"
+          size="sm"
+          className="h-auto"
+          disabled={reveal.isPending}
+          onClick={() => {
+            reveal.mutate()
+          }}
+          title={t("user.profile.revealHint")}
+        >
+          <EyeIcon />
+          {t("user.profile.reveal")}
+        </Button>
+      )}
+    </span>
+  )
+}
+
+function RolesTab({ user }: { user: DashUser }) {
+  const { t } = useTranslation("dashboard")
+  if (user.roles.length === 0) {
+    return (
+      <Card>
+        <CardContent className="py-10 text-center text-muted-foreground">
+          {t("user.roles.empty")}
+        </CardContent>
+      </Card>
+    )
+  }
+  return (
+    <div className="rounded-2xl border bg-card">
+      <Table>
+        <caption className="sr-only">{t("user.tabs.roles")}</caption>
+        <TableHeader>
+          <TableRow className="hover:bg-transparent">
+            <TableHead>{t("user.roles.role")}</TableHead>
+            <TableHead>{t("user.roles.scope")}</TableHead>
+            <TableHead className="hidden sm:table-cell">{t("user.roles.grantedBy")}</TableHead>
+            <TableHead className="hidden sm:table-cell">{t("user.roles.grantedAt")}</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {user.roles.map((r) => (
+            <TableRow key={`${String(r.role.id)}:${String(r.network?.id ?? "g")}`}>
+              <TableCell>
+                <span className="font-medium">{r.role.name}</span>{" "}
+                <span className="text-xs text-muted-foreground">
+                  {t("roles.level", { level: r.role.level })}
+                </span>
+              </TableCell>
+              <TableCell>
+                {r.network ? (
+                  <Link
+                    to="/n/$network"
+                    params={{ network: r.network.slug }}
+                    className="hover:underline"
+                  >
+                    {r.network.name}
+                  </Link>
+                ) : (
+                  <Badge variant="brand">{t("user.roles.global")}</Badge>
+                )}
+              </TableCell>
+              <TableCell className="hidden sm:table-cell">
+                {r.granted_by ? <UserChip user={r.granted_by} link /> : t("user.roles.system")}
+              </TableCell>
+              <TableCell className="hidden sm:table-cell">
+                {formatDateTime(r.granted_at, { dateStyle: "medium" })}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  )
+}
+
+function ModerationTab({
+  user,
+  canModerate,
+  onBan,
+  onUnban,
+}: {
+  user: DashUser
+  canModerate: boolean
+  onBan: () => void
+  onUnban: () => void
+}) {
+  const { t } = useTranslation("dashboard")
+  const ban = user.ban
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>{ban ? t("user.moderation.banned") : t("user.moderation.notBanned")}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        {ban ? (
+          <dl className="divide-y">
+            <Field label={t("user.moderation.until")}>
+              {ban.until ? formatDateTime(ban.until) : t("user.ban.durations.permanent")}
+            </Field>
+            <Field label={t("user.moderation.publicReason")}>{ban.public_reason}</Field>
+            <Field label={t("user.moderation.privateReason")}>
+              {ban.private_reason ?? t("none", { ns: "common" })}
+            </Field>
+            <Field label={t("user.moderation.by")}>
+              {ban.created_by ? <UserChip user={ban.created_by} link /> : t("user.roles.system")}
+              <span className="ml-2 text-xs text-muted-foreground">
+                {formatDateTime(ban.created_at)}
+              </span>
+            </Field>
+          </dl>
+        ) : (
+          <p className="text-sm text-muted-foreground">{t("user.moderation.notBannedBody")}</p>
+        )}
+        {canModerate && (
+          <div className="mt-4">
+            {ban ? (
+              <Button variant="outline" onClick={onUnban}>
+                <ShieldCheckIcon />
+                {t("user.unban.action")}
+              </Button>
+            ) : (
+              <Button variant="destructive" onClick={onBan}>
+                <BanIcon />
+                {t("user.ban.action")}
+              </Button>
+            )}
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  )
+}

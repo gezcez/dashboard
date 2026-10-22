@@ -434,6 +434,44 @@ const ACTIONS: { action: string; severity: S["AuditEntry"]["severity"]; target: 
   { action: "auth.refresh_reuse", severity: "critical", target: "session" },
 ]
 
+/** Plausible before/after payloads so the audit diff view has something to show. */
+function CHANGES(
+  action: string,
+  network: string | null,
+): Pick<S["AuditEntry"], "before" | "after"> {
+  switch (action) {
+    case "settings.update":
+      return {
+        before: { signup_open: true, min_app_version: "3.1.0" },
+        after: { signup_open: false, min_app_version: "3.2.0" },
+      }
+    case "user.ban":
+      return {
+        before: { status: "active" },
+        after: { status: "banned", duration: "7d", public_reason: "Spam" },
+      }
+    case "user.unban":
+      return { before: { status: "banned" }, after: { status: "active" } }
+    case "role.grant":
+      return { before: null, after: { role: "analyst", network: "kocaeli" } }
+    case "role.revoke":
+      return { before: { role: "viewer", network: "sakarya" }, after: null }
+    case "role.permissions.update":
+      return {
+        before: { added: [], removed: [] },
+        after: { added: ["analytics.export"], removed: ["vehicles.history.read"] },
+      }
+    case "tracker.pause":
+    case "tracker.resume":
+      return {
+        before: { paused: action === "tracker.resume", network },
+        after: { paused: action === "tracker.pause", network },
+      }
+    default:
+      return { before: null, after: null }
+  }
+}
+
 export const AUDIT: S["AuditEntry"][] = (() => {
   const rand = seeded(42)
   const out: S["AuditEntry"][] = []
@@ -464,8 +502,7 @@ export const AUDIT: S["AuditEntry"][] = (() => {
       network_id: network?.id ?? null,
       ip_prefix: "85.105.12.0/24",
       request_id: `req_${(5000 + i).toString(36)}`,
-      before: a.action === "settings.update" ? { signup_open: true } : null,
-      after: a.action === "settings.update" ? { signup_open: false } : null,
+      ...CHANGES(a.action, network?.slug ?? null),
     })
   }
   return out

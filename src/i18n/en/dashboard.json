@@ -24,5 +24,165 @@
     "version": "Version {{version}} ({{sha}}) · mode {{mode}}",
     "recentEvents": "Recent events",
     "noEvents": "No events yet."
+  },
+  "userStatus": {
+    "active": "Active",
+    "unverified": "Unverified",
+    "banned": "Banned",
+    "pending_deletion": "Pending deletion"
+  },
+  "users": {
+    "eyebrow": "Platform",
+    "title": "Users",
+    "intro": "Every gezcez account. Search by name, username, email or ID.",
+    "search": "Search users",
+    "columns": {
+      "user": "User",
+      "email": "Email",
+      "status": "Status",
+      "roles": "Roles",
+      "lastActive": "Last active",
+      "joined": "Joined"
+    },
+    "emptyTitle": "No users yet",
+    "noMatchTitle": "No users match",
+    "noMatchBody": "Try a different search or clear the filters."
+  },
+  "user": {
+    "eyebrow": "User",
+    "back": "All users",
+    "notFoundTitle": "User not found",
+    "notFoundBody": "This account doesn't exist or was deleted.",
+    "tabs": {
+      "profile": "Profile",
+      "roles": "Roles",
+      "moderation": "Moderation"
+    },
+    "profile": {
+      "account": "Account",
+      "displayName": "Display name",
+      "username": "Username",
+      "email": "Email",
+      "language": "Language",
+      "joined": "Joined",
+      "lastActive": "Last active",
+      "verified": "Verified",
+      "unverified": "Not verified",
+      "reveal": "Reveal",
+      "revealHint": "Shows the full address. This is recorded in the audit log.",
+      "revealFailed": "Couldn't reveal the email.",
+      "signIn": "Sign-in methods",
+      "methods": {
+        "emailCode": "Email code",
+        "password": "Password",
+        "passkeys_one": "{{count}} passkey",
+        "passkeys_other": "{{count}} passkeys"
+      },
+      "activity": "Activity",
+      "activityBody": "Everything done to or by this account is in the audit log.",
+      "openAudit": "Open in audit log",
+      "locales": {
+        "tr": "Turkish",
+        "en": "English"
+      }
+    },
+    "roles": {
+      "empty": "This user has no dashboard roles.",
+      "role": "Role",
+      "scope": "Scope",
+      "grantedBy": "Granted by",
+      "grantedAt": "Granted",
+      "global": "Global",
+      "system": "System"
+    },
+    "moderation": {
+      "banned": "Banned",
+      "notBanned": "Not banned",
+      "notBannedBody": "This account can sign in and use gezcez normally.",
+      "until": "Until",
+      "publicReason": "Reason shown to the user",
+      "privateReason": "Internal note",
+      "by": "Banned by"
+    },
+    "ban": {
+      "action": "Ban user",
+      "title": "Ban {{name}}?",
+      "body": "They are signed out everywhere and can't sign in until the ban ends. This needs a recent sign-in.",
+      "duration": "Duration",
+      "durations": {
+        "1d": "1 day",
+        "7d": "7 days",
+        "30d": "30 days",
+        "permanent": "Permanent"
+      },
+      "publicReason": "Reason shown to the user",
+      "publicReasonHint": "3 to 500 characters. The user sees this when they try to sign in.",
+      "publicReasonError": "Write a reason of 3 to 500 characters.",
+      "privateReason": "Internal note (optional)",
+      "privateReasonHint": "Only staff see this.",
+      "confirm": "Ban user",
+      "pending": "Banning…",
+      "done": "{{name}} is banned.",
+      "failed": "Couldn't ban this user."
+    },
+    "unban": {
+      "action": "Lift ban",
+      "title": "Lift the ban on {{name}}?",
+      "body": "They can sign in again straight away.",
+      "confirm": "Lift ban",
+      "pending": "Lifting…",
+      "done": "The ban on {{name}} is lifted.",
+      "failed": "Couldn't lift the ban.",
+      "reason": "Reason",
+      "reasonHint": "At least 3 characters. Recorded in the audit log."
+    }
+  },
+  "roles": {
+    "eyebrow": "Platform",
+    "title": "Roles",
+    "intro": "Roles bundle permissions. A role can only manage roles below its level.",
+    "empty": "No roles defined.",
+    "level": "level {{level}}",
+    "builtIn": "Built-in",
+    "builtInHint": "Built-in roles can't be renamed or deleted.",
+    "columns": {
+      "role": "Role",
+      "description": "Description",
+      "level": "Level",
+      "members": "Members",
+      "permissions": "Permissions"
+    }
+  },
+  "audit": {
+    "eyebrow": "Platform",
+    "title": "Audit log",
+    "intro": "Every admin action, who did it and what changed. Open a row for the diff.",
+    "search": "Search action, actor, target or request ID",
+    "export": "Export page as CSV",
+    "targetType": "Target type",
+    "targetFilter": "Target {{id}}",
+    "clearTarget": "Clear target filter",
+    "system": "System",
+    "emptyTitle": "No audit events yet",
+    "noMatchTitle": "No events match",
+    "columns": {
+      "when": "When",
+      "action": "Action",
+      "actor": "Actor",
+      "target": "Target",
+      "network": "Network"
+    },
+    "detail": {
+      "at": "Time",
+      "id": "Event ID",
+      "requestId": "Request ID",
+      "ip": "IP prefix",
+      "target": "Target",
+      "changes": "Changes",
+      "field": "Field",
+      "before": "Before",
+      "after": "After",
+      "noChanges": "No field changes recorded for this event."
+    }
   }
 }

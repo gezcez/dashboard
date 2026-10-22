@@ -126,6 +126,31 @@ export function createHandlers(apiUrl: string, options: { latency?: boolean } = 
 
   // In-memory mutations for the session (bans), layered over the fixtures.
   const bans = new Map<string, S["Ban"] | null>()
+  /** Entries written by this session's mutations, newest first, shown above the fixtures. */
+  const written: S["AuditEntry"][] = []
+  const record = (
+    c: Caller,
+    action: string,
+    target: S["DashUser"] | undefined,
+    after: S["AuditEntry"]["after"],
+    before: S["AuditEntry"]["before"] = null,
+  ) => {
+    written.unshift({
+      id: `aud_live_${String(written.length + 1)}`,
+      at: new Date().toISOString(),
+      action,
+      severity: action === "user.ban" ? "warn" : "info",
+      actor: { id: c.persona.userId, display_name: c.persona.name, username: c.persona.username },
+      target_type: "user",
+      target_id: target?.id ?? null,
+      target_label: target?.display_name ?? null,
+      network_id: null,
+      ip_prefix: "127.0.0.0/24",
+      request_id: `req_live_${String(written.length + 1)}`,
+      before,
+      after,
+    })
+  }
   const userWithState = (u: S["DashUser"]): S["DashUser"] => {
     if (!bans.has(u.id)) return u
     const ban = bans.get(u.id) ?? null
@@ -369,6 +394,13 @@ export function createHandlers(apiUrl: string, options: { latency?: boolean } = 
         },
       }
       bans.set(params.userId, ban)
+      record(
+        c,
+        "user.ban",
+        USERS.find((u) => u.id === params.userId),
+        { status: "banned", duration: body.duration, public_reason: body.public_reason },
+        { status: "active" },
+      )
       return response(200).json({ ok: true, data: ban })
     }),
     http.post("/v1/dash/users/{userId}/unban", async ({ request, params, response }) => {
@@ -376,6 +408,15 @@ export function createHandlers(apiUrl: string, options: { latency?: boolean } = 
       const c = authorize(request, "POST /v1/dash/users/{userId}/unban")
       if (c instanceof Response) return c
       bans.set(params.userId, null)
+      record(
+        c,
+        "user.unban",
+        USERS.find((u) => u.id === params.userId),
+        { status: "active" },
+        {
+          status: "banned",
+        },
+      )
       return response(200).json({ ok: true, data: { unbanned: true } })
     }),
 
@@ -397,13 +438,19 @@ export function createHandlers(apiUrl: string, options: { latency?: boolean } = 
       if (c instanceof Response) return c
       const action = query.get("action")
       const q = (query.get("q") ?? "").toLowerCase()
-      const items = AUDIT.filter((e) => !action || e.action.startsWith(action)).filter(
-        (e) =>
-          !q ||
-          [e.action, e.actor?.display_name ?? "", e.target_label ?? "", e.request_id ?? ""].some(
-            (v) => v.toLowerCase().includes(q),
-          ),
-      )
+      const targetId = query.get("target_id")
+      const targetType = query.get("target_type")
+      const items = [...written, ...AUDIT]
+        .filter((e) => !action || e.action.startsWith(action))
+        .filter((e) => !targetId || e.target_id === targetId)
+        .filter((e) => !targetType || e.target_type === targetType)
+        .filter(
+          (e) =>
+            !q ||
+            [e.action, e.actor?.display_name ?? "", e.target_label ?? "", e.request_id ?? ""].some(
+              (v) => v.toLowerCase().includes(q),
+            ),
+        )
       return response(200).json({
         ok: true,
         data: paginate(items, new URL(request.url), { at: byString((e) => e.at) }, "at:desc"),
