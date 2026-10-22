@@ -49,3 +49,26 @@ export function formatDuration(seconds: number | null | undefined): string {
   if (seconds < 86_400) return `${formatNumber(Math.round(seconds / 360) / 10)} h`
   return `${formatNumber(Math.round(seconds / 8640) / 10)} d`
 }
+
+/** m/s to a rounded km/h string. */
+export function formatSpeed(ms: number | null | undefined): string {
+  if (ms === null || ms === undefined) return "–"
+  return `${formatNumber(Math.round(ms * 3.6))} km/h`
+}
+
+/** Wall-clock time in a given IANA zone (network time), for example 14:02. */
+export function formatClock(
+  value: string | number | null | undefined,
+  timeZone?: string,
+  withSeconds = false,
+): string {
+  if (value === null || value === undefined) return "–"
+  const date = typeof value === "number" ? new Date(value * 1000) : new Date(value)
+  return new Intl.DateTimeFormat(locale(), {
+    hour: "2-digit",
+    minute: "2-digit",
+    ...(withSeconds ? { second: "2-digit" } : {}),
+    hour12: false,
+    timeZone,
+  }).format(date)
+}

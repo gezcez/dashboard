@@ -1,0 +1,767 @@
+{
+  "common": {
+    "yes": "Yes",
+    "no": "No"
+  },
+  "map": {
+    "offline": "Basemap unavailable, showing data only"
+  },
+  "live": {
+    "title": "Live map",
+    "playback": "Playback",
+    "fit": "Fit to fleet",
+    "direction": "Direction {{dir}}",
+    "pausedBanner_one": "A provider binding is paused: its vehicles stop updating and show as stale.",
+    "pausedBanner_other": "{{count}} provider bindings are paused: their vehicles stop updating and show as stale.",
+    "connection": {
+      "idle": "Not connected",
+      "connecting": "Connecting",
+      "open": "Live",
+      "reconnecting": "Reconnecting",
+      "fallback": "Polling every 15 s"
+    },
+    "motion": {
+      "moving": "Moving",
+      "stopped": "Stopped",
+      "stale": "Stale"
+    },
+    "strip": {
+      "total": "Vehicles",
+      "feed": "Feed",
+      "shown": "Shown"
+    },
+    "filters": {
+      "label": "Filters",
+      "toggle": "Filters",
+      "search": "Plate, route or headsign",
+      "status": "Status",
+      "direction": "Direction",
+      "agency": "Agency",
+      "onlyWithTrip": "Only vehicles on a trip",
+      "routes": "Routes",
+      "layers": "Layers",
+      "stops": "Stops (zoom in)",
+      "labels": "Route labels"
+    },
+    "drawer": {
+      "label": "Vehicle details",
+      "close": "Close",
+      "noRoute": "No route assigned",
+      "notLive": "This vehicle is not in the live feed right now.",
+      "accessible": "Accessible",
+      "lastUpdate": "Last update",
+      "ago": "{{duration}} ago",
+      "speed": "Speed",
+      "stop": "Stop",
+      "stopStatus": {
+        "incoming": "Arriving at stop {{seq}}",
+        "stopped": "At stop {{seq}}",
+        "inTransit": "Towards stop {{seq}}"
+      },
+      "trip": "Trip",
+      "feedLag": "Feed lag",
+      "startDelay": "Start vs timetable",
+      "late": "late",
+      "early": "early",
+      "duty": "On duty today",
+      "runsToday": "Trips today",
+      "follow": "Follow on map",
+      "following": "Following",
+      "openPlayback": "Open in playback",
+      "routeHeadways": "This route's headways today",
+      "fleetAnalytics": "Fleet analytics"
+    }
+  },
+  "playback": {
+    "title": "Playback",
+    "intro": "Replay where vehicles were over the last hours, with poll gaps marked.",
+    "backToLive": "Live map",
+    "window": "Window",
+    "hours_one": "{{count}} h",
+    "hours_other": "{{count}} h",
+    "capHint": "Network-wide playback is limited to {{hours}} h. Pick a route for up to 24 h.",
+    "route": "Route",
+    "summary": "{{vehicles}} vehicles, {{rows}} positions",
+    "play": "Play",
+    "pause": "Pause",
+    "speed": "Playback speed",
+    "timeline": "Time",
+    "gaps_one": "{{count}} poll gap",
+    "gaps_other": "{{count}} poll gaps",
+    "inGap": "No data: poll gap",
+    "at": "At",
+    "position": "Position",
+    "emptyTitle": "No positions in this window",
+    "emptyBody": "Try a longer window or another route."
+  },
+  "tracker": {
+    "title": "Tracker",
+    "intro": "Provider bindings of this network: polling health, lag, tokens and controls.",
+    "empty": "This network has no provider bindings.",
+    "notFound": "Binding not found",
+    "runner": "Runner: {{runner}}",
+    "pollNow": "Poll now",
+    "state": {
+      "ok": "Running",
+      "degraded": "Degraded",
+      "down": "Down",
+      "paused": "Paused",
+      "killed": "Killed",
+      "unknown": "Unknown"
+    },
+    "urlVariant": {
+      "primary": "Primary",
+      "fallback": "Fallback"
+    },
+    "columns": {
+      "binding": "Binding",
+      "state": "State",
+      "mode": "Endpoint",
+      "interval": "Interval",
+      "lastPoll": "Last poll",
+      "outcome": "Outcome",
+      "vehicles": "Vehicles",
+      "failures": "Failures",
+      "token": "Token"
+    },
+    "tabs": {
+      "status": "Status",
+      "polls": "Poll log",
+      "token": "Token",
+      "fallback": "Fallback",
+      "config": "Config",
+      "logs": "Logs"
+    },
+    "kpis": {
+      "vehicles": "Live vehicles",
+      "success": "Poll success",
+      "window": "last {{hours}} h",
+      "lastPoll": "Last poll",
+      "failures": "Failures in a row",
+      "token": "Upstream token"
+    },
+    "charts": {
+      "latencyTitle": "Poll latency",
+      "pollsTitle": "Polls",
+      "pollsSummary": "{{total}} polls, {{failed}} failed",
+      "vehiclesTitle": "Vehicles per poll",
+      "lagTitle": "Feed lag and dedup",
+      "polls": "Polls",
+      "ok": "OK",
+      "failed": "Failed",
+      "vehicles": "Vehicles",
+      "lagP50": "Lag p50",
+      "lagP95": "Lag p95",
+      "dedup": "Dedup ratio",
+      "gap": "Poll gap"
+    },
+    "polls": {
+      "time": "Time",
+      "outcome": "Outcome",
+      "endpoint": "Endpoint",
+      "latency": "Latency",
+      "entities": "Entities",
+      "inserted": "Inserted",
+      "dropped": "Dropped",
+      "error": "Error",
+      "errorsOnly": "Errors only (this page)",
+      "feedAt": "Feed timestamp",
+      "accepted": "Accepted",
+      "droppedBy": "Dropped by reason",
+      "empty": "No polls yet.",
+      "noErrors": "No failed polls on this page."
+    },
+    "kill": {
+      "running": "Running",
+      "paused": "Paused",
+      "killed": "Killed by the provider kill switch",
+      "runningDetail": "Polling on schedule. Pausing stops live updates for every rider of this network.",
+      "pausedDetail": "Reason: {{reason}} · since {{when}}",
+      "pause": "Pause provider",
+      "resume": "Resume provider",
+      "pausing": "Pausing…",
+      "resuming": "Resuming…",
+      "pauseTitle": "Pause {{name}}?",
+      "resumeTitle": "Resume {{name}}?",
+      "pauseEffect": "Pause {{name}} for {{network}}. Live vehicles stop updating for all riders until it is resumed.",
+      "resumeEffect": "Resume polling {{name}} for {{network}}. Live vehicles update again from the next poll.",
+      "reason": "Reason (kept in the audit log)",
+      "unconfirmed": {
+        "pause": "Pause requested, the tracker worker has not confirmed yet.",
+        "resume": "Resume requested, the tracker worker has not confirmed yet."
+      }
+    },
+    "control": {
+      "failed": "The tracker refused the action. {{error}}",
+      "done": {
+        "pause": "Provider paused",
+        "resume": "Provider resumed",
+        "poll-now": "Poll requested",
+        "reset-url": "Back on the primary endpoint",
+        "refresh-token": "Token refreshed"
+      }
+    },
+    "token": {
+      "none": "None",
+      "notNeeded": "This provider needs no upstream token.",
+      "state": "State",
+      "realm": "Realm",
+      "expires": "Expires",
+      "refreshed": "Last refresh",
+      "failures": "Refresh failures (24 h)",
+      "secrets": "Secrets",
+      "secretsHint": "Only the names of the secrets are shown; values never leave the server.",
+      "missing": "Missing",
+      "states": {
+        "ok": "Valid",
+        "missing": "Missing",
+        "refreshing": "Refreshing",
+        "auth_failed": "Auth failed",
+        "unknown": "Unknown"
+      },
+      "refresh": "Refresh token now",
+      "refreshTitle": "Refresh the token of {{name}}?",
+      "refreshEffect": "Asks the upstream for a new token now. Polling continues with the current token until the new one arrives."
+    },
+    "fallback": {
+      "current": "Endpoint in use",
+      "baseUrl": "Base URL",
+      "lastFeed": "Last feed",
+      "explain": "After repeated failures the tracker switches to the fallback endpoint. Clearing it retries the primary on the next poll.",
+      "reset": "Clear fallback and retry primary",
+      "resetTitle": "Retry the primary endpoint of {{name}}?",
+      "resetEffect": "The next poll goes to the primary endpoint. If it fails again, the tracker falls back as before."
+    },
+    "config": {
+      "poll_interval_s": "Poll interval (s)",
+      "idle_poll_interval_s": "Idle poll interval (s)",
+      "readOnly": "You can view this config. Changing it needs tracker.config.write.",
+      "raw": "Config (JSON)",
+      "review_one": "Review {{count}} change",
+      "review_other": "Review {{count}} changes",
+      "discard": "Discard changes",
+      "reviewTitle_one": "{{count}} change",
+      "reviewTitle_other": "{{count}} changes",
+      "reason": "Reason (kept in the audit log)",
+      "back": "Back to editing",
+      "save": "Save config",
+      "saving": "Saving…",
+      "saved": "Config saved",
+      "failed": "Could not save the config",
+      "errors": {
+        "required": "Required",
+        "pattern": "Does not match the expected format",
+        "range": "Out of range"
+      }
+    },
+    "logs": {
+      "level": "Minimum level",
+      "pause": "Pause scroll",
+      "follow": "Follow",
+      "clear": "Clear",
+      "count": "{{shown}} lines (keeps {{max}})",
+      "waiting": "Waiting for log lines…"
+    }
+  },
+  "analytics": {
+    "title": "Analytics",
+    "n": "n = {{n}}",
+    "source": {
+      "hot": "live data",
+      "archive": "archive",
+      "rollup": "rollup"
+    },
+    "methodology": "Methodology",
+    "viewAsTable": "Table",
+    "export": "Export",
+    "exportFailed": "Export failed",
+    "tableCapped": "Showing {{shown}} of {{total}} rows. Export for all rows.",
+    "emptyTitle": "No data for these filters",
+    "emptyBody": "Try a wider date range or fewer filters.",
+    "presets": {
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "7d": "7 days",
+      "30d": "30 days"
+    },
+    "dayTypes": {
+      "all": "All days",
+      "weekday": "Weekdays",
+      "saturday": "Saturday",
+      "sunday": "Sunday"
+    },
+    "filters": {
+      "range": "Date range",
+      "from": "From",
+      "to": "To",
+      "dayType": "Days",
+      "hourFrom": "From hour",
+      "hourTo": "To hour",
+      "route": "Route",
+      "direction": "Direction",
+      "tooLong": "At most {{days}} days per request."
+    },
+    "columns": {
+      "route": "Route",
+      "direction": "Direction",
+      "stop": "Stop",
+      "hour": "Hour"
+    },
+    "method": {
+      "filtersTitle": "Filtered out",
+      "caveatsTitle": "Caveats",
+      "staff": "Staff-only routes (for example 419) and their vehicles.",
+      "test": "Test devices listed in the binding config.",
+      "outliers": "Speed outliers above 30 m/s and implied jumps between fixes."
+    },
+    "views": {
+      "label": "Analytics views",
+      "index": {
+        "tab": "Overview",
+        "title": "Analytics",
+        "intro": "One number per view for the selected period. Open a view for the detail."
+      },
+      "fleet": {
+        "tab": "Fleet",
+        "title": "Fleet utilisation",
+        "intro": "How many vehicles ran, when, and for how long."
+      },
+      "runtimes": {
+        "tab": "Runtimes",
+        "title": "Trip runtimes",
+        "intro": "End-to-end trip times by route, direction and hour."
+      },
+      "headways": {
+        "tab": "Headways",
+        "title": "Headways and bunching",
+        "intro": "Spacing between vehicles, bunching and gaps, and the space-time chart."
+      },
+      "adherence": {
+        "tab": "Adherence",
+        "title": "Delays vs timetable",
+        "intro": "Departure delays where the network publishes a timetable."
+      },
+      "dwell": {
+        "tab": "Dwell",
+        "title": "Dwell times",
+        "intro": "How long vehicles stand at stops."
+      },
+      "speed": {
+        "tab": "Speed",
+        "title": "Speed heatmap",
+        "intro": "Median vehicle speed per hexagon."
+      },
+      "quality": {
+        "tab": "Quality",
+        "title": "Data quality",
+        "intro": "Daily feed health score, lag, gaps and coverage."
+      }
+    },
+    "index": {
+      "fleetHint": "Peak vehicles in a day",
+      "runtimeHint": "Median trip runtime",
+      "bunchingHint": "Headways under half the median",
+      "needsTimetable": "Needs timetable",
+      "dwellHint": "Median dwell at the busiest stops",
+      "speedHint": "Median speed across cells",
+      "qualityHint": "Latest daily score"
+    },
+    "fleet": {
+      "vehicles": "Vehicles",
+      "thisPeriod": "This period",
+      "previousPeriod": "Previous period",
+      "vehicleHours": "Vehicle-hours",
+      "kpiVehicles": "Distinct vehicles",
+      "kpiAdded_one": "{{count}} new in this window",
+      "kpiAdded_other": "{{count}} new in this window",
+      "kpiPeak": "Peak vehicles",
+      "kpiDuty": "Average duty",
+      "activeTitle": "Active vehicles",
+      "activeBody": "Distinct vehicles per {{granularity}} bucket.",
+      "granularity": "Bucket",
+      "compare": "Compare to previous period",
+      "hoursTitle": "Vehicle-hours per day",
+      "heatmapTitle": "Hour by weekday",
+      "heatmapBody": "Median active vehicles.",
+      "vehiclesTitle": "Vehicles by day",
+      "vehiclesBody": "Duty span and samples per vehicle and day.",
+      "method": {
+        "what": "A vehicle counts as active in a bucket when it reported at least one position in it. Vehicle-hours add up the time between first and last fix of each presence run.",
+        "caveats": "Poll gaps (for example the nightly upstream maintenance) lower the counts of the buckets they cover."
+      }
+    },
+    "runtimes": {
+      "minutes": "Minutes",
+      "runs": "Trips",
+      "byHourTitle": "Route {{route}}, direction {{dir}} by hour",
+      "byHourBody": "Median (p50) and p90 runtime per start hour; bars are trip counts. Faint points have fewer than 5 trips.",
+      "tableTitle": "All route-directions",
+      "tableBody": "Select a row to chart it.",
+      "method": {
+        "what": "Trips are cut where a vehicle's trip id changes; a trip counts when it covers at least 5 stops. Runtime is first to last stop.",
+        "caveats": "A histogram of single trips needs per-trip rows, which the metric does not return yet."
+      }
+    },
+    "headways": {
+      "stopAxis": "Stop",
+      "stopSeq": "stop {{seq}}",
+      "median": "Median",
+      "bunching": "Bunching",
+      "gaps": "Gaps",
+      "mareyTitle": "Route {{route}}, direction {{dir}} on {{date}}",
+      "mareyBody": "One line per vehicle, {{trips}} trips. Lines that touch are bunched buses; wide spaces are gaps. Drag or scroll to zoom.",
+      "mareyEmpty": "No trips for this route, direction and day.",
+      "byStopTitle": "Headway along the route",
+      "byStopBody": "Median and p90 headway at each stop of the selected route-direction.",
+      "bunchingTitle": "Bunching and gaps by route",
+      "bunchingBody": "Share of headways below half (bunching) or above 1.5× (gaps) the median.",
+      "gapTitle": "Gap hot spots",
+      "gapBody": "Stop-hours where at least 15% of headways were gaps.",
+      "noGaps": "No gap hot spots in this period.",
+      "method": {
+        "what": "A headway is the time between two consecutive vehicles of the same route and direction passing a stop.",
+        "bunching": "Without a timetable, bunching and gaps compare to the observed median of that stop and hour.",
+        "marey": "The space-time chart shows one route-direction on the last day of the range."
+      }
+    },
+    "adherence": {
+      "early_share": "Early",
+      "on_time_share": "On time",
+      "late_share": "Late",
+      "onTime": "On time",
+      "onTimeHint": "Departures from 1 min early to 5 min late",
+      "medianDelay": "Median delay",
+      "sharesTitle": "Early, on time and late by hour",
+      "heatmapTitle": "Median delay by route and hour",
+      "worstTitle": "Worst route-directions (p90 delay)",
+      "noTimetableTitle": "No timetable for this network yet",
+      "noTimetableBody": "Delays need scheduled departures. The provider does not publish a timetable for this network.",
+      "noTimetableLink": "See the catalogue issue",
+      "method": {
+        "what": "Each trip's first departure is matched to the closest scheduled departure of its route and direction.",
+        "window": "On time means from 1 minute early to 5 minutes late."
+      }
+    },
+    "dwell": {
+      "median": "Median",
+      "topTitle_one": "Top {{count}} stop by dwell",
+      "topTitle_other": "Top {{count}} stops by dwell",
+      "topBody": "Median and p90 standing time. Select a bar for the stop's hours.",
+      "mapTitle": "Where vehicles stand longest",
+      "mapBody": "Ring size follows the median dwell.",
+      "byHourTitle": "{{stop}} by hour",
+      "method": {
+        "what": "Dwell is the run length of 'stopped at' reports (or near-zero speed) at the same stop."
+      }
+    },
+    "speed": {
+      "allDay": "All day",
+      "hour": "Hour",
+      "res": "Resolution",
+      "resolution": "H3 resolution {{res}}",
+      "median": "Median speed",
+      "cells": "Cells",
+      "slowCells": "Slow cells",
+      "slowHint": "Median under 12 km/h",
+      "legend": "Speed scale",
+      "mapTitle": "Median speed, {{hour}}",
+      "mapBody": "Hexagons with too few samples are left out. Select one for its numbers.",
+      "empty": "No cells with enough samples. Widen the date range.",
+      "method": {
+        "what": "Speeds come from consecutive fixes of the same vehicle, binned into H3 hexagons.",
+        "samples": "Cells with fewer than 30 samples are dropped."
+      }
+    },
+    "quality": {
+      "scoreToday": "Score, last day",
+      "scoreAvg": "Average score",
+      "worstDay": "Worst day",
+      "coverage": "Route coverage",
+      "calendarTitle": "Daily score",
+      "lagTitle": "Feed lag and poll gaps",
+      "lagP50": "Lag p50",
+      "lagP95": "Lag p95",
+      "gapMinutes": "Gap minutes",
+      "sharesTitle": "Stale, outliers and failed polls",
+      "staleShare": "Stale vehicles",
+      "outlierShare": "GPS outliers",
+      "successRate": "Failed polls",
+      "droppedTitle": "Dropped rows by reason",
+      "droppedBody": "Positions filtered before they reach riders.",
+      "dropped": {
+        "dropped_test": "Test devices",
+        "dropped_staff": "Staff routes",
+        "dropped_stale": "Stale",
+        "dropped_out_of_bbox": "Outside the area",
+        "dropped_invalid": "Invalid"
+      },
+      "coverageTitle": "Routes to check",
+      "coverageBody": "Routes seen in the feed but not in the catalogue, or never seen in this window.",
+      "coverageClean": "Every catalogue route was seen and every feed route is in the catalogue.",
+      "problem": "Problem",
+      "notInCatalog": "Not in catalogue",
+      "neverSeen": "Never seen",
+      "daysSeen": "Days seen",
+      "vehicles": "Vehicles",
+      "lastSeen": "Last seen",
+      "method": {
+        "score": "The daily score (0 to 100) weighs four parts:",
+        "success": "40%: poll success rate.",
+        "freshness": "30%: share of fresh (not stale) vehicles.",
+        "coverage": "20%: catalogue routes seen in the feed.",
+        "outliers": "10%: positions that are not GPS outliers."
+      }
+    }
+  },
+  "catalog": {
+    "title": "Catalogue",
+    "intro": "Network profile, provider bindings and the privacy facts riders see.",
+    "tabsLabel": "Catalogue sections",
+    "tabs": {
+      "profile": "Profile",
+      "routes": "Routes",
+      "stops": "Stops",
+      "issues": "Issues"
+    },
+    "modes": {
+      "tram": "Tram",
+      "metro": "Metro",
+      "rail": "Rail",
+      "bus": "Bus",
+      "ferry": "Ferry",
+      "cable_tram": "Cable tram",
+      "aerial_lift": "Aerial lift",
+      "funicular": "Funicular",
+      "trolleybus": "Trolleybus",
+      "monorail": "Monorail"
+    },
+    "networkStatus": {
+      "active": "Active",
+      "degraded": "Degraded",
+      "disabled": "Disabled"
+    },
+    "profile": {
+      "title": "Network profile",
+      "readOnly": "Read only here: the backend has no network edit endpoint yet.",
+      "name": "Name",
+      "slug": "Slug",
+      "operator": "Operator",
+      "status": "Status",
+      "modes": "Modes",
+      "staticSynced": "Static data synced",
+      "outdated": "May be outdated",
+      "realtimeFeed": "Realtime feed",
+      "pack": "Offline pack"
+    },
+    "bindings": {
+      "title": "Provider bindings",
+      "intro": "Where this network's data comes from.",
+      "empty": "No provider bindings yet.",
+      "interval": "every {{s}} s ({{idle}} s idle)",
+      "lastFeed": "last feed {{when}}",
+      "openTracker": "Tracker",
+      "status": {
+        "active": "Active",
+        "paused": "Paused",
+        "disabled": "Disabled"
+      }
+    },
+    "sync": {
+      "now": "Sync catalogue now",
+      "running": "Syncing…",
+      "failed": "Sync failed. {{error}}",
+      "done": {
+        "ok": "Catalogue synced",
+        "unchanged": "Catalogue unchanged",
+        "failed": "Sync failed"
+      },
+      "runsTitle": "Sync runs",
+      "noRuns": "No sync runs yet.",
+      "started": "Started",
+      "status": "Status",
+      "trigger": "Trigger",
+      "duration": "Duration",
+      "counts": "Counts",
+      "statuses": {
+        "running": "Running",
+        "ok": "OK",
+        "unchanged": "Unchanged",
+        "failed": "Failed"
+      }
+    },
+    "privacy": {
+      "title": "What the provider collects",
+      "intro": "Shown on the public privacy page and used for the opt-out feature.",
+      "none": "No provider declares collected data.",
+      "key": "Data",
+      "collected": "Collected",
+      "optOut": "Can opt out",
+      "details": "Details",
+      "attribution": "Data attribution:"
+    },
+    "routes": {
+      "intro": "Every route of this network as the provider publishes it.",
+      "search": "Search routes",
+      "code": "Code",
+      "name": "Name",
+      "agency": "Agency",
+      "mode": "Mode",
+      "id": "Id",
+      "empty": "No routes match."
+    },
+    "route": {
+      "notFound": "Route not found",
+      "runtimes": "Runtimes",
+      "headways": "Headways today",
+      "towards": "To {{headsign}}",
+      "timetable": "Timetable",
+      "dayType": "Service day",
+      "noTimetable": "No timetable for this route and day.",
+      "noDepartures": "No departures.",
+      "departures_one": "{{count}} departure",
+      "departures_other": "{{count}} departures",
+      "timetableCaption": "Departures towards {{headsign}}",
+      "hour": "Hour",
+      "minutes": "Minutes",
+      "stops_one": "{{count}} stop",
+      "stops_other": "{{count}} stops"
+    },
+    "stops": {
+      "intro": "Stops of this network.",
+      "search": "Search stops",
+      "name": "Name",
+      "code": "Code",
+      "coords": "Coordinates",
+      "empty": "No stops match."
+    },
+    "stop": {
+      "notFound": "Stop not found",
+      "dwell": "Median dwell",
+      "headway": "Median headway",
+      "last7": "Last 7 days",
+      "routes_one": "{{count}} route",
+      "routes_other": "{{count}} routes",
+      "departures": "Next departures",
+      "noDepartures": "No upcoming departures.",
+      "source": {
+        "schedule": "Scheduled",
+        "live": "Live",
+        "live_eta": "Live ETA"
+      }
+    },
+    "issues": {
+      "intro": "Data problems the backend jobs detected, with their status.",
+      "search": "Search issues",
+      "severity": "Severity",
+      "type": "Type",
+      "entity": "Entity",
+      "statusLabel": "Status",
+      "firstDetected": "First seen",
+      "lastDetected": "Last seen",
+      "severities": {
+        "critical": "Critical",
+        "warning": "Warning",
+        "info": "Info"
+      },
+      "status": {
+        "open": "Open",
+        "acknowledged": "Acknowledged",
+        "resolved": "Resolved",
+        "ignored": "Ignored"
+      },
+      "types": {
+        "route_not_in_catalog": "Route in feed, not in catalogue",
+        "route_never_seen": "Route never seen in 7 days",
+        "stop_without_coordinates": "Stop without coordinates",
+        "duplicate_stops": "Duplicate stops within 15 m",
+        "trip_without_timetable": "Trips without timetable",
+        "staff_route_leak": "Staff route in public data"
+      },
+      "entities": {
+        "route": "Route",
+        "stop": "Stop",
+        "vehicle": "Vehicle",
+        "binding": "Binding",
+        "trip": "Trip"
+      },
+      "openCount_one": "{{count}} open {{severity}}",
+      "openCount_other": "{{count}} open {{severity}}",
+      "selectAll": "Select all on this page",
+      "select": "Select {{label}}",
+      "bulk": "Bulk actions",
+      "selected_one": "{{count}} selected",
+      "selected_other": "{{count}} selected",
+      "actions": {
+        "acknowledge": "Acknowledge",
+        "resolve": "Resolve",
+        "reopen": "Reopen",
+        "ignore": "Ignore"
+      },
+      "updated_one": "{{count}} issue marked {{status}}",
+      "updated_other": "{{count}} issues marked {{status}}",
+      "undo": "Undo",
+      "failed": "Could not update the issues",
+      "ignoreTitle_one": "Ignore {{count}} issue?",
+      "ignoreTitle_other": "Ignore {{count}} issues?",
+      "ignoreBody": "Ignored issues stay hidden from the open list. Say why, for the next person.",
+      "reason": "Reason",
+      "saving": "Saving…",
+      "empty": "No issues",
+      "emptyBody": "The detection jobs found nothing for this network.",
+      "noMatch": "No issues match these filters."
+    }
+  },
+  "adminCatalog": {
+    "eyebrow": "Platform",
+    "title": "Networks and cities",
+    "intro": "Every network, city and data provider across gezcez.",
+    "tabs": {
+      "networks": "Networks",
+      "cities": "Cities",
+      "providers": "Providers"
+    },
+    "visibility": {
+      "public": "Public",
+      "hidden": "Hidden"
+    },
+    "cityStatus": {
+      "draft": "Draft",
+      "public": "Public",
+      "hidden": "Hidden"
+    },
+    "networks": {
+      "name": "Network",
+      "city": "City",
+      "operator": "Operator",
+      "visibility": "Visibility",
+      "bindings": "Bindings",
+      "timezone": "Timezone"
+    },
+    "cities": {
+      "name": "City",
+      "country": "Country",
+      "status": "Status",
+      "timezone": "Timezone",
+      "centre": "Centre"
+    },
+    "providers": {
+      "empty": "No providers registered.",
+      "on": "Enabled",
+      "off": "Killed",
+      "envOff": "Disabled by env",
+      "replayed": "Replayed data",
+      "bindings_one": "{{count}} binding",
+      "bindings_other": "{{count}} bindings",
+      "kill": "Kill provider",
+      "enable": "Re-enable provider",
+      "killed": "Provider killed",
+      "enabled": "Provider enabled",
+      "killTitle": "Kill {{name}} everywhere?",
+      "enableTitle": "Re-enable {{name}}?",
+      "killEffect_one": "Stops polling {{count}} binding at once. Every network on this provider loses live data until it is re-enabled.",
+      "killEffect_other": "Stops polling all {{count}} bindings at once. Every network on this provider loses live data until it is re-enabled.",
+      "enableEffect_one": "Polling resumes for {{count}} binding from the next tick.",
+      "enableEffect_other": "Polling resumes for {{count}} bindings from the next tick."
+    }
+  }
+}

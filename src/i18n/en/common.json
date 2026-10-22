@@ -33,7 +33,13 @@
     "networkAudit": "Audit log",
     "apps": "OAuth apps",
     "moderation": "Moderation",
-    "email": "Email"
+    "email": "Email",
+    "live": "Live map",
+    "playback": "Playback",
+    "tracker": "Tracker",
+    "analytics": "Analytics",
+    "catalog": "Catalogue",
+    "networksCities": "Networks and cities"
   },
   "network": {
     "switch": "Switch network",

@@ -20,6 +20,7 @@ import { Route as MockAuthorizeRouteImport } from './routes/mock/authorize'
 import { Route as MockLogoutRouteImport } from './routes/mock/logout'
 import { Route as AppAdminIndexRouteImport } from './routes/_app/admin/index'
 import { Route as AppAdminAuditRouteImport } from './routes/_app/admin/audit'
+import { Route as AppAdminCatalogRouteImport } from './routes/_app/admin/catalog'
 import { Route as AppAdminEmailRouteImport } from './routes/_app/admin/email'
 import { Route as AppAdminModerationRouteImport } from './routes/_app/admin/moderation'
 import { Route as AppAdminPermissionsRouteImport } from './routes/_app/admin/permissions'
@@ -31,8 +32,28 @@ import { Route as AppAdminRolesRoleIdRouteImport } from './routes/_app/admin/rol
 import { Route as AppAdminUsersIndexRouteImport } from './routes/_app/admin/users/index'
 import { Route as AppAdminUsersUserIdRouteImport } from './routes/_app/admin/users/$userId'
 import { Route as AppNNetworkIndexRouteImport } from './routes/_app/n/$network/index'
+import { Route as AppNNetworkAnalyticsRouteImport } from './routes/_app/n/$network/analytics'
 import { Route as AppNNetworkAuditRouteImport } from './routes/_app/n/$network/audit'
+import { Route as AppNNetworkCatalogRouteImport } from './routes/_app/n/$network/catalog'
 import { Route as AppNNetworkMembersRouteImport } from './routes/_app/n/$network/members'
+import { Route as AppNNetworkAnalyticsIndexRouteImport } from './routes/_app/n/$network/analytics/index'
+import { Route as AppNNetworkAnalyticsAdherenceRouteImport } from './routes/_app/n/$network/analytics/adherence'
+import { Route as AppNNetworkAnalyticsDwellRouteImport } from './routes/_app/n/$network/analytics/dwell'
+import { Route as AppNNetworkAnalyticsFleetRouteImport } from './routes/_app/n/$network/analytics/fleet'
+import { Route as AppNNetworkAnalyticsHeadwaysRouteImport } from './routes/_app/n/$network/analytics/headways'
+import { Route as AppNNetworkAnalyticsQualityRouteImport } from './routes/_app/n/$network/analytics/quality'
+import { Route as AppNNetworkAnalyticsRuntimesRouteImport } from './routes/_app/n/$network/analytics/runtimes'
+import { Route as AppNNetworkAnalyticsSpeedRouteImport } from './routes/_app/n/$network/analytics/speed'
+import { Route as AppNNetworkCatalogIndexRouteImport } from './routes/_app/n/$network/catalog/index'
+import { Route as AppNNetworkCatalogIssuesRouteImport } from './routes/_app/n/$network/catalog/issues'
+import { Route as AppNNetworkLiveIndexRouteImport } from './routes/_app/n/$network/live/index'
+import { Route as AppNNetworkLivePlaybackRouteImport } from './routes/_app/n/$network/live/playback'
+import { Route as AppNNetworkTrackerIndexRouteImport } from './routes/_app/n/$network/tracker/index'
+import { Route as AppNNetworkTrackerBindingRouteImport } from './routes/_app/n/$network/tracker/$binding'
+import { Route as AppNNetworkCatalogRoutesIndexRouteImport } from './routes/_app/n/$network/catalog/routes/index'
+import { Route as AppNNetworkCatalogRoutesRouteRouteImport } from './routes/_app/n/$network/catalog/routes/$route'
+import { Route as AppNNetworkCatalogStopsIndexRouteImport } from './routes/_app/n/$network/catalog/stops/index'
+import { Route as AppNNetworkCatalogStopsStopRouteImport } from './routes/_app/n/$network/catalog/stops/$stop'
 
 const AppRoute = AppRouteImport.update({
   id: '/_app',
@@ -86,6 +107,11 @@ const AppAdminIndexRoute = AppAdminIndexRouteImport.update({
 const AppAdminAuditRoute = AppAdminAuditRouteImport.update({
   id: '/admin/audit',
   path: '/admin/audit',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAdminCatalogRoute = AppAdminCatalogRouteImport.update({
+  id: '/admin/catalog',
+  path: '/admin/catalog',
   getParentRoute: () => AppRoute,
 } as any)
 const AppAdminEmailRoute = AppAdminEmailRouteImport.update({
@@ -143,9 +169,19 @@ const AppNNetworkIndexRoute = AppNNetworkIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppNNetworkRoute,
 } as any)
+const AppNNetworkAnalyticsRoute = AppNNetworkAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => AppNNetworkRoute,
+} as any)
 const AppNNetworkAuditRoute = AppNNetworkAuditRouteImport.update({
   id: '/audit',
   path: '/audit',
+  getParentRoute: () => AppNNetworkRoute,
+} as any)
+const AppNNetworkCatalogRoute = AppNNetworkCatalogRouteImport.update({
+  id: '/catalog',
+  path: '/catalog',
   getParentRoute: () => AppNNetworkRoute,
 } as any)
 const AppNNetworkMembersRoute = AppNNetworkMembersRouteImport.update({
@@ -153,6 +189,110 @@ const AppNNetworkMembersRoute = AppNNetworkMembersRouteImport.update({
   path: '/members',
   getParentRoute: () => AppNNetworkRoute,
 } as any)
+const AppNNetworkAnalyticsIndexRoute =
+  AppNNetworkAnalyticsIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AppNNetworkAnalyticsRoute,
+  } as any)
+const AppNNetworkAnalyticsAdherenceRoute =
+  AppNNetworkAnalyticsAdherenceRouteImport.update({
+    id: '/adherence',
+    path: '/adherence',
+    getParentRoute: () => AppNNetworkAnalyticsRoute,
+  } as any)
+const AppNNetworkAnalyticsDwellRoute =
+  AppNNetworkAnalyticsDwellRouteImport.update({
+    id: '/dwell',
+    path: '/dwell',
+    getParentRoute: () => AppNNetworkAnalyticsRoute,
+  } as any)
+const AppNNetworkAnalyticsFleetRoute =
+  AppNNetworkAnalyticsFleetRouteImport.update({
+    id: '/fleet',
+    path: '/fleet',
+    getParentRoute: () => AppNNetworkAnalyticsRoute,
+  } as any)
+const AppNNetworkAnalyticsHeadwaysRoute =
+  AppNNetworkAnalyticsHeadwaysRouteImport.update({
+    id: '/headways',
+    path: '/headways',
+    getParentRoute: () => AppNNetworkAnalyticsRoute,
+  } as any)
+const AppNNetworkAnalyticsQualityRoute =
+  AppNNetworkAnalyticsQualityRouteImport.update({
+    id: '/quality',
+    path: '/quality',
+    getParentRoute: () => AppNNetworkAnalyticsRoute,
+  } as any)
+const AppNNetworkAnalyticsRuntimesRoute =
+  AppNNetworkAnalyticsRuntimesRouteImport.update({
+    id: '/runtimes',
+    path: '/runtimes',
+    getParentRoute: () => AppNNetworkAnalyticsRoute,
+  } as any)
+const AppNNetworkAnalyticsSpeedRoute =
+  AppNNetworkAnalyticsSpeedRouteImport.update({
+    id: '/speed',
+    path: '/speed',
+    getParentRoute: () => AppNNetworkAnalyticsRoute,
+  } as any)
+const AppNNetworkCatalogIndexRoute = AppNNetworkCatalogIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppNNetworkCatalogRoute,
+} as any)
+const AppNNetworkCatalogIssuesRoute =
+  AppNNetworkCatalogIssuesRouteImport.update({
+    id: '/issues',
+    path: '/issues',
+    getParentRoute: () => AppNNetworkCatalogRoute,
+  } as any)
+const AppNNetworkLiveIndexRoute = AppNNetworkLiveIndexRouteImport.update({
+  id: '/live/',
+  path: '/live/',
+  getParentRoute: () => AppNNetworkRoute,
+} as any)
+const AppNNetworkLivePlaybackRoute = AppNNetworkLivePlaybackRouteImport.update({
+  id: '/live/playback',
+  path: '/live/playback',
+  getParentRoute: () => AppNNetworkRoute,
+} as any)
+const AppNNetworkTrackerIndexRoute = AppNNetworkTrackerIndexRouteImport.update({
+  id: '/tracker/',
+  path: '/tracker/',
+  getParentRoute: () => AppNNetworkRoute,
+} as any)
+const AppNNetworkTrackerBindingRoute =
+  AppNNetworkTrackerBindingRouteImport.update({
+    id: '/tracker/$binding',
+    path: '/tracker/$binding',
+    getParentRoute: () => AppNNetworkRoute,
+  } as any)
+const AppNNetworkCatalogRoutesIndexRoute =
+  AppNNetworkCatalogRoutesIndexRouteImport.update({
+    id: '/routes/',
+    path: '/routes/',
+    getParentRoute: () => AppNNetworkCatalogRoute,
+  } as any)
+const AppNNetworkCatalogRoutesRouteRoute =
+  AppNNetworkCatalogRoutesRouteRouteImport.update({
+    id: '/routes/$route',
+    path: '/routes/$route',
+    getParentRoute: () => AppNNetworkCatalogRoute,
+  } as any)
+const AppNNetworkCatalogStopsIndexRoute =
+  AppNNetworkCatalogStopsIndexRouteImport.update({
+    id: '/stops/',
+    path: '/stops/',
+    getParentRoute: () => AppNNetworkCatalogRoute,
+  } as any)
+const AppNNetworkCatalogStopsStopRoute =
+  AppNNetworkCatalogStopsStopRouteImport.update({
+    id: '/stops/$stop',
+    path: '/stops/$stop',
+    getParentRoute: () => AppNNetworkCatalogRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AppIndexRoute
@@ -164,6 +304,7 @@ export interface FileRoutesByFullPath {
   '/mock/authorize': typeof MockAuthorizeRoute
   '/mock/logout': typeof MockLogoutRoute
   '/admin/audit': typeof AppAdminAuditRoute
+  '/admin/catalog': typeof AppAdminCatalogRoute
   '/admin/email': typeof AppAdminEmailRoute
   '/admin/moderation': typeof AppAdminModerationRoute
   '/admin/permissions': typeof AppAdminPermissionsRoute
@@ -172,12 +313,32 @@ export interface FileRoutesByFullPath {
   '/admin/apps/$appId': typeof AppAdminAppsAppIdRoute
   '/admin/roles/$roleId': typeof AppAdminRolesRoleIdRoute
   '/admin/users/$userId': typeof AppAdminUsersUserIdRoute
+  '/n/$network/analytics': typeof AppNNetworkAnalyticsRouteWithChildren
   '/n/$network/audit': typeof AppNNetworkAuditRoute
+  '/n/$network/catalog': typeof AppNNetworkCatalogRouteWithChildren
   '/n/$network/members': typeof AppNNetworkMembersRoute
   '/admin/apps/': typeof AppAdminAppsIndexRoute
   '/admin/roles/': typeof AppAdminRolesIndexRoute
   '/admin/users/': typeof AppAdminUsersIndexRoute
   '/n/$network/': typeof AppNNetworkIndexRoute
+  '/n/$network/analytics/adherence': typeof AppNNetworkAnalyticsAdherenceRoute
+  '/n/$network/analytics/dwell': typeof AppNNetworkAnalyticsDwellRoute
+  '/n/$network/analytics/fleet': typeof AppNNetworkAnalyticsFleetRoute
+  '/n/$network/analytics/headways': typeof AppNNetworkAnalyticsHeadwaysRoute
+  '/n/$network/analytics/quality': typeof AppNNetworkAnalyticsQualityRoute
+  '/n/$network/analytics/runtimes': typeof AppNNetworkAnalyticsRuntimesRoute
+  '/n/$network/analytics/speed': typeof AppNNetworkAnalyticsSpeedRoute
+  '/n/$network/catalog/issues': typeof AppNNetworkCatalogIssuesRoute
+  '/n/$network/live/playback': typeof AppNNetworkLivePlaybackRoute
+  '/n/$network/tracker/$binding': typeof AppNNetworkTrackerBindingRoute
+  '/n/$network/analytics/': typeof AppNNetworkAnalyticsIndexRoute
+  '/n/$network/catalog/': typeof AppNNetworkCatalogIndexRoute
+  '/n/$network/live/': typeof AppNNetworkLiveIndexRoute
+  '/n/$network/tracker/': typeof AppNNetworkTrackerIndexRoute
+  '/n/$network/catalog/routes/$route': typeof AppNNetworkCatalogRoutesRouteRoute
+  '/n/$network/catalog/stops/$stop': typeof AppNNetworkCatalogStopsStopRoute
+  '/n/$network/catalog/routes/': typeof AppNNetworkCatalogRoutesIndexRoute
+  '/n/$network/catalog/stops/': typeof AppNNetworkCatalogStopsIndexRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
@@ -189,6 +350,7 @@ export interface FileRoutesByTo {
   '/mock/logout': typeof MockLogoutRoute
   '/': typeof AppIndexRoute
   '/admin/audit': typeof AppAdminAuditRoute
+  '/admin/catalog': typeof AppAdminCatalogRoute
   '/admin/email': typeof AppAdminEmailRoute
   '/admin/moderation': typeof AppAdminModerationRoute
   '/admin/permissions': typeof AppAdminPermissionsRoute
@@ -202,6 +364,24 @@ export interface FileRoutesByTo {
   '/admin/roles': typeof AppAdminRolesIndexRoute
   '/admin/users': typeof AppAdminUsersIndexRoute
   '/n/$network': typeof AppNNetworkIndexRoute
+  '/n/$network/analytics/adherence': typeof AppNNetworkAnalyticsAdherenceRoute
+  '/n/$network/analytics/dwell': typeof AppNNetworkAnalyticsDwellRoute
+  '/n/$network/analytics/fleet': typeof AppNNetworkAnalyticsFleetRoute
+  '/n/$network/analytics/headways': typeof AppNNetworkAnalyticsHeadwaysRoute
+  '/n/$network/analytics/quality': typeof AppNNetworkAnalyticsQualityRoute
+  '/n/$network/analytics/runtimes': typeof AppNNetworkAnalyticsRuntimesRoute
+  '/n/$network/analytics/speed': typeof AppNNetworkAnalyticsSpeedRoute
+  '/n/$network/catalog/issues': typeof AppNNetworkCatalogIssuesRoute
+  '/n/$network/live/playback': typeof AppNNetworkLivePlaybackRoute
+  '/n/$network/tracker/$binding': typeof AppNNetworkTrackerBindingRoute
+  '/n/$network/analytics': typeof AppNNetworkAnalyticsIndexRoute
+  '/n/$network/catalog': typeof AppNNetworkCatalogIndexRoute
+  '/n/$network/live': typeof AppNNetworkLiveIndexRoute
+  '/n/$network/tracker': typeof AppNNetworkTrackerIndexRoute
+  '/n/$network/catalog/routes/$route': typeof AppNNetworkCatalogRoutesRouteRoute
+  '/n/$network/catalog/stops/$stop': typeof AppNNetworkCatalogStopsStopRoute
+  '/n/$network/catalog/routes': typeof AppNNetworkCatalogRoutesIndexRoute
+  '/n/$network/catalog/stops': typeof AppNNetworkCatalogStopsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -215,6 +395,7 @@ export interface FileRoutesById {
   '/mock/logout': typeof MockLogoutRoute
   '/_app/': typeof AppIndexRoute
   '/_app/admin/audit': typeof AppAdminAuditRoute
+  '/_app/admin/catalog': typeof AppAdminCatalogRoute
   '/_app/admin/email': typeof AppAdminEmailRoute
   '/_app/admin/moderation': typeof AppAdminModerationRoute
   '/_app/admin/permissions': typeof AppAdminPermissionsRoute
@@ -223,12 +404,32 @@ export interface FileRoutesById {
   '/_app/admin/apps/$appId': typeof AppAdminAppsAppIdRoute
   '/_app/admin/roles/$roleId': typeof AppAdminRolesRoleIdRoute
   '/_app/admin/users/$userId': typeof AppAdminUsersUserIdRoute
+  '/_app/n/$network/analytics': typeof AppNNetworkAnalyticsRouteWithChildren
   '/_app/n/$network/audit': typeof AppNNetworkAuditRoute
+  '/_app/n/$network/catalog': typeof AppNNetworkCatalogRouteWithChildren
   '/_app/n/$network/members': typeof AppNNetworkMembersRoute
   '/_app/admin/apps/': typeof AppAdminAppsIndexRoute
   '/_app/admin/roles/': typeof AppAdminRolesIndexRoute
   '/_app/admin/users/': typeof AppAdminUsersIndexRoute
   '/_app/n/$network/': typeof AppNNetworkIndexRoute
+  '/_app/n/$network/analytics/adherence': typeof AppNNetworkAnalyticsAdherenceRoute
+  '/_app/n/$network/analytics/dwell': typeof AppNNetworkAnalyticsDwellRoute
+  '/_app/n/$network/analytics/fleet': typeof AppNNetworkAnalyticsFleetRoute
+  '/_app/n/$network/analytics/headways': typeof AppNNetworkAnalyticsHeadwaysRoute
+  '/_app/n/$network/analytics/quality': typeof AppNNetworkAnalyticsQualityRoute
+  '/_app/n/$network/analytics/runtimes': typeof AppNNetworkAnalyticsRuntimesRoute
+  '/_app/n/$network/analytics/speed': typeof AppNNetworkAnalyticsSpeedRoute
+  '/_app/n/$network/catalog/issues': typeof AppNNetworkCatalogIssuesRoute
+  '/_app/n/$network/live/playback': typeof AppNNetworkLivePlaybackRoute
+  '/_app/n/$network/tracker/$binding': typeof AppNNetworkTrackerBindingRoute
+  '/_app/n/$network/analytics/': typeof AppNNetworkAnalyticsIndexRoute
+  '/_app/n/$network/catalog/': typeof AppNNetworkCatalogIndexRoute
+  '/_app/n/$network/live/': typeof AppNNetworkLiveIndexRoute
+  '/_app/n/$network/tracker/': typeof AppNNetworkTrackerIndexRoute
+  '/_app/n/$network/catalog/routes/$route': typeof AppNNetworkCatalogRoutesRouteRoute
+  '/_app/n/$network/catalog/stops/$stop': typeof AppNNetworkCatalogStopsStopRoute
+  '/_app/n/$network/catalog/routes/': typeof AppNNetworkCatalogRoutesIndexRoute
+  '/_app/n/$network/catalog/stops/': typeof AppNNetworkCatalogStopsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -242,6 +443,7 @@ export interface FileRouteTypes {
     | '/mock/authorize'
     | '/mock/logout'
     | '/admin/audit'
+    | '/admin/catalog'
     | '/admin/email'
     | '/admin/moderation'
     | '/admin/permissions'
@@ -250,12 +452,32 @@ export interface FileRouteTypes {
     | '/admin/apps/$appId'
     | '/admin/roles/$roleId'
     | '/admin/users/$userId'
+    | '/n/$network/analytics'
     | '/n/$network/audit'
+    | '/n/$network/catalog'
     | '/n/$network/members'
     | '/admin/apps/'
     | '/admin/roles/'
     | '/admin/users/'
     | '/n/$network/'
+    | '/n/$network/analytics/adherence'
+    | '/n/$network/analytics/dwell'
+    | '/n/$network/analytics/fleet'
+    | '/n/$network/analytics/headways'
+    | '/n/$network/analytics/quality'
+    | '/n/$network/analytics/runtimes'
+    | '/n/$network/analytics/speed'
+    | '/n/$network/catalog/issues'
+    | '/n/$network/live/playback'
+    | '/n/$network/tracker/$binding'
+    | '/n/$network/analytics/'
+    | '/n/$network/catalog/'
+    | '/n/$network/live/'
+    | '/n/$network/tracker/'
+    | '/n/$network/catalog/routes/$route'
+    | '/n/$network/catalog/stops/$stop'
+    | '/n/$network/catalog/routes/'
+    | '/n/$network/catalog/stops/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
@@ -267,6 +489,7 @@ export interface FileRouteTypes {
     | '/mock/logout'
     | '/'
     | '/admin/audit'
+    | '/admin/catalog'
     | '/admin/email'
     | '/admin/moderation'
     | '/admin/permissions'
@@ -280,6 +503,24 @@ export interface FileRouteTypes {
     | '/admin/roles'
     | '/admin/users'
     | '/n/$network'
+    | '/n/$network/analytics/adherence'
+    | '/n/$network/analytics/dwell'
+    | '/n/$network/analytics/fleet'
+    | '/n/$network/analytics/headways'
+    | '/n/$network/analytics/quality'
+    | '/n/$network/analytics/runtimes'
+    | '/n/$network/analytics/speed'
+    | '/n/$network/catalog/issues'
+    | '/n/$network/live/playback'
+    | '/n/$network/tracker/$binding'
+    | '/n/$network/analytics'
+    | '/n/$network/catalog'
+    | '/n/$network/live'
+    | '/n/$network/tracker'
+    | '/n/$network/catalog/routes/$route'
+    | '/n/$network/catalog/stops/$stop'
+    | '/n/$network/catalog/routes'
+    | '/n/$network/catalog/stops'
   id:
     | '__root__'
     | '/_app'
@@ -292,6 +533,7 @@ export interface FileRouteTypes {
     | '/mock/logout'
     | '/_app/'
     | '/_app/admin/audit'
+    | '/_app/admin/catalog'
     | '/_app/admin/email'
     | '/_app/admin/moderation'
     | '/_app/admin/permissions'
@@ -300,12 +542,32 @@ export interface FileRouteTypes {
     | '/_app/admin/apps/$appId'
     | '/_app/admin/roles/$roleId'
     | '/_app/admin/users/$userId'
+    | '/_app/n/$network/analytics'
     | '/_app/n/$network/audit'
+    | '/_app/n/$network/catalog'
     | '/_app/n/$network/members'
     | '/_app/admin/apps/'
     | '/_app/admin/roles/'
     | '/_app/admin/users/'
     | '/_app/n/$network/'
+    | '/_app/n/$network/analytics/adherence'
+    | '/_app/n/$network/analytics/dwell'
+    | '/_app/n/$network/analytics/fleet'
+    | '/_app/n/$network/analytics/headways'
+    | '/_app/n/$network/analytics/quality'
+    | '/_app/n/$network/analytics/runtimes'
+    | '/_app/n/$network/analytics/speed'
+    | '/_app/n/$network/catalog/issues'
+    | '/_app/n/$network/live/playback'
+    | '/_app/n/$network/tracker/$binding'
+    | '/_app/n/$network/analytics/'
+    | '/_app/n/$network/catalog/'
+    | '/_app/n/$network/live/'
+    | '/_app/n/$network/tracker/'
+    | '/_app/n/$network/catalog/routes/$route'
+    | '/_app/n/$network/catalog/stops/$stop'
+    | '/_app/n/$network/catalog/routes/'
+    | '/_app/n/$network/catalog/stops/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -398,6 +660,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAdminAuditRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/admin/catalog': {
+      id: '/_app/admin/catalog'
+      path: '/admin/catalog'
+      fullPath: '/admin/catalog'
+      preLoaderRoute: typeof AppAdminCatalogRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/admin/email': {
       id: '/_app/admin/email'
       path: '/admin/email'
@@ -475,11 +744,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppNNetworkIndexRouteImport
       parentRoute: typeof AppNNetworkRoute
     }
+    '/_app/n/$network/analytics': {
+      id: '/_app/n/$network/analytics'
+      path: '/analytics'
+      fullPath: '/n/$network/analytics'
+      preLoaderRoute: typeof AppNNetworkAnalyticsRouteImport
+      parentRoute: typeof AppNNetworkRoute
+    }
     '/_app/n/$network/audit': {
       id: '/_app/n/$network/audit'
       path: '/audit'
       fullPath: '/n/$network/audit'
       preLoaderRoute: typeof AppNNetworkAuditRouteImport
+      parentRoute: typeof AppNNetworkRoute
+    }
+    '/_app/n/$network/catalog': {
+      id: '/_app/n/$network/catalog'
+      path: '/catalog'
+      fullPath: '/n/$network/catalog'
+      preLoaderRoute: typeof AppNNetworkCatalogRouteImport
       parentRoute: typeof AppNNetworkRoute
     }
     '/_app/n/$network/members': {
@@ -489,19 +772,203 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppNNetworkMembersRouteImport
       parentRoute: typeof AppNNetworkRoute
     }
+    '/_app/n/$network/analytics/': {
+      id: '/_app/n/$network/analytics/'
+      path: '/'
+      fullPath: '/n/$network/analytics/'
+      preLoaderRoute: typeof AppNNetworkAnalyticsIndexRouteImport
+      parentRoute: typeof AppNNetworkAnalyticsRoute
+    }
+    '/_app/n/$network/analytics/adherence': {
+      id: '/_app/n/$network/analytics/adherence'
+      path: '/adherence'
+      fullPath: '/n/$network/analytics/adherence'
+      preLoaderRoute: typeof AppNNetworkAnalyticsAdherenceRouteImport
+      parentRoute: typeof AppNNetworkAnalyticsRoute
+    }
+    '/_app/n/$network/analytics/dwell': {
+      id: '/_app/n/$network/analytics/dwell'
+      path: '/dwell'
+      fullPath: '/n/$network/analytics/dwell'
+      preLoaderRoute: typeof AppNNetworkAnalyticsDwellRouteImport
+      parentRoute: typeof AppNNetworkAnalyticsRoute
+    }
+    '/_app/n/$network/analytics/fleet': {
+      id: '/_app/n/$network/analytics/fleet'
+      path: '/fleet'
+      fullPath: '/n/$network/analytics/fleet'
+      preLoaderRoute: typeof AppNNetworkAnalyticsFleetRouteImport
+      parentRoute: typeof AppNNetworkAnalyticsRoute
+    }
+    '/_app/n/$network/analytics/headways': {
+      id: '/_app/n/$network/analytics/headways'
+      path: '/headways'
+      fullPath: '/n/$network/analytics/headways'
+      preLoaderRoute: typeof AppNNetworkAnalyticsHeadwaysRouteImport
+      parentRoute: typeof AppNNetworkAnalyticsRoute
+    }
+    '/_app/n/$network/analytics/quality': {
+      id: '/_app/n/$network/analytics/quality'
+      path: '/quality'
+      fullPath: '/n/$network/analytics/quality'
+      preLoaderRoute: typeof AppNNetworkAnalyticsQualityRouteImport
+      parentRoute: typeof AppNNetworkAnalyticsRoute
+    }
+    '/_app/n/$network/analytics/runtimes': {
+      id: '/_app/n/$network/analytics/runtimes'
+      path: '/runtimes'
+      fullPath: '/n/$network/analytics/runtimes'
+      preLoaderRoute: typeof AppNNetworkAnalyticsRuntimesRouteImport
+      parentRoute: typeof AppNNetworkAnalyticsRoute
+    }
+    '/_app/n/$network/analytics/speed': {
+      id: '/_app/n/$network/analytics/speed'
+      path: '/speed'
+      fullPath: '/n/$network/analytics/speed'
+      preLoaderRoute: typeof AppNNetworkAnalyticsSpeedRouteImport
+      parentRoute: typeof AppNNetworkAnalyticsRoute
+    }
+    '/_app/n/$network/catalog/': {
+      id: '/_app/n/$network/catalog/'
+      path: '/'
+      fullPath: '/n/$network/catalog/'
+      preLoaderRoute: typeof AppNNetworkCatalogIndexRouteImport
+      parentRoute: typeof AppNNetworkCatalogRoute
+    }
+    '/_app/n/$network/catalog/issues': {
+      id: '/_app/n/$network/catalog/issues'
+      path: '/issues'
+      fullPath: '/n/$network/catalog/issues'
+      preLoaderRoute: typeof AppNNetworkCatalogIssuesRouteImport
+      parentRoute: typeof AppNNetworkCatalogRoute
+    }
+    '/_app/n/$network/live/': {
+      id: '/_app/n/$network/live/'
+      path: '/live'
+      fullPath: '/n/$network/live/'
+      preLoaderRoute: typeof AppNNetworkLiveIndexRouteImport
+      parentRoute: typeof AppNNetworkRoute
+    }
+    '/_app/n/$network/live/playback': {
+      id: '/_app/n/$network/live/playback'
+      path: '/live/playback'
+      fullPath: '/n/$network/live/playback'
+      preLoaderRoute: typeof AppNNetworkLivePlaybackRouteImport
+      parentRoute: typeof AppNNetworkRoute
+    }
+    '/_app/n/$network/tracker/': {
+      id: '/_app/n/$network/tracker/'
+      path: '/tracker'
+      fullPath: '/n/$network/tracker/'
+      preLoaderRoute: typeof AppNNetworkTrackerIndexRouteImport
+      parentRoute: typeof AppNNetworkRoute
+    }
+    '/_app/n/$network/tracker/$binding': {
+      id: '/_app/n/$network/tracker/$binding'
+      path: '/tracker/$binding'
+      fullPath: '/n/$network/tracker/$binding'
+      preLoaderRoute: typeof AppNNetworkTrackerBindingRouteImport
+      parentRoute: typeof AppNNetworkRoute
+    }
+    '/_app/n/$network/catalog/routes/': {
+      id: '/_app/n/$network/catalog/routes/'
+      path: '/routes'
+      fullPath: '/n/$network/catalog/routes/'
+      preLoaderRoute: typeof AppNNetworkCatalogRoutesIndexRouteImport
+      parentRoute: typeof AppNNetworkCatalogRoute
+    }
+    '/_app/n/$network/catalog/routes/$route': {
+      id: '/_app/n/$network/catalog/routes/$route'
+      path: '/routes/$route'
+      fullPath: '/n/$network/catalog/routes/$route'
+      preLoaderRoute: typeof AppNNetworkCatalogRoutesRouteRouteImport
+      parentRoute: typeof AppNNetworkCatalogRoute
+    }
+    '/_app/n/$network/catalog/stops/': {
+      id: '/_app/n/$network/catalog/stops/'
+      path: '/stops'
+      fullPath: '/n/$network/catalog/stops/'
+      preLoaderRoute: typeof AppNNetworkCatalogStopsIndexRouteImport
+      parentRoute: typeof AppNNetworkCatalogRoute
+    }
+    '/_app/n/$network/catalog/stops/$stop': {
+      id: '/_app/n/$network/catalog/stops/$stop'
+      path: '/stops/$stop'
+      fullPath: '/n/$network/catalog/stops/$stop'
+      preLoaderRoute: typeof AppNNetworkCatalogStopsStopRouteImport
+      parentRoute: typeof AppNNetworkCatalogRoute
+    }
   }
 }
 
+interface AppNNetworkAnalyticsRouteChildren {
+  AppNNetworkAnalyticsAdherenceRoute: typeof AppNNetworkAnalyticsAdherenceRoute
+  AppNNetworkAnalyticsDwellRoute: typeof AppNNetworkAnalyticsDwellRoute
+  AppNNetworkAnalyticsFleetRoute: typeof AppNNetworkAnalyticsFleetRoute
+  AppNNetworkAnalyticsHeadwaysRoute: typeof AppNNetworkAnalyticsHeadwaysRoute
+  AppNNetworkAnalyticsQualityRoute: typeof AppNNetworkAnalyticsQualityRoute
+  AppNNetworkAnalyticsRuntimesRoute: typeof AppNNetworkAnalyticsRuntimesRoute
+  AppNNetworkAnalyticsSpeedRoute: typeof AppNNetworkAnalyticsSpeedRoute
+  AppNNetworkAnalyticsIndexRoute: typeof AppNNetworkAnalyticsIndexRoute
+}
+
+const AppNNetworkAnalyticsRouteChildren: AppNNetworkAnalyticsRouteChildren = {
+  AppNNetworkAnalyticsAdherenceRoute: AppNNetworkAnalyticsAdherenceRoute,
+  AppNNetworkAnalyticsDwellRoute: AppNNetworkAnalyticsDwellRoute,
+  AppNNetworkAnalyticsFleetRoute: AppNNetworkAnalyticsFleetRoute,
+  AppNNetworkAnalyticsHeadwaysRoute: AppNNetworkAnalyticsHeadwaysRoute,
+  AppNNetworkAnalyticsQualityRoute: AppNNetworkAnalyticsQualityRoute,
+  AppNNetworkAnalyticsRuntimesRoute: AppNNetworkAnalyticsRuntimesRoute,
+  AppNNetworkAnalyticsSpeedRoute: AppNNetworkAnalyticsSpeedRoute,
+  AppNNetworkAnalyticsIndexRoute: AppNNetworkAnalyticsIndexRoute,
+}
+
+const AppNNetworkAnalyticsRouteWithChildren =
+  AppNNetworkAnalyticsRoute._addFileChildren(AppNNetworkAnalyticsRouteChildren)
+
+interface AppNNetworkCatalogRouteChildren {
+  AppNNetworkCatalogIssuesRoute: typeof AppNNetworkCatalogIssuesRoute
+  AppNNetworkCatalogIndexRoute: typeof AppNNetworkCatalogIndexRoute
+  AppNNetworkCatalogRoutesRouteRoute: typeof AppNNetworkCatalogRoutesRouteRoute
+  AppNNetworkCatalogStopsStopRoute: typeof AppNNetworkCatalogStopsStopRoute
+  AppNNetworkCatalogRoutesIndexRoute: typeof AppNNetworkCatalogRoutesIndexRoute
+  AppNNetworkCatalogStopsIndexRoute: typeof AppNNetworkCatalogStopsIndexRoute
+}
+
+const AppNNetworkCatalogRouteChildren: AppNNetworkCatalogRouteChildren = {
+  AppNNetworkCatalogIssuesRoute: AppNNetworkCatalogIssuesRoute,
+  AppNNetworkCatalogIndexRoute: AppNNetworkCatalogIndexRoute,
+  AppNNetworkCatalogRoutesRouteRoute: AppNNetworkCatalogRoutesRouteRoute,
+  AppNNetworkCatalogStopsStopRoute: AppNNetworkCatalogStopsStopRoute,
+  AppNNetworkCatalogRoutesIndexRoute: AppNNetworkCatalogRoutesIndexRoute,
+  AppNNetworkCatalogStopsIndexRoute: AppNNetworkCatalogStopsIndexRoute,
+}
+
+const AppNNetworkCatalogRouteWithChildren =
+  AppNNetworkCatalogRoute._addFileChildren(AppNNetworkCatalogRouteChildren)
+
 interface AppNNetworkRouteChildren {
+  AppNNetworkAnalyticsRoute: typeof AppNNetworkAnalyticsRouteWithChildren
   AppNNetworkAuditRoute: typeof AppNNetworkAuditRoute
+  AppNNetworkCatalogRoute: typeof AppNNetworkCatalogRouteWithChildren
   AppNNetworkMembersRoute: typeof AppNNetworkMembersRoute
   AppNNetworkIndexRoute: typeof AppNNetworkIndexRoute
+  AppNNetworkLivePlaybackRoute: typeof AppNNetworkLivePlaybackRoute
+  AppNNetworkTrackerBindingRoute: typeof AppNNetworkTrackerBindingRoute
+  AppNNetworkLiveIndexRoute: typeof AppNNetworkLiveIndexRoute
+  AppNNetworkTrackerIndexRoute: typeof AppNNetworkTrackerIndexRoute
 }
 
 const AppNNetworkRouteChildren: AppNNetworkRouteChildren = {
+  AppNNetworkAnalyticsRoute: AppNNetworkAnalyticsRouteWithChildren,
   AppNNetworkAuditRoute: AppNNetworkAuditRoute,
+  AppNNetworkCatalogRoute: AppNNetworkCatalogRouteWithChildren,
   AppNNetworkMembersRoute: AppNNetworkMembersRoute,
   AppNNetworkIndexRoute: AppNNetworkIndexRoute,
+  AppNNetworkLivePlaybackRoute: AppNNetworkLivePlaybackRoute,
+  AppNNetworkTrackerBindingRoute: AppNNetworkTrackerBindingRoute,
+  AppNNetworkLiveIndexRoute: AppNNetworkLiveIndexRoute,
+  AppNNetworkTrackerIndexRoute: AppNNetworkTrackerIndexRoute,
 }
 
 const AppNNetworkRouteWithChildren = AppNNetworkRoute._addFileChildren(
@@ -511,6 +978,7 @@ const AppNNetworkRouteWithChildren = AppNNetworkRoute._addFileChildren(
 interface AppRouteChildren {
   AppIndexRoute: typeof AppIndexRoute
   AppAdminAuditRoute: typeof AppAdminAuditRoute
+  AppAdminCatalogRoute: typeof AppAdminCatalogRoute
   AppAdminEmailRoute: typeof AppAdminEmailRoute
   AppAdminModerationRoute: typeof AppAdminModerationRoute
   AppAdminPermissionsRoute: typeof AppAdminPermissionsRoute
@@ -527,6 +995,7 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppIndexRoute: AppIndexRoute,
   AppAdminAuditRoute: AppAdminAuditRoute,
+  AppAdminCatalogRoute: AppAdminCatalogRoute,
   AppAdminEmailRoute: AppAdminEmailRoute,
   AppAdminModerationRoute: AppAdminModerationRoute,
   AppAdminPermissionsRoute: AppAdminPermissionsRoute,

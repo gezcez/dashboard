@@ -4,17 +4,19 @@ import enAuth from "./en/auth.json"
 import enCommon from "./en/common.json"
 import enDashboard from "./en/dashboard.json"
 import enErrors from "./en/errors.json"
+import enOps from "./en/ops.json"
 import trAuth from "./tr/auth.json"
 import trCommon from "./tr/common.json"
 import trDashboard from "./tr/dashboard.json"
 import trErrors from "./tr/errors.json"
+import trOps from "./tr/ops.json"
 
 export const LANGUAGES = ["tr", "en"] as const
 export type Language = (typeof LANGUAGES)[number]
 
 export const resources = {
-  en: { common: enCommon, errors: enErrors, auth: enAuth, dashboard: enDashboard },
-  tr: { common: trCommon, errors: trErrors, auth: trAuth, dashboard: trDashboard },
+  en: { common: enCommon, errors: enErrors, auth: enAuth, dashboard: enDashboard, ops: enOps },
+  tr: { common: trCommon, errors: trErrors, auth: trAuth, dashboard: trDashboard, ops: trOps },
 } as const
 
 export function isLanguage(value: unknown): value is Language {
@@ -36,7 +38,7 @@ export function initI18n(language: Language): typeof i18n {
       fallbackLng: "en",
       supportedLngs: LANGUAGES,
       defaultNS: "common",
-      ns: ["common", "errors", "auth", "dashboard"],
+      ns: ["common", "errors", "auth", "dashboard", "ops"],
       interpolation: { escapeValue: false },
       returnNull: false,
       initAsync: false,

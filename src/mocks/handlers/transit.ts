@@ -191,9 +191,11 @@ export function transitHandlers(ctx: Ctx, transit: TransitState): HttpHandler[] 
       if (!sim) return notFound("network")
       const url = new URL(request.url)
       const q = url.searchParams.get("q")
+      const type = url.searchParams.get("type")
       const items = sim.routes
         .map(routeItem)
         .filter((r) => matches(q, r.short_name, r.long_name, r.agency))
+        .filter((r) => type === null || r.route_type === Number(type))
       return response(200).json({
         ok: true,
         data: paginate(

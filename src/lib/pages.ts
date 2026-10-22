@@ -1,4 +1,10 @@
 import {
+  Building2Icon,
+  ChartLineIcon,
+  CirclePlayIcon,
+  LibraryBigIcon,
+  MapIcon,
+  RadioTowerIcon,
   GaugeIcon,
   KeyRoundIcon,
   AppWindowIcon,
@@ -26,6 +32,8 @@ export interface PageDef {
   group: "network" | "platform"
   label: ParseKeys
   icon: LucideIcon
+  /** false keeps a page out of the sidebar and palette (reached from another page). */
+  nav?: false
 }
 
 /**
@@ -41,6 +49,47 @@ export const PAGES = {
     group: "network",
     label: "nav.networkOverview",
     icon: LayoutDashboardIcon,
+  },
+  "network.live": {
+    to: "/n/$network/live",
+    perm: "vehicles.live.read",
+    scope: "network",
+    group: "network",
+    label: "nav.live",
+    icon: MapIcon,
+  },
+  "network.playback": {
+    to: "/n/$network/live/playback",
+    perm: "vehicles.history.read",
+    scope: "network",
+    group: "network",
+    label: "nav.playback",
+    icon: CirclePlayIcon,
+    nav: false,
+  },
+  "network.tracker": {
+    to: "/n/$network/tracker",
+    perm: "tracker.read",
+    scope: "network",
+    group: "network",
+    label: "nav.tracker",
+    icon: RadioTowerIcon,
+  },
+  "network.analytics": {
+    to: "/n/$network/analytics",
+    perm: "analytics.read",
+    scope: "network",
+    group: "network",
+    label: "nav.analytics",
+    icon: ChartLineIcon,
+  },
+  "network.catalog": {
+    to: "/n/$network/catalog",
+    perm: "catalog.read",
+    scope: "network",
+    group: "network",
+    label: "nav.catalog",
+    icon: LibraryBigIcon,
   },
   "network.members": {
     to: "/n/$network/members",
@@ -65,6 +114,14 @@ export const PAGES = {
     group: "platform",
     label: "nav.systemOverview",
     icon: GaugeIcon,
+  },
+  "admin.catalog": {
+    to: "/admin/catalog",
+    perm: "catalog.read",
+    scope: "global",
+    group: "platform",
+    label: "nav.networksCities",
+    icon: Building2Icon,
   },
   "admin.users": {
     to: "/admin/users",
@@ -150,7 +207,10 @@ export function visiblePages(
   group: PageDef["group"],
   network?: NetworkContext | null,
 ): PageId[] {
-  return PAGE_IDS.filter((id) => PAGES[id].group === group && canSeePage(me, id, network))
+  return PAGE_IDS.filter((id) => {
+    const page: PageDef = PAGES[id]
+    return page.group === group && page.nav !== false && canSeePage(me, id, network)
+  })
 }
 
 /** Route guard for beforeLoad. Throws ForbiddenError (rendered as a 403 in place). */

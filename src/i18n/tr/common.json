@@ -33,7 +33,13 @@
     "networkAudit": "Denetim kaydı",
     "apps": "OAuth uygulamaları",
     "moderation": "Moderasyon",
-    "email": "E-posta"
+    "email": "E-posta",
+    "live": "Canlı harita",
+    "playback": "Geçmiş oynatma",
+    "tracker": "Takipçi",
+    "analytics": "Analitik",
+    "catalog": "Katalog",
+    "networksCities": "Ağlar ve şehirler"
   },
   "network": {
     "switch": "Ağ değiştirin",

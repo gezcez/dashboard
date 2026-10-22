@@ -1,0 +1,767 @@
+{
+  "common": {
+    "yes": "Evet",
+    "no": "Hayır"
+  },
+  "map": {
+    "offline": "Altlık harita yüklenemedi, yalnızca veriler gösteriliyor"
+  },
+  "live": {
+    "title": "Canlı harita",
+    "playback": "Geçmiş oynatma",
+    "fit": "Filoya sığdır",
+    "direction": "Yön {{dir}}",
+    "pausedBanner_one": "Bir sağlayıcı bağlantısı duraklatıldı: araçları güncellenmiyor ve bayat görünüyor.",
+    "pausedBanner_other": "{{count}} sağlayıcı bağlantısı duraklatıldı: araçları güncellenmiyor ve bayat görünüyor.",
+    "connection": {
+      "idle": "Bağlı değil",
+      "connecting": "Bağlanıyor",
+      "open": "Canlı",
+      "reconnecting": "Yeniden bağlanıyor",
+      "fallback": "15 sn'de bir sorgulanıyor"
+    },
+    "motion": {
+      "moving": "Hareket halinde",
+      "stopped": "Duruyor",
+      "stale": "Bayat"
+    },
+    "strip": {
+      "total": "Araç",
+      "feed": "Akış",
+      "shown": "Gösterilen"
+    },
+    "filters": {
+      "label": "Filtreler",
+      "toggle": "Filtreler",
+      "search": "Plaka, hat veya yön",
+      "status": "Durum",
+      "direction": "Yön",
+      "agency": "İşletme",
+      "onlyWithTrip": "Yalnızca seferdeki araçlar",
+      "routes": "Hatlar",
+      "layers": "Katmanlar",
+      "stops": "Duraklar (yakınlaştırın)",
+      "labels": "Hat etiketleri"
+    },
+    "drawer": {
+      "label": "Araç ayrıntıları",
+      "close": "Kapat",
+      "noRoute": "Hat atanmamış",
+      "notLive": "Bu araç şu anda canlı akışta değil.",
+      "accessible": "Erişilebilir",
+      "lastUpdate": "Son güncelleme",
+      "ago": "{{duration}} önce",
+      "speed": "Hız",
+      "stop": "Durak",
+      "stopStatus": {
+        "incoming": "{{seq}}. durağa yaklaşıyor",
+        "stopped": "{{seq}}. durakta",
+        "inTransit": "{{seq}}. durağa gidiyor"
+      },
+      "trip": "Sefer",
+      "feedLag": "Akış gecikmesi",
+      "startDelay": "Tarifeye göre kalkış",
+      "late": "geç",
+      "early": "erken",
+      "duty": "Bugünkü görev",
+      "runsToday": "Bugünkü seferler",
+      "follow": "Haritada takip et",
+      "following": "Takip ediliyor",
+      "openPlayback": "Geçmişte oynat",
+      "routeHeadways": "Bu hattın bugünkü aralıkları",
+      "fleetAnalytics": "Filo analitiği"
+    }
+  },
+  "playback": {
+    "title": "Geçmiş oynatma",
+    "intro": "Araçların son saatlerdeki konumlarını, sorgu boşluklarıyla birlikte yeniden oynatın.",
+    "backToLive": "Canlı harita",
+    "window": "Zaman aralığı",
+    "hours_one": "{{count}} sa",
+    "hours_other": "{{count}} sa",
+    "capHint": "Ağ genelinde oynatma {{hours}} saatle sınırlı. 24 saate kadar için bir hat seçin.",
+    "route": "Hat",
+    "summary": "{{vehicles}} araç, {{rows}} konum",
+    "play": "Oynat",
+    "pause": "Duraklat",
+    "speed": "Oynatma hızı",
+    "timeline": "Zaman",
+    "gaps_one": "{{count}} sorgu boşluğu",
+    "gaps_other": "{{count}} sorgu boşluğu",
+    "inGap": "Veri yok: sorgu boşluğu",
+    "at": "Zaman",
+    "position": "Konum",
+    "emptyTitle": "Bu aralıkta konum yok",
+    "emptyBody": "Daha uzun bir aralık veya başka bir hat deneyin."
+  },
+  "tracker": {
+    "title": "Takipçi",
+    "intro": "Bu ağın sağlayıcı bağlantıları: sorgu sağlığı, gecikme, jetonlar ve kontroller.",
+    "empty": "Bu ağın sağlayıcı bağlantısı yok.",
+    "notFound": "Bağlantı bulunamadı",
+    "runner": "Çalıştırıcı: {{runner}}",
+    "pollNow": "Şimdi sorgula",
+    "state": {
+      "ok": "Çalışıyor",
+      "degraded": "Kısmi sorun",
+      "down": "Çalışmıyor",
+      "paused": "Duraklatıldı",
+      "killed": "Kapatıldı",
+      "unknown": "Bilinmiyor"
+    },
+    "urlVariant": {
+      "primary": "Birincil",
+      "fallback": "Yedek"
+    },
+    "columns": {
+      "binding": "Bağlantı",
+      "state": "Durum",
+      "mode": "Uç nokta",
+      "interval": "Aralık",
+      "lastPoll": "Son sorgu",
+      "outcome": "Sonuç",
+      "vehicles": "Araç",
+      "failures": "Hata",
+      "token": "Jeton"
+    },
+    "tabs": {
+      "status": "Durum",
+      "polls": "Sorgu kaydı",
+      "token": "Jeton",
+      "fallback": "Yedek",
+      "config": "Yapılandırma",
+      "logs": "Günlük"
+    },
+    "kpis": {
+      "vehicles": "Canlı araç",
+      "success": "Sorgu başarısı",
+      "window": "son {{hours}} sa",
+      "lastPoll": "Son sorgu",
+      "failures": "Ardışık hata",
+      "token": "Kaynak jetonu"
+    },
+    "charts": {
+      "latencyTitle": "Sorgu süresi",
+      "pollsTitle": "Sorgular",
+      "pollsSummary": "{{total}} sorgu, {{failed}} başarısız",
+      "vehiclesTitle": "Sorgu başına araç",
+      "lagTitle": "Akış gecikmesi ve tekilleştirme",
+      "polls": "Sorgu",
+      "ok": "Başarılı",
+      "failed": "Başarısız",
+      "vehicles": "Araç",
+      "lagP50": "Gecikme p50",
+      "lagP95": "Gecikme p95",
+      "dedup": "Tekrar oranı",
+      "gap": "Sorgu boşluğu"
+    },
+    "polls": {
+      "time": "Zaman",
+      "outcome": "Sonuç",
+      "endpoint": "Uç nokta",
+      "latency": "Süre",
+      "entities": "Varlık",
+      "inserted": "Eklenen",
+      "dropped": "Elenen",
+      "error": "Hata",
+      "errorsOnly": "Yalnızca hatalar (bu sayfa)",
+      "feedAt": "Akış zamanı",
+      "accepted": "Kabul edilen",
+      "droppedBy": "Nedene göre elenen",
+      "empty": "Henüz sorgu yok.",
+      "noErrors": "Bu sayfada başarısız sorgu yok."
+    },
+    "kill": {
+      "running": "Çalışıyor",
+      "paused": "Duraklatıldı",
+      "killed": "Sağlayıcı kapatma anahtarıyla kapatıldı",
+      "runningDetail": "Sorgular zamanında. Duraklatmak bu ağın tüm yolcuları için canlı güncellemeleri durdurur.",
+      "pausedDetail": "Neden: {{reason}} · {{when}} tarihinden beri",
+      "pause": "Sağlayıcıyı duraklat",
+      "resume": "Sağlayıcıyı sürdür",
+      "pausing": "Duraklatılıyor…",
+      "resuming": "Sürdürülüyor…",
+      "pauseTitle": "{{name}} duraklatılsın mı?",
+      "resumeTitle": "{{name}} sürdürülsün mü?",
+      "pauseEffect": "{{network}} için {{name}} duraklatılır. Sürdürülene kadar canlı araçlar hiçbir yolcu için güncellenmez.",
+      "resumeEffect": "{{network}} için {{name}} sorguları yeniden başlar. Canlı araçlar bir sonraki sorgudan itibaren güncellenir.",
+      "reason": "Neden (denetim kaydında saklanır)",
+      "unconfirmed": {
+        "pause": "Duraklatma istendi, takipçi henüz onaylamadı.",
+        "resume": "Sürdürme istendi, takipçi henüz onaylamadı."
+      }
+    },
+    "control": {
+      "failed": "Takipçi işlemi reddetti. {{error}}",
+      "done": {
+        "pause": "Sağlayıcı duraklatıldı",
+        "resume": "Sağlayıcı sürdürüldü",
+        "poll-now": "Sorgu istendi",
+        "reset-url": "Birincil uç noktaya dönüldü",
+        "refresh-token": "Jeton yenilendi"
+      }
+    },
+    "token": {
+      "none": "Yok",
+      "notNeeded": "Bu sağlayıcı kaynak jetonu gerektirmez.",
+      "state": "Durum",
+      "realm": "Alan",
+      "expires": "Bitiş",
+      "refreshed": "Son yenileme",
+      "failures": "Yenileme hataları (24 sa)",
+      "secrets": "Gizli değerler",
+      "secretsHint": "Yalnızca gizli değerlerin adları gösterilir; değerler sunucudan hiç çıkmaz.",
+      "missing": "Eksik",
+      "states": {
+        "ok": "Geçerli",
+        "missing": "Eksik",
+        "refreshing": "Yenileniyor",
+        "auth_failed": "Kimlik doğrulama hatası",
+        "unknown": "Bilinmiyor"
+      },
+      "refresh": "Jetonu şimdi yenile",
+      "refreshTitle": "{{name}} jetonu yenilensin mi?",
+      "refreshEffect": "Kaynaktan hemen yeni bir jeton istenir. Yenisi gelene kadar sorgular mevcut jetonla sürer."
+    },
+    "fallback": {
+      "current": "Kullanılan uç nokta",
+      "baseUrl": "Temel URL",
+      "lastFeed": "Son akış",
+      "explain": "Art arda hatalardan sonra takipçi yedek uç noktaya geçer. Temizlemek bir sonraki sorguda birincili yeniden dener.",
+      "reset": "Yedeği temizle, birincili dene",
+      "resetTitle": "{{name}} için birincil uç nokta denensin mi?",
+      "resetEffect": "Bir sonraki sorgu birincil uç noktaya gider. Yine başarısız olursa takipçi eskisi gibi yedeğe geçer."
+    },
+    "config": {
+      "poll_interval_s": "Sorgu aralığı (sn)",
+      "idle_poll_interval_s": "Boşta sorgu aralığı (sn)",
+      "readOnly": "Bu yapılandırmayı görebilirsiniz. Değiştirmek için tracker.config.write gerekir.",
+      "raw": "Yapılandırma (JSON)",
+      "review_one": "{{count}} değişikliği incele",
+      "review_other": "{{count}} değişikliği incele",
+      "discard": "Değişiklikleri at",
+      "reviewTitle_one": "{{count}} değişiklik",
+      "reviewTitle_other": "{{count}} değişiklik",
+      "reason": "Neden (denetim kaydında saklanır)",
+      "back": "Düzenlemeye dön",
+      "save": "Yapılandırmayı kaydet",
+      "saving": "Kaydediliyor…",
+      "saved": "Yapılandırma kaydedildi",
+      "failed": "Yapılandırma kaydedilemedi",
+      "errors": {
+        "required": "Zorunlu",
+        "pattern": "Beklenen biçime uymuyor",
+        "range": "Aralık dışında"
+      }
+    },
+    "logs": {
+      "level": "En düşük seviye",
+      "pause": "Kaydırmayı duraklat",
+      "follow": "Takip et",
+      "clear": "Temizle",
+      "count": "{{shown}} satır ({{max}} tutulur)",
+      "waiting": "Günlük satırları bekleniyor…"
+    }
+  },
+  "analytics": {
+    "title": "Analitik",
+    "n": "n = {{n}}",
+    "source": {
+      "hot": "canlı veri",
+      "archive": "arşiv",
+      "rollup": "özet"
+    },
+    "methodology": "Yöntem",
+    "viewAsTable": "Tablo",
+    "export": "Dışa aktar",
+    "exportFailed": "Dışa aktarma başarısız",
+    "tableCapped": "{{total}} satırın {{shown}} tanesi gösteriliyor. Tümü için dışa aktarın.",
+    "emptyTitle": "Bu filtrelerle veri yok",
+    "emptyBody": "Daha geniş bir tarih aralığı veya daha az filtre deneyin.",
+    "presets": {
+      "today": "Bugün",
+      "yesterday": "Dün",
+      "7d": "7 gün",
+      "30d": "30 gün"
+    },
+    "dayTypes": {
+      "all": "Tüm günler",
+      "weekday": "Hafta içi",
+      "saturday": "Cumartesi",
+      "sunday": "Pazar"
+    },
+    "filters": {
+      "range": "Tarih aralığı",
+      "from": "Başlangıç",
+      "to": "Bitiş",
+      "dayType": "Günler",
+      "hourFrom": "Başlangıç saati",
+      "hourTo": "Bitiş saati",
+      "route": "Hat",
+      "direction": "Yön",
+      "tooLong": "İstek başına en çok {{days}} gün."
+    },
+    "columns": {
+      "route": "Hat",
+      "direction": "Yön",
+      "stop": "Durak",
+      "hour": "Saat"
+    },
+    "method": {
+      "filtersTitle": "Hariç tutulanlar",
+      "caveatsTitle": "Uyarılar",
+      "staff": "Personel hatları (örneğin 419) ve araçları.",
+      "test": "Bağlantı yapılandırmasında listelenen test cihazları.",
+      "outliers": "30 m/sn üstü hız aykırılıkları ve konumlar arası olanaksız sıçramalar."
+    },
+    "views": {
+      "label": "Analitik görünümleri",
+      "index": {
+        "tab": "Genel bakış",
+        "title": "Analitik",
+        "intro": "Seçilen dönem için her görünümden bir sayı. Ayrıntı için görünümü açın."
+      },
+      "fleet": {
+        "tab": "Filo",
+        "title": "Filo kullanımı",
+        "intro": "Kaç aracın, ne zaman ve ne kadar süre çalıştığı."
+      },
+      "runtimes": {
+        "tab": "Sefer süreleri",
+        "title": "Sefer süreleri",
+        "intro": "Hat, yön ve saate göre baştan sona sefer süreleri."
+      },
+      "headways": {
+        "tab": "Aralıklar",
+        "title": "Aralıklar ve yığılma",
+        "intro": "Araçlar arası aralık, yığılma ve boşluklar ile zaman-mekân grafiği."
+      },
+      "adherence": {
+        "tab": "Tarifeye uyum",
+        "title": "Tarifeye göre gecikme",
+        "intro": "Ağın tarife yayımladığı yerlerde kalkış gecikmeleri."
+      },
+      "dwell": {
+        "tab": "Bekleme",
+        "title": "Durakta bekleme",
+        "intro": "Araçların duraklarda ne kadar beklediği."
+      },
+      "speed": {
+        "tab": "Hız",
+        "title": "Hız ısı haritası",
+        "intro": "Altıgen başına ortanca araç hızı."
+      },
+      "quality": {
+        "tab": "Kalite",
+        "title": "Veri kalitesi",
+        "intro": "Günlük akış sağlığı puanı, gecikme, boşluklar ve kapsam."
+      }
+    },
+    "index": {
+      "fleetHint": "Bir gündeki en yüksek araç sayısı",
+      "runtimeHint": "Ortanca sefer süresi",
+      "bunchingHint": "Ortancanın yarısından kısa aralıklar",
+      "needsTimetable": "Tarife gerekli",
+      "dwellHint": "En yoğun duraklarda ortanca bekleme",
+      "speedHint": "Hücreler genelinde ortanca hız",
+      "qualityHint": "En son günlük puan"
+    },
+    "fleet": {
+      "vehicles": "Araç",
+      "thisPeriod": "Bu dönem",
+      "previousPeriod": "Önceki dönem",
+      "vehicleHours": "Araç-saat",
+      "kpiVehicles": "Farklı araç",
+      "kpiAdded_one": "Bu aralıkta {{count}} yeni",
+      "kpiAdded_other": "Bu aralıkta {{count}} yeni",
+      "kpiPeak": "En yüksek araç",
+      "kpiDuty": "Ortalama görev",
+      "activeTitle": "Aktif araçlar",
+      "activeBody": "{{granularity}} dilim başına farklı araç.",
+      "granularity": "Dilim",
+      "compare": "Önceki dönemle karşılaştır",
+      "hoursTitle": "Günlük araç-saat",
+      "heatmapTitle": "Saat ve hafta günü",
+      "heatmapBody": "Ortanca aktif araç.",
+      "vehiclesTitle": "Günlere göre araçlar",
+      "vehiclesBody": "Araç ve gün başına görev süresi ve örnek sayısı.",
+      "method": {
+        "what": "Bir araç, dilimde en az bir konum bildirdiyse o dilimde aktif sayılır. Araç-saat, her bulunma dönemindeki ilk ve son konum arasındaki süreleri toplar.",
+        "caveats": "Sorgu boşlukları (örneğin kaynağın gece bakımı) kapsadıkları dilimlerin sayılarını düşürür."
+      }
+    },
+    "runtimes": {
+      "minutes": "Dakika",
+      "runs": "Sefer",
+      "byHourTitle": "{{route}} hattı, {{dir}} yönü saate göre",
+      "byHourBody": "Kalkış saatine göre ortanca (p50) ve p90 süre; çubuklar sefer sayısı. Soluk noktalarda 5'ten az sefer var.",
+      "tableTitle": "Tüm hat-yönler",
+      "tableBody": "Grafikte görmek için bir satır seçin.",
+      "method": {
+        "what": "Seferler, aracın sefer kimliği değiştiğinde ayrılır; en az 5 durağı kapsayan sefer sayılır. Süre ilk duraktan son durağa kadardır.",
+        "caveats": "Tek tek seferlerin histogramı sefer başına satır gerektirir; metrik henüz bunu döndürmüyor."
+      }
+    },
+    "headways": {
+      "stopAxis": "Durak",
+      "stopSeq": "{{seq}}. durak",
+      "median": "Ortanca",
+      "bunching": "Yığılma",
+      "gaps": "Boşluk",
+      "mareyTitle": "{{route}} hattı, {{dir}} yönü, {{date}}",
+      "mareyBody": "Araç başına bir çizgi, {{trips}} sefer. Birbirine değen çizgiler yığılmış otobüslerdir; geniş aralıklar boşluktur. Yakınlaştırmak için sürükleyin veya kaydırın.",
+      "mareyEmpty": "Bu hat, yön ve gün için sefer yok.",
+      "byStopTitle": "Hat boyunca aralık",
+      "byStopBody": "Seçili hat-yönün her durağında ortanca ve p90 aralık.",
+      "bunchingTitle": "Hatlara göre yığılma ve boşluk",
+      "bunchingBody": "Ortancanın yarısından kısa (yığılma) veya 1,5 katından uzun (boşluk) aralıkların payı.",
+      "gapTitle": "Boşluk yoğun noktalar",
+      "gapBody": "Aralıkların en az %15'inin boşluk olduğu durak-saatler.",
+      "noGaps": "Bu dönemde boşluk yoğun nokta yok.",
+      "method": {
+        "what": "Aralık, aynı hat ve yöndeki art arda iki aracın bir duraktan geçişleri arasındaki süredir.",
+        "bunching": "Tarife yoksa yığılma ve boşluk, o durak ve saatin gözlenen ortancasıyla karşılaştırılır.",
+        "marey": "Zaman-mekân grafiği, aralığın son gününde tek bir hat-yönü gösterir."
+      }
+    },
+    "adherence": {
+      "early_share": "Erken",
+      "on_time_share": "Zamanında",
+      "late_share": "Geç",
+      "onTime": "Zamanında",
+      "onTimeHint": "1 dk erken ile 5 dk geç arasındaki kalkışlar",
+      "medianDelay": "Ortanca gecikme",
+      "sharesTitle": "Saate göre erken, zamanında ve geç",
+      "heatmapTitle": "Hat ve saate göre ortanca gecikme",
+      "worstTitle": "En kötü hat-yönler (p90 gecikme)",
+      "noTimetableTitle": "Bu ağ için henüz tarife yok",
+      "noTimetableBody": "Gecikmeler planlı kalkışlar gerektirir. Sağlayıcı bu ağ için tarife yayımlamıyor.",
+      "noTimetableLink": "Katalog sorununa bakın",
+      "method": {
+        "what": "Her seferin ilk kalkışı, hattının ve yönünün en yakın planlı kalkışıyla eşleştirilir.",
+        "window": "Zamanında: 1 dakika erken ile 5 dakika geç arası."
+      }
+    },
+    "dwell": {
+      "median": "Ortanca",
+      "topTitle_one": "Beklemeye göre ilk {{count}} durak",
+      "topTitle_other": "Beklemeye göre ilk {{count}} durak",
+      "topBody": "Ortanca ve p90 bekleme süresi. Durağın saatleri için bir çubuk seçin.",
+      "mapTitle": "Araçların en uzun beklediği yerler",
+      "mapBody": "Halka boyutu ortanca beklemeyi izler.",
+      "byHourTitle": "{{stop}} saate göre",
+      "method": {
+        "what": "Bekleme, aynı durakta 'durakta' bildirimlerinin (veya sıfıra yakın hızın) süresidir."
+      }
+    },
+    "speed": {
+      "allDay": "Tüm gün",
+      "hour": "Saat",
+      "res": "Çözünürlük",
+      "resolution": "H3 çözünürlüğü {{res}}",
+      "median": "Ortanca hız",
+      "cells": "Hücre",
+      "slowCells": "Yavaş hücre",
+      "slowHint": "Ortanca 12 km/sa altında",
+      "legend": "Hız ölçeği",
+      "mapTitle": "Ortanca hız, {{hour}}",
+      "mapBody": "Örneği az olan altıgenler dışarıda bırakılır. Sayılar için birini seçin.",
+      "empty": "Yeterli örneği olan hücre yok. Tarih aralığını genişletin.",
+      "method": {
+        "what": "Hızlar aynı aracın art arda konumlarından hesaplanır ve H3 altıgenlerine gruplanır.",
+        "samples": "30'dan az örneği olan hücreler atılır."
+      }
+    },
+    "quality": {
+      "scoreToday": "Puan, son gün",
+      "scoreAvg": "Ortalama puan",
+      "worstDay": "En kötü gün",
+      "coverage": "Hat kapsamı",
+      "calendarTitle": "Günlük puan",
+      "lagTitle": "Akış gecikmesi ve sorgu boşlukları",
+      "lagP50": "Gecikme p50",
+      "lagP95": "Gecikme p95",
+      "gapMinutes": "Boşluk dakikası",
+      "sharesTitle": "Bayat, aykırı ve başarısız sorgular",
+      "staleShare": "Bayat araçlar",
+      "outlierShare": "GPS aykırıları",
+      "successRate": "Başarısız sorgular",
+      "droppedTitle": "Nedene göre elenen satırlar",
+      "droppedBody": "Yolculara ulaşmadan elenen konumlar.",
+      "dropped": {
+        "dropped_test": "Test cihazları",
+        "dropped_staff": "Personel hatları",
+        "dropped_stale": "Bayat",
+        "dropped_out_of_bbox": "Alan dışında",
+        "dropped_invalid": "Geçersiz"
+      },
+      "coverageTitle": "Kontrol edilecek hatlar",
+      "coverageBody": "Akışta görülen ama katalogda olmayan veya bu aralıkta hiç görülmeyen hatlar.",
+      "coverageClean": "Katalogdaki her hat görüldü ve akıştaki her hat katalogda.",
+      "problem": "Sorun",
+      "notInCatalog": "Katalogda yok",
+      "neverSeen": "Hiç görülmedi",
+      "daysSeen": "Görüldüğü gün",
+      "vehicles": "Araç",
+      "lastSeen": "Son görülme",
+      "method": {
+        "score": "Günlük puan (0-100) dört parçadan oluşur:",
+        "success": "%40: sorgu başarı oranı.",
+        "freshness": "%30: taze (bayat olmayan) araçların payı.",
+        "coverage": "%20: akışta görülen katalog hatları.",
+        "outliers": "%10: GPS aykırısı olmayan konumlar."
+      }
+    }
+  },
+  "catalog": {
+    "title": "Katalog",
+    "intro": "Ağ profili, sağlayıcı bağlantıları ve yolcuların gördüğü gizlilik bilgileri.",
+    "tabsLabel": "Katalog bölümleri",
+    "tabs": {
+      "profile": "Profil",
+      "routes": "Hatlar",
+      "stops": "Duraklar",
+      "issues": "Sorunlar"
+    },
+    "modes": {
+      "tram": "Tramvay",
+      "metro": "Metro",
+      "rail": "Tren",
+      "bus": "Otobüs",
+      "ferry": "Vapur",
+      "cable_tram": "Kablolu tramvay",
+      "aerial_lift": "Teleferik",
+      "funicular": "Füniküler",
+      "trolleybus": "Troleybüs",
+      "monorail": "Monoray"
+    },
+    "networkStatus": {
+      "active": "Aktif",
+      "degraded": "Kısmi sorun",
+      "disabled": "Devre dışı"
+    },
+    "profile": {
+      "title": "Ağ profili",
+      "readOnly": "Burada salt okunur: arka uçta henüz ağ düzenleme uç noktası yok.",
+      "name": "Ad",
+      "slug": "Kısa ad",
+      "operator": "İşletmeci",
+      "status": "Durum",
+      "modes": "Ulaşım türleri",
+      "staticSynced": "Statik veri eşitlendi",
+      "outdated": "Güncel olmayabilir",
+      "realtimeFeed": "Canlı akış",
+      "pack": "Çevrimdışı paket"
+    },
+    "bindings": {
+      "title": "Sağlayıcı bağlantıları",
+      "intro": "Bu ağın verisinin geldiği yerler.",
+      "empty": "Henüz sağlayıcı bağlantısı yok.",
+      "interval": "her {{s}} sn (boşta {{idle}} sn)",
+      "lastFeed": "son akış {{when}}",
+      "openTracker": "Takipçi",
+      "status": {
+        "active": "Aktif",
+        "paused": "Duraklatıldı",
+        "disabled": "Devre dışı"
+      }
+    },
+    "sync": {
+      "now": "Kataloğu şimdi eşitle",
+      "running": "Eşitleniyor…",
+      "failed": "Eşitleme başarısız. {{error}}",
+      "done": {
+        "ok": "Katalog eşitlendi",
+        "unchanged": "Katalog değişmedi",
+        "failed": "Eşitleme başarısız"
+      },
+      "runsTitle": "Eşitleme çalışmaları",
+      "noRuns": "Henüz eşitleme yok.",
+      "started": "Başlangıç",
+      "status": "Durum",
+      "trigger": "Tetikleyen",
+      "duration": "Süre",
+      "counts": "Sayılar",
+      "statuses": {
+        "running": "Çalışıyor",
+        "ok": "Tamam",
+        "unchanged": "Değişmedi",
+        "failed": "Başarısız"
+      }
+    },
+    "privacy": {
+      "title": "Sağlayıcının topladıkları",
+      "intro": "Herkese açık gizlilik sayfasında gösterilir ve vazgeçme özelliğinde kullanılır.",
+      "none": "Hiçbir sağlayıcı toplanan veri bildirmiyor.",
+      "key": "Veri",
+      "collected": "Toplanıyor",
+      "optOut": "Vazgeçilebilir",
+      "details": "Ayrıntı",
+      "attribution": "Veri kaynağı:"
+    },
+    "routes": {
+      "intro": "Bu ağın sağlayıcının yayımladığı tüm hatları.",
+      "search": "Hat ara",
+      "code": "Kod",
+      "name": "Ad",
+      "agency": "İşletme",
+      "mode": "Tür",
+      "id": "Kimlik",
+      "empty": "Eşleşen hat yok."
+    },
+    "route": {
+      "notFound": "Hat bulunamadı",
+      "runtimes": "Sefer süreleri",
+      "headways": "Bugünkü aralıklar",
+      "towards": "{{headsign}} yönü",
+      "timetable": "Tarife",
+      "dayType": "Hizmet günü",
+      "noTimetable": "Bu hat ve gün için tarife yok.",
+      "noDepartures": "Kalkış yok.",
+      "departures_one": "{{count}} kalkış",
+      "departures_other": "{{count}} kalkış",
+      "timetableCaption": "{{headsign}} yönüne kalkışlar",
+      "hour": "Saat",
+      "minutes": "Dakika",
+      "stops_one": "{{count}} durak",
+      "stops_other": "{{count}} durak"
+    },
+    "stops": {
+      "intro": "Bu ağın durakları.",
+      "search": "Durak ara",
+      "name": "Ad",
+      "code": "Kod",
+      "coords": "Koordinatlar",
+      "empty": "Eşleşen durak yok."
+    },
+    "stop": {
+      "notFound": "Durak bulunamadı",
+      "dwell": "Ortanca bekleme",
+      "headway": "Ortanca aralık",
+      "last7": "Son 7 gün",
+      "routes_one": "{{count}} hat",
+      "routes_other": "{{count}} hat",
+      "departures": "Sıradaki kalkışlar",
+      "noDepartures": "Yaklaşan kalkış yok.",
+      "source": {
+        "schedule": "Tarifeli",
+        "live": "Canlı",
+        "live_eta": "Canlı tahmin"
+      }
+    },
+    "issues": {
+      "intro": "Arka uç işlerinin bulduğu veri sorunları ve durumları.",
+      "search": "Sorun ara",
+      "severity": "Önem",
+      "type": "Tür",
+      "entity": "Varlık",
+      "statusLabel": "Durum",
+      "firstDetected": "İlk görülme",
+      "lastDetected": "Son görülme",
+      "severities": {
+        "critical": "Kritik",
+        "warning": "Uyarı",
+        "info": "Bilgi"
+      },
+      "status": {
+        "open": "Açık",
+        "acknowledged": "Görüldü",
+        "resolved": "Çözüldü",
+        "ignored": "Yok sayıldı"
+      },
+      "types": {
+        "route_not_in_catalog": "Akışta var, katalogda yok",
+        "route_never_seen": "7 gündür görülmeyen hat",
+        "stop_without_coordinates": "Koordinatsız durak",
+        "duplicate_stops": "15 m içinde yinelenen duraklar",
+        "trip_without_timetable": "Tarifesiz seferler",
+        "staff_route_leak": "Herkese açık veride personel hattı"
+      },
+      "entities": {
+        "route": "Hat",
+        "stop": "Durak",
+        "vehicle": "Araç",
+        "binding": "Bağlantı",
+        "trip": "Sefer"
+      },
+      "openCount_one": "{{count}} açık {{severity}}",
+      "openCount_other": "{{count}} açık {{severity}}",
+      "selectAll": "Bu sayfadakilerin hepsini seç",
+      "select": "{{label}} seç",
+      "bulk": "Toplu işlemler",
+      "selected_one": "{{count}} seçili",
+      "selected_other": "{{count}} seçili",
+      "actions": {
+        "acknowledge": "Görüldü işaretle",
+        "resolve": "Çözüldü",
+        "reopen": "Yeniden aç",
+        "ignore": "Yok say"
+      },
+      "updated_one": "{{count}} sorun {{status}} olarak işaretlendi",
+      "updated_other": "{{count}} sorun {{status}} olarak işaretlendi",
+      "undo": "Geri al",
+      "failed": "Sorunlar güncellenemedi",
+      "ignoreTitle_one": "{{count}} sorun yok sayılsın mı?",
+      "ignoreTitle_other": "{{count}} sorun yok sayılsın mı?",
+      "ignoreBody": "Yok sayılan sorunlar açık listede görünmez. Sonraki kişi için nedenini yazın.",
+      "reason": "Neden",
+      "saving": "Kaydediliyor…",
+      "empty": "Sorun yok",
+      "emptyBody": "Tespit işleri bu ağ için bir şey bulmadı.",
+      "noMatch": "Bu filtrelerle eşleşen sorun yok."
+    }
+  },
+  "adminCatalog": {
+    "eyebrow": "Platform",
+    "title": "Ağlar ve şehirler",
+    "intro": "gezcez genelindeki tüm ağlar, şehirler ve veri sağlayıcılar.",
+    "tabs": {
+      "networks": "Ağlar",
+      "cities": "Şehirler",
+      "providers": "Sağlayıcılar"
+    },
+    "visibility": {
+      "public": "Herkese açık",
+      "hidden": "Gizli"
+    },
+    "cityStatus": {
+      "draft": "Taslak",
+      "public": "Herkese açık",
+      "hidden": "Gizli"
+    },
+    "networks": {
+      "name": "Ağ",
+      "city": "Şehir",
+      "operator": "İşletmeci",
+      "visibility": "Görünürlük",
+      "bindings": "Bağlantı",
+      "timezone": "Saat dilimi"
+    },
+    "cities": {
+      "name": "Şehir",
+      "country": "Ülke",
+      "status": "Durum",
+      "timezone": "Saat dilimi",
+      "centre": "Merkez"
+    },
+    "providers": {
+      "empty": "Kayıtlı sağlayıcı yok.",
+      "on": "Açık",
+      "off": "Kapatıldı",
+      "envOff": "Ortam değişkeniyle kapalı",
+      "replayed": "Yeniden oynatılan veri",
+      "bindings_one": "{{count}} bağlantı",
+      "bindings_other": "{{count}} bağlantı",
+      "kill": "Sağlayıcıyı kapat",
+      "enable": "Sağlayıcıyı yeniden aç",
+      "killed": "Sağlayıcı kapatıldı",
+      "enabled": "Sağlayıcı açıldı",
+      "killTitle": "{{name}} her yerde kapatılsın mı?",
+      "enableTitle": "{{name}} yeniden açılsın mı?",
+      "killEffect_one": "{{count}} bağlantının sorgusu hemen durur. Bu sağlayıcıyı kullanan her ağ, yeniden açılana kadar canlı veriyi kaybeder.",
+      "killEffect_other": "{{count}} bağlantının tümünün sorgusu hemen durur. Bu sağlayıcıyı kullanan her ağ, yeniden açılana kadar canlı veriyi kaybeder.",
+      "enableEffect_one": "{{count}} bağlantı için sorgular bir sonraki turda yeniden başlar.",
+      "enableEffect_other": "{{count}} bağlantı için sorgular bir sonraki turda yeniden başlar."
+    }
+  }
+}
