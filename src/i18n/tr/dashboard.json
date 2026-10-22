@@ -58,7 +58,11 @@
     "tabs": {
       "profile": "Profil",
       "roles": "Roller",
-      "moderation": "Moderasyon"
+      "moderation": "Moderasyon",
+      "sessions": "Oturumlar",
+      "activity": "Etkinlik",
+      "emails": "E-postalar",
+      "privacy": "Gizlilik"
     },
     "profile": {
       "account": "Hesap",
@@ -95,7 +99,24 @@
       "grantedBy": "Veren",
       "grantedAt": "Verilme",
       "global": "Genel",
-      "system": "Sistem"
+      "system": "Sistem",
+      "granted": "Veriliş",
+      "actions": "İşlemler",
+      "hint": "Roller genel ya da ağ bazındadır. Yalnızca kendi seviyenizin altındaki rolleri değiştirebilirsiniz.",
+      "selfHint": "Kendi rollerinizi değiştiremezsiniz.",
+      "add": "Rol ekle",
+      "addTitle": "{{name}} kullanıcısına rol ekleyin",
+      "addBody": "Genel roller için yakın zamanda giriş yapmış olmanız gerekir. Ağ rolleri yalnızca o ağda geçerlidir.",
+      "pick": "Bir rol seçin",
+      "grant": "Rolü ver",
+      "globalHint": "Genel roller her ağda geçerlidir.",
+      "levelHint": "Yalnızca bu ağdaki seviyenizin altındaki roller listelenir.",
+      "grantedToast": "{{role}} verildi ({{scope}}).",
+      "remove": "Kaldır",
+      "removeTitle": "{{role}} kaldırılsın mı?",
+      "removeEffect": "{{name}}, {{scope}} kapsamında {{role}} rolünü ve yalnızca bu rolden gelen tüm izinleri kaybeder.",
+      "removed": "Rol kaldırıldı.",
+      "failed": "Rol değişikliği kaydedilemedi. Tekrar deneyin."
     },
     "moderation": {
       "banned": "Yasaklı",
@@ -104,7 +125,9 @@
       "until": "Bitiş",
       "publicReason": "Kullanıcıya gösterilen neden",
       "privateReason": "İç not",
-      "by": "Yasaklayan"
+      "by": "Yasaklayan",
+      "history": "Geçmiş",
+      "noHistory": "Henüz moderasyon işlemi yok."
     },
     "ban": {
       "action": "Kullanıcıyı yasakla",
@@ -137,6 +160,62 @@
       "failed": "Yasak kaldırılamadı.",
       "reason": "Neden",
       "reasonHint": "En az 3 karakter. Denetim kaydına yazılır."
+    },
+    "sessions": {
+      "summary_one": "{{count}} etkin oturum veya belirteç ailesi.",
+      "summary_other": "{{count}} etkin oturum ve belirteç ailesi.",
+      "empty": "Etkin oturum yok.",
+      "app": "Uygulama",
+      "device": "Cihaz",
+      "ip": "IP (/24)",
+      "lastUsed": "Son kullanım",
+      "expires": "Bitiş",
+      "actions": "İşlemler",
+      "sso": "gezcez girişi",
+      "kinds": {
+        "sso": "SSO",
+        "refresh": "Yenileme"
+      },
+      "created": "{{when}} tarihinden beri",
+      "revoke": "İptal et",
+      "revokeAll": "Tüm oturumları iptal et",
+      "revokeTitle": "Bu oturum iptal edilsin mi?",
+      "revokeEffect": "Kullanıcının {{device}} üzerindeki {{app}} oturumu kapatılır. Diğer oturumlar açık kalır.",
+      "revokeAllTitle": "{{name}} kullanıcısının tüm oturumları iptal edilsin mi?",
+      "revokeAllEffect_one": "{{name}} tüm cihaz ve uygulamalardaki {{count}} oturumdan çıkarılır. Yasaklı değilse yeniden giriş yapabilir.",
+      "revokeAllEffect_other": "{{name}} tüm cihaz ve uygulamalardaki {{count}} oturumdan çıkarılır. Yasaklı değilse yeniden giriş yapabilir.",
+      "reason": "Gerekçe (denetim kaydında tutulur)",
+      "revoked_one": "{{count}} oturum iptal edildi.",
+      "revoked_other": "{{count}} oturum iptal edildi.",
+      "failed": "Oturumlar iptal edilemedi. Tekrar deneyin."
+    },
+    "activity": {
+      "empty": "Bu kullanıcı için denetim kaydı yok."
+    },
+    "emails": {
+      "note": "Yalnızca üst veriler tutulur: kod ve etkinleştirme e-postalarının içeriği hiçbir zaman saklanmaz.",
+      "empty": "Bu kullanıcıya e-posta gönderilmemiş."
+    },
+    "privacy": {
+      "deletion": "Hesap silme",
+      "exports": "Veri dışa aktarımları",
+      "status": "Durum",
+      "requested": "Talep",
+      "deleteAfter": "Silinme tarihi",
+      "noDeletion": "Silme talebi yok.",
+      "noExports": "Dışa aktarım talebi yok.",
+      "expires": "{{date}} tarihinde sona erer",
+      "deletionStatus": {
+        "scheduled": "Planlandı",
+        "cancelled": "İptal edildi",
+        "completed": "Tamamlandı"
+      },
+      "exportStatus": {
+        "pending": "Hazırlanıyor",
+        "ready": "Hazır",
+        "expired": "Süresi doldu",
+        "failed": "Başarısız"
+      }
     }
   },
   "roles": {
@@ -216,7 +295,8 @@
       "before": "Önce",
       "after": "Sonra",
       "noChanges": "Bu kayıt için alan değişikliği yok."
-    }
+    },
+    "networkIntro": "Bu ağda yapılan değişiklikler: roller, izleyici denetimleri ve ayarlar."
   },
   "role": {
     "eyebrow": "Rol",
@@ -311,5 +391,225 @@
     "deleteEffect_other": "Anahtarı ve {{count}} roldeki iznini kaldırır. Geri alınamaz; anahtarı yeniden kullanan bir sürüm onu izinsiz olarak yeniden kaydeder.",
     "deleted": "{{key}} silindi.",
     "deleteFailed": "Anahtar silinemedi. Tekrar deneyin."
+  },
+  "moderation": {
+    "active": "Etkin",
+    "actions": {
+      "ban": "Yasak",
+      "unban": "Yasak kaldırma",
+      "warn": "Uyarı",
+      "note": "Not"
+    }
+  },
+  "email": {
+    "status": {
+      "queued": "Sırada",
+      "sent": "Gönderildi",
+      "delivered": "Teslim edildi",
+      "bounced": "Geri döndü",
+      "complained": "Şikâyet",
+      "failed": "Başarısız"
+    },
+    "columns": {
+      "sent": "Gönderim",
+      "template": "Şablon",
+      "subject": "Konu",
+      "status": "Durum",
+      "to": "Alıcı",
+      "user": "Kullanıcı",
+      "locale": "Dil"
+    }
+  },
+  "members": {
+    "title": "Üyeler",
+    "intro": "Bu ağda rolü olan kişiler. Kendi seviyenizin altındaki rolleri yönetebilirsiniz.",
+    "add": "Üye ekle",
+    "search": "Üyelerde arayın",
+    "empty": "Burada henüz kimsenin rolü yok.",
+    "emptyBody": "Birine bu ağa erişim vermek için üye ekleyin.",
+    "noMatch": "Eşleşen üye yok.",
+    "columns": {
+      "member": "Üye",
+      "email": "E-posta",
+      "roles": "Roller",
+      "granted": "Son verilen",
+      "lastActive": "Son etkinlik"
+    },
+    "removeRole": "{{name}} kullanıcısından {{role}} rolünü kaldır",
+    "removed": "{{name}} kullanıcısından {{role}} kaldırıldı.",
+    "undo": "Geri al",
+    "removeFailed": "Rol kaldırılamadı. Tekrar deneyin.",
+    "undoFailed": "Rol geri yüklenemedi. Yeniden ekleyin.",
+    "addTitle": "{{network}} ağına üye ekleyin",
+    "addBody": "gezcez hesabı olan birini bulun, ardından buradaki rollerini seçin.",
+    "find": "Kullanıcı bulun",
+    "findHint": "Kullanıcı adının en az 2 karakterini yazın.",
+    "findHintEmail": "Kullanıcı adının en az 2 karakterini ya da tam e-posta adresini yazın.",
+    "results": "Eşleşen kullanıcılar",
+    "noCandidates": "Eşleşen kullanıcı yok.",
+    "change": "Değiştir",
+    "roles": "Roller",
+    "noAssignable": "Burada atayabileceğiniz rol yok.",
+    "addSubmit": "Üye ekle",
+    "added": "{{name}}, {{network}} ağına eklendi.",
+    "addFailed": "Üye eklenemedi. Tekrar deneyin."
+  },
+  "apps": {
+    "eyebrow": "Platform",
+    "title": "OAuth uygulamaları",
+    "intro": "gezcez ile giriş yaptıran istemciler: yönlendirme URI'leri, kapsamlar, belirteç süreleri ve gizli anahtarlar.",
+    "search": "Ad veya istemci kimliğiyle arayın",
+    "empty": "Henüz uygulama yok.",
+    "noMatch": "Eşleşen uygulama yok.",
+    "back": "Tüm uygulamalar",
+    "notFoundTitle": "Uygulama bulunamadı",
+    "notFoundBody": "Bu kimlikle bir istemci yok.",
+    "columns": {
+      "app": "Uygulama",
+      "type": "Tür",
+      "redirects": "Yönlendirme URI'leri",
+      "families": "Etkin oturumlar",
+      "tokens": "Belirteç (24 sa)",
+      "created": "Oluşturulma"
+    },
+    "types": {
+      "public": "Açık",
+      "confidential": "Gizli"
+    },
+    "typeHints": {
+      "public": "Gizli anahtarı yoktur: PKCE kullanan tarayıcı ve mobil uygulamalar için.",
+      "confidential": "Gizli anahtarı vardır: bunu saklayabilen sunucular için."
+    },
+    "platforms": {
+      "web": "Web",
+      "native": "Yerel",
+      "dev": "Geliştirme"
+    },
+    "firstParty": "Birinci taraf",
+    "system": "Sistem",
+    "systemHint": "Bir sistem istemcisi (pano veya mobil uygulama). Buradan silinemez.",
+    "fields": {
+      "name": "Ad",
+      "description": "Açıklama",
+      "homepage": "Ana sayfa",
+      "logo": "Logo URL'si",
+      "type": "Tür",
+      "platform": "Platform"
+    },
+    "tabs": {
+      "general": "Genel",
+      "redirects": "Yönlendirme URI'leri",
+      "scopes": "Kapsamlar",
+      "lifetimes": "Belirteç süreleri",
+      "secrets": "Gizli anahtarlar",
+      "usage": "Kullanım"
+    },
+    "create": {
+      "action": "Yeni uygulama",
+      "title": "Yeni OAuth uygulaması",
+      "body": "Tür ve platform sonradan değiştirilemez. İstemci oluşturmak için yakın zamanda giriş yapmış olmanız gerekir.",
+      "submit": "Uygulama oluştur",
+      "failed": "Uygulama oluşturulamadı. Tekrar deneyin."
+    },
+    "general": {
+      "title": "Ayrıntılar",
+      "fixed": "(oluşturulduktan sonra değişmez)",
+      "firstPartyBody": "Birinci taraf uygulamalar onay ekranını atlar. Yalnızca gezcez'in kendi uygulamaları birinci taraf olmalıdır.",
+      "skipsConsent": "Onay istemez",
+      "asksConsent": "Onay ister",
+      "makeFirstParty": "Birinci taraf yap",
+      "makeThirdParty": "Yeniden onay iste",
+      "firstPartyTitle": "{{name}} birinci taraf yapılsın mı?",
+      "firstPartyEffect": "{{name}} uygulamasına giriş yapanlar artık onay ekranını görmez. İstediği tüm kapsamlar sessizce verilir.",
+      "thirdPartyTitle": "{{name}} için yeniden onay istensin mi?",
+      "thirdPartyEffect": "Kullanıcılar bu uygulamaya bir sonraki girişlerinde onay ekranını yeniden görür."
+    },
+    "needsSudo": "Kaydetmek için yakın zamanda giriş yapmış olmanız gerekir.",
+    "reset": "Sıfırla",
+    "saved": "Kaydedildi.",
+    "saveFailed": "Değişiklik kaydedilemedi. Tekrar deneyin.",
+    "redirects": {
+      "title": "Yönlendirme URI'leri",
+      "list": "Yönlendirme URI'leri",
+      "uri": "Yönlendirme URI'si {{n}}",
+      "remove": "{{n}}. yönlendirme URI'sini kaldır",
+      "add": "URI ekle",
+      "trailingSlash": "Başka bir URI yalnızca sondaki eğik çizgiyle farklı. İkisi ayrı birebir eşleşme olarak tutulur.",
+      "problems": {
+        "invalid": "Geçerli bir URL değil.",
+        "https_required": "https:// kullanın (http yalnızca geliştirme istemcilerinde port belirtilmiş localhost için).",
+        "custom_scheme_native_only": "Özel şemalara yalnızca yerel uygulamalarda izin verilir.",
+        "wildcard": "Joker karakterlere izin verilmez: URI'ler birebir eşleşir.",
+        "fragment": "#parçayı kaldırın.",
+        "duplicate": "Bu URI listede zaten var."
+      },
+      "rules": {
+        "web": "Birebir eşleşme. Yalnızca https://.",
+        "native": "Birebir eşleşme. https:// ya da gezcez://oauth/callback gibi özel bir şema.",
+        "dev": "Birebir eşleşme. https:// ya da http://localhost:<port> ve http://127.0.0.1:<port>."
+      }
+    },
+    "scopes": {
+      "title": "Bu uygulamanın isteyebileceği kapsamlar"
+    },
+    "lifetimes": {
+      "title": "Belirteç süreleri",
+      "access": "Erişim belirteci",
+      "refresh": "Yenileme, kayan",
+      "max": "Yenileme, mutlak üst sınır",
+      "minutes": "dakika",
+      "days": "gün",
+      "accessHint": "5 ile 60 dakika arası. Varsayılan 15.",
+      "refreshHint": "Kullanıldıkça yenilenir. Web 30 gün, mobil 90. En fazla üst sınır kadar.",
+      "maxHint": "Ne kadar etkin olunursa olsun bu süreden sonra yeniden giriş gerekir."
+    },
+    "secret": {
+      "title": "İstemci gizli anahtarları",
+      "body": "En fazla iki tane bulunur: güncel olan ve yenileme sonrası geçiş süresince önceki.",
+      "prefix": "Anahtar",
+      "state": "Durum",
+      "lastUsed": "Son kullanım",
+      "expires": "Bitiş",
+      "noExpiry": "Süresi dolmaz",
+      "states": {
+        "current": "Güncel",
+        "previous": "Önceki"
+      },
+      "rotate": "Anahtarı yenile",
+      "rotateTitle": "{{name}} gizli anahtarı yenilensin mi?",
+      "grace": "Eski anahtar şu süre çalışmaya devam etsin",
+      "graces": {
+        "none": "Geçiş yok",
+        "24h": "24 saat",
+        "7d": "7 gün"
+      },
+      "rotateEffect": {
+        "none": "Yeni bir anahtar oluşturur ve mevcut olanı hemen durdurur. Onu kullanan sunucular güncellenene kadar hata alır.",
+        "24h": "Yeni bir anahtar oluşturur. Mevcut olan 24 saat daha çalışır, sonra durur.",
+        "7d": "Yeni bir anahtar oluşturur. Mevcut olan 7 gün daha çalışır, sonra durur."
+      },
+      "revokePrevious": "Önceki anahtarı şimdi iptal et",
+      "revokePreviousTitle": "Önceki anahtar şimdi iptal edilsin mi?",
+      "revokePreviousEffect": "{{name}} uygulamasının önceki anahtarı geçiş süresinin sonunu beklemeden hemen çalışmayı bırakır.",
+      "previousRevoked": "Önceki anahtar iptal edildi.",
+      "onceTitle": "Yeni anahtarı şimdi kopyalayın",
+      "onceBody": "{{clientId}} için anahtar yalnızca bu kez gösterilir. Sunucunuzun gizli anahtar yöneticisinde saklayın.",
+      "stored": "Güvenli bir yerde sakladım",
+      "done": "Tamam"
+    },
+    "usage": {
+      "title": "Günlük verilen belirteçler",
+      "empty": "Son 30 günde belirteç verilmedi.",
+      "summary": "{{days}} günlük günlük belirteç sayısı çubuk grafiği: toplam {{total}}, bir günde en fazla {{max}}.",
+      "caption": "Toplam {{total}} belirteç; en yoğun gün {{max}}.",
+      "revokeTitle": "Herkesin bu uygulamadan çıkışını yapın",
+      "revokeBody": "Tüm yenileme belirteci ailelerini iptal eder. Kullanıcılar bu uygulamada yeniden giriş yapmak zorunda kalır.",
+      "revokeAll": "Tüm oturumları iptal et",
+      "revokeConfirmTitle": "Herkes {{name}} uygulamasından çıkarılsın mı?",
+      "revokeEffect_one": "{{name}} uygulamasının {{count}} etkin oturumunu iptal eder. Sahibi yeniden giriş yapmak zorunda kalır.",
+      "revokeEffect_other": "{{name}} uygulamasının {{count}} etkin oturumunu iptal eder. Herkes yeniden giriş yapmak zorunda kalır.",
+      "revoked_one": "{{count}} oturum iptal edildi.",
+      "revoked_other": "{{count}} oturum iptal edildi."
+    }
   }
 }

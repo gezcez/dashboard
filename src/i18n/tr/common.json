@@ -28,7 +28,10 @@
     "home": "Ana sayfa",
     "toggleSidebar": "Kenar çubuğunu daralt",
     "uiKit": "Arayüz kiti",
-    "permissions": "İzinler"
+    "permissions": "İzinler",
+    "members": "Üyeler",
+    "networkAudit": "Denetim kaydı",
+    "apps": "OAuth uygulamaları"
   },
   "network": {
     "switch": "Ağ değiştirin",

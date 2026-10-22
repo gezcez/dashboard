@@ -18,15 +18,19 @@ describe("ConfirmDialog", () => {
         onConfirm={onConfirm}
       />,
     )
+    // Paste instead of typing each key: same events for the dialog, far fewer timers.
+    const user = userEvent.setup({ delay: null })
     const button = screen.getByRole("button", { name: "Rotate" })
     expect(button).toBeDisabled()
-    await userEvent.type(screen.getByLabelText("Reason"), "Leaked in a log")
+    await user.click(screen.getByLabelText("Reason"))
+    await user.paste("Leaked in a log")
     expect(button).toBeDisabled()
-    await userEvent.type(screen.getByLabelText(/Type the name/), "kocaeli-open-dat")
+    await user.click(screen.getByLabelText(/Type the name/))
+    await user.paste("kocaeli-open-dat")
     expect(button).toBeDisabled()
-    await userEvent.type(screen.getByLabelText(/Type the name/), "a")
+    await user.type(screen.getByLabelText(/Type the name/), "a")
     expect(button).toBeEnabled()
-    await userEvent.click(button)
+    await user.click(button)
     expect(onConfirm).toHaveBeenCalledWith("Leaked in a log")
   })
 

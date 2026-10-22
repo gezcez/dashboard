@@ -578,3 +578,7 @@ export function personaEmail(userId: string): string | null {
 }
 
 export { maskEmail }
+
+/** The mock's unmasked address: personas have real ones, generated users a derived one. */
+export const emailOf = (id: string, name: string) =>
+  personaEmail(id) ?? `${name.toLowerCase().replace(/\s+/g, ".")}@example.com`

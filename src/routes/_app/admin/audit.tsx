@@ -1,31 +1,21 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query"
-import { createFileRoute, Link } from "@tanstack/react-router"
-import type { ColumnDef } from "@tanstack/react-table"
+import { createFileRoute } from "@tanstack/react-router"
 import { DownloadIcon, XIcon } from "lucide-react"
-import { useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
 import { tableSearchSchema } from "@/api/pagination"
-import type { components } from "@/api/schema.gen"
 import { CursorPager } from "@/components/data-table/cursor-pager"
 import { DataTable } from "@/components/data-table/data-table"
 import { FilterBar, SearchFilter, SelectFilter } from "@/components/data-table/filters"
-import { UserChip } from "@/components/entity/user-chip"
+import { ACTION_GROUPS, AuditDetail, useAuditColumns } from "@/components/audit/audit-columns"
 import { PageHeader } from "@/components/layout/page-header"
 import { EmptyState } from "@/components/states/states"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { apiQuery } from "@/lib/api"
 import { downloadText, toCsv } from "@/lib/csv"
-import { diffObjects, formatValue } from "@/lib/diff"
-import { formatDateTime, formatRelative } from "@/lib/format"
-import { useMe } from "@/lib/me"
 import { assertPage } from "@/lib/pages"
-import { cn } from "@/lib/utils"
 
-type Entry = components["schemas"]["AuditEntry"]
-
-const ACTION_GROUPS = ["user.", "role.", "tracker.", "app.", "settings.", "auth."] as const
 const TARGET_TYPES = ["user", "role", "binding", "app", "settings", "session"] as const
 
 const searchSchema = tableSearchSchema.extend({
@@ -37,8 +27,6 @@ type Search = z.infer<typeof searchSchema>
 
 const auditQuery = (search: Search) =>
   apiQuery("/v1/dash/audit", { params: { query: { limit: 50, ...search } } })
-
-const SEVERITY = { info: "default", warn: "warn", critical: "error" } as const
 
 export const Route = createFileRoute("/_app/admin/audit")({
   staticData: { pageId: "admin.audit" },
@@ -54,84 +42,12 @@ function AuditPage() {
   const search = Route.useSearch()
   const navigate = Route.useNavigate()
   const query = useQuery({ ...auditQuery(search), placeholderData: keepPreviousData })
-  const { data: me } = useMe()
-  const networkName = (id: number | null) =>
-    id === null ? null : (me?.networks.find((n) => n.id === id)?.name ?? `#${String(id)}`)
 
   const setSearch = (patch: Partial<Search>) =>
     void navigate({ search: (prev) => ({ ...prev, cursor: undefined, ...patch }), replace: true })
   const filtered = Boolean(search.q || search.action || search.target_type || search.target_id)
 
-  const columns = useMemo<ColumnDef<Entry>[]>(
-    () => [
-      {
-        id: "at",
-        header: t("audit.columns.when"),
-        meta: { sortKey: "at", firstDir: "desc" },
-        cell: ({ row }) => (
-          <span title={formatDateTime(row.original.at)} className="text-muted-foreground">
-            {formatRelative(row.original.at)}
-          </span>
-        ),
-      },
-      {
-        id: "action",
-        header: t("audit.columns.action"),
-        cell: ({ row }) => (
-          <Badge variant={SEVERITY[row.original.severity]} className="font-mono">
-            {row.original.action}
-          </Badge>
-        ),
-      },
-      {
-        id: "actor",
-        header: t("audit.columns.actor"),
-        meta: { hideOnMobile: true },
-        cell: ({ row }) =>
-          row.original.actor ? (
-            <UserChip user={row.original.actor} link />
-          ) : (
-            <span className="text-muted-foreground">{t("audit.system")}</span>
-          ),
-      },
-      {
-        id: "target",
-        header: t("audit.columns.target"),
-        meta: { className: "w-full max-w-0 sm:max-w-none" },
-        cell: ({ row }) => {
-          const e = row.original
-          if (!e.target_label) return <span className="text-muted-foreground">–</span>
-          return (
-            <span className="flex min-w-0 items-center gap-2">
-              {e.target_type && (
-                <span className="text-xs text-muted-foreground">{e.target_type}</span>
-              )}
-              {e.target_type === "user" && e.target_id ? (
-                <Link
-                  to="/admin/users/$userId"
-                  params={{ userId: e.target_id }}
-                  className="truncate hover:underline"
-                >
-                  {e.target_label}
-                </Link>
-              ) : (
-                <span className="truncate">{e.target_label}</span>
-              )}
-            </span>
-          )
-        },
-      },
-      {
-        id: "network",
-        header: t("audit.columns.network"),
-        meta: { hideOnMobile: true },
-        cell: ({ row }) => networkName(row.original.network_id) ?? "–",
-      },
-    ],
-    // networkName reads `me`, which only changes on refetch.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [t, me],
-  )
+  const columns = useAuditColumns()
 
   const exportCsv = () => {
     const rows = query.data?.items ?? []
@@ -281,77 +197,5 @@ function AuditPage() {
         }
       />
     </>
-  )
-}
-
-const KIND_CLASS = {
-  added: "text-status-ok",
-  removed: "text-destructive line-through",
-  changed: "",
-  same: "text-muted-foreground",
-} as const
-
-function AuditDetail({ entry }: { entry: Entry }) {
-  const { t } = useTranslation("dashboard")
-  const rows = diffObjects(entry.before, entry.after)
-  return (
-    <div className="grid gap-4 py-2 lg:grid-cols-[1fr_2fr]">
-      <dl className="grid grid-cols-[8rem_1fr] gap-x-4 gap-y-1 text-xs">
-        <dt className="text-muted-foreground">{t("audit.detail.at")}</dt>
-        <dd>{formatDateTime(entry.at, { dateStyle: "medium", timeStyle: "medium" })}</dd>
-        <dt className="text-muted-foreground">{t("audit.detail.id")}</dt>
-        <dd className="font-mono">{entry.id}</dd>
-        <dt className="text-muted-foreground">{t("audit.detail.requestId")}</dt>
-        <dd className="font-mono">{entry.request_id ?? "–"}</dd>
-        <dt className="text-muted-foreground">{t("audit.detail.ip")}</dt>
-        <dd className="font-mono">{entry.ip_prefix ?? "–"}</dd>
-        <dt className="text-muted-foreground">{t("audit.detail.target")}</dt>
-        <dd className="font-mono break-all">
-          {entry.target_type ?? "–"}
-          {entry.target_id ? ` · ${entry.target_id}` : ""}
-        </dd>
-      </dl>
-      {rows.length === 0 ? (
-        <p className="text-xs text-muted-foreground">{t("audit.detail.noChanges")}</p>
-      ) : (
-        <table className="w-full text-xs">
-          <caption className="sr-only">{t("audit.detail.changes")}</caption>
-          <thead>
-            <tr className="text-left text-muted-foreground">
-              <th className="py-1 pr-4 font-medium">{t("audit.detail.field")}</th>
-              <th className="py-1 pr-4 font-medium">{t("audit.detail.before")}</th>
-              <th className="py-1 font-medium">{t("audit.detail.after")}</th>
-            </tr>
-          </thead>
-          <tbody className="font-mono">
-            {rows.map((r) => (
-              <tr key={r.key} className="border-t align-top">
-                <td className="py-1 pr-4">{r.key}</td>
-                <td
-                  className={cn(
-                    "py-1 pr-4 break-all",
-                    r.kind === "changed" ? "text-destructive line-through" : KIND_CLASS[r.kind],
-                  )}
-                >
-                  {formatValue(r.before)}
-                </td>
-                <td
-                  className={cn(
-                    "py-1 break-all",
-                    r.kind === "changed"
-                      ? "text-status-ok"
-                      : r.kind === "removed"
-                        ? ""
-                        : KIND_CLASS[r.kind],
-                  )}
-                >
-                  {formatValue(r.after)}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-    </div>
   )
 }

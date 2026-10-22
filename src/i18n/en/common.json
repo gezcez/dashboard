@@ -28,7 +28,10 @@
     "home": "Home",
     "toggleSidebar": "Collapse sidebar",
     "uiKit": "UI kit",
-    "permissions": "Permissions"
+    "permissions": "Permissions",
+    "members": "Members",
+    "networkAudit": "Audit log",
+    "apps": "OAuth apps"
   },
   "network": {
     "switch": "Switch network",

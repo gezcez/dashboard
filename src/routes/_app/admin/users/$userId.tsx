@@ -16,27 +16,43 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Eyebrow } from "@/components/ui/eyebrow"
 import { Skeleton } from "@/components/ui/skeleton"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { BanDialog } from "@/components/users/ban-dialog"
+import {
+  ActivityTab,
+  EmailsTab,
+  ModerationHistory,
+  PrivacyTab,
+} from "@/components/users/history-tabs"
+import { RolesTab } from "@/components/users/roles-tab"
+import { SessionsTab } from "@/components/users/sessions-tab"
 import { UnbanDialog } from "@/components/users/unban-dialog"
 import { apiQuery, callApi } from "@/lib/api"
 import { apiErrorMessage } from "@/lib/errors"
 import { formatDateTime, formatRelative } from "@/lib/format"
 import { assertPage } from "@/lib/pages"
-import { useCan } from "@/lib/permissions"
+import { can, useCan, type PermissionKey } from "@/lib/permissions"
+import { useMe } from "@/lib/me"
 
 type DashUser = components["schemas"]["DashUser"]
 
-const TABS = ["profile", "roles", "moderation"] as const
+const TABS = [
+  "profile",
+  "roles",
+  "sessions",
+  "activity",
+  "emails",
+  "privacy",
+  "moderation",
+] as const
 type Tab = (typeof TABS)[number]
+
+/** Each tab reads one endpoint; a tab is hidden when its permission is missing. */
+const TAB_PERMISSION: Partial<Record<Tab, PermissionKey>> = {
+  sessions: "users.sessions.revoke",
+  activity: "audit.read",
+  emails: "email.read",
+}
 
 const userQuery = (userId: string) =>
   apiQuery("/v1/dash/users/{userId}", { params: { path: { userId } } })
@@ -69,6 +85,11 @@ function UserPage() {
   const navigate = Route.useNavigate()
   const query = useQuery(userQuery(userId))
   const canModerate = useCan("moderation.write", "global") === true
+  const { data: me } = useMe()
+  const tabs = TABS.filter((id) => {
+    const key = TAB_PERMISSION[id]
+    return !key || can(me, key, "global") === true
+  })
   const [dialog, setDialog] = useState<"ban" | "unban" | null>(null)
 
   const back = (
@@ -168,8 +189,8 @@ function UserPage() {
           })
         }
       >
-        <TabsList>
-          {TABS.map((id) => (
+        <TabsList className="max-w-full overflow-x-auto">
+          {tabs.map((id) => (
             <TabsTrigger key={id} value={id}>
               {t(`user.tabs.${id}`)}
               {id === "roles" && (
@@ -185,6 +206,18 @@ function UserPage() {
         </TabsContent>
         <TabsContent value="roles" className="mt-4">
           <RolesTab user={user} />
+        </TabsContent>
+        <TabsContent value="sessions" className="mt-4">
+          <SessionsTab user={user} />
+        </TabsContent>
+        <TabsContent value="activity" className="mt-4">
+          <ActivityTab userId={user.id} />
+        </TabsContent>
+        <TabsContent value="emails" className="mt-4">
+          <EmailsTab userId={user.id} />
+        </TabsContent>
+        <TabsContent value="privacy" className="mt-4">
+          <PrivacyTab userId={user.id} />
         </TabsContent>
         <TabsContent value="moderation" className="mt-4">
           <ModerationTab
@@ -349,65 +382,6 @@ function EmailField({ user }: { user: DashUser }) {
   )
 }
 
-function RolesTab({ user }: { user: DashUser }) {
-  const { t } = useTranslation("dashboard")
-  if (user.roles.length === 0) {
-    return (
-      <Card>
-        <CardContent className="py-10 text-center text-muted-foreground">
-          {t("user.roles.empty")}
-        </CardContent>
-      </Card>
-    )
-  }
-  return (
-    <div className="rounded-2xl border bg-card">
-      <Table>
-        <caption className="sr-only">{t("user.tabs.roles")}</caption>
-        <TableHeader>
-          <TableRow className="hover:bg-transparent">
-            <TableHead>{t("user.roles.role")}</TableHead>
-            <TableHead>{t("user.roles.scope")}</TableHead>
-            <TableHead className="hidden sm:table-cell">{t("user.roles.grantedBy")}</TableHead>
-            <TableHead className="hidden sm:table-cell">{t("user.roles.grantedAt")}</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {user.roles.map((r) => (
-            <TableRow key={`${String(r.role.id)}:${String(r.network?.id ?? "g")}`}>
-              <TableCell>
-                <span className="font-medium">{r.role.name}</span>{" "}
-                <span className="text-xs text-muted-foreground">
-                  {t("roles.level", { level: r.role.level })}
-                </span>
-              </TableCell>
-              <TableCell>
-                {r.network ? (
-                  <Link
-                    to="/n/$network"
-                    params={{ network: r.network.slug }}
-                    className="hover:underline"
-                  >
-                    {r.network.name}
-                  </Link>
-                ) : (
-                  <Badge variant="brand">{t("user.roles.global")}</Badge>
-                )}
-              </TableCell>
-              <TableCell className="hidden sm:table-cell">
-                {r.granted_by ? <UserChip user={r.granted_by} link /> : t("user.roles.system")}
-              </TableCell>
-              <TableCell className="hidden sm:table-cell">
-                {formatDateTime(r.granted_at, { dateStyle: "medium" })}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
-  )
-}
-
 function ModerationTab({
   user,
   canModerate,
@@ -420,48 +394,54 @@ function ModerationTab({
   onUnban: () => void
 }) {
   const { t } = useTranslation("dashboard")
+  const canRead = useCan("moderation.read", "global") === true
   const ban = user.ban
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{ban ? t("user.moderation.banned") : t("user.moderation.notBanned")}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        {ban ? (
-          <dl className="divide-y">
-            <Field label={t("user.moderation.until")}>
-              {ban.until ? formatDateTime(ban.until) : t("user.ban.durations.permanent")}
-            </Field>
-            <Field label={t("user.moderation.publicReason")}>{ban.public_reason}</Field>
-            <Field label={t("user.moderation.privateReason")}>
-              {ban.private_reason ?? t("none", { ns: "common" })}
-            </Field>
-            <Field label={t("user.moderation.by")}>
-              {ban.created_by ? <UserChip user={ban.created_by} link /> : t("user.roles.system")}
-              <span className="ml-2 text-xs text-muted-foreground">
-                {formatDateTime(ban.created_at)}
-              </span>
-            </Field>
-          </dl>
-        ) : (
-          <p className="text-sm text-muted-foreground">{t("user.moderation.notBannedBody")}</p>
-        )}
-        {canModerate && (
-          <div className="mt-4">
-            {ban ? (
-              <Button variant="outline" onClick={onUnban}>
-                <ShieldCheckIcon />
-                {t("user.unban.action")}
-              </Button>
-            ) : (
-              <Button variant="destructive" onClick={onBan}>
-                <BanIcon />
-                {t("user.ban.action")}
-              </Button>
-            )}
-          </div>
-        )}
-      </CardContent>
-    </Card>
+    <div className="grid gap-6 xl:grid-cols-2">
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            {ban ? t("user.moderation.banned") : t("user.moderation.notBanned")}
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          {ban ? (
+            <dl className="divide-y">
+              <Field label={t("user.moderation.until")}>
+                {ban.until ? formatDateTime(ban.until) : t("user.ban.durations.permanent")}
+              </Field>
+              <Field label={t("user.moderation.publicReason")}>{ban.public_reason}</Field>
+              <Field label={t("user.moderation.privateReason")}>
+                {ban.private_reason ?? t("none", { ns: "common" })}
+              </Field>
+              <Field label={t("user.moderation.by")}>
+                {ban.created_by ? <UserChip user={ban.created_by} link /> : t("user.roles.system")}
+                <span className="ml-2 text-xs text-muted-foreground">
+                  {formatDateTime(ban.created_at)}
+                </span>
+              </Field>
+            </dl>
+          ) : (
+            <p className="text-sm text-muted-foreground">{t("user.moderation.notBannedBody")}</p>
+          )}
+          {canModerate && (
+            <div className="mt-4">
+              {ban ? (
+                <Button variant="outline" onClick={onUnban}>
+                  <ShieldCheckIcon />
+                  {t("user.unban.action")}
+                </Button>
+              ) : (
+                <Button variant="destructive" onClick={onBan}>
+                  <BanIcon />
+                  {t("user.ban.action")}
+                </Button>
+              )}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+      {canRead && <ModerationHistory userId={user.id} />}
+    </div>
   )
 }
