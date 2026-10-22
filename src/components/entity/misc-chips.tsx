@@ -53,3 +53,17 @@ export function AuditInfo({
     </span>
   )
 }
+
+/** OAuth client: name linking to its page, client_id in mono underneath. */
+export function AppChip({ app }: { app: { client_id: string; name: string } }) {
+  return (
+    <Link
+      to="/admin/apps/$appId"
+      params={{ appId: app.client_id }}
+      className="inline-flex min-w-0 flex-col leading-tight hover:underline"
+    >
+      <span className="truncate font-medium">{app.name}</span>
+      <span className="truncate font-mono text-xs text-muted-foreground">{app.client_id}</span>
+    </Link>
+  )
+}

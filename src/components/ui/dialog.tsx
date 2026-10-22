@@ -24,8 +24,13 @@ export function DialogContent({
   className,
   children,
   closeLabel,
+  hideClose = false,
   ...props
-}: ComponentProps<typeof DialogPrimitive.Content> & { closeLabel?: string }) {
+}: ComponentProps<typeof DialogPrimitive.Content> & {
+  closeLabel?: string
+  /** For dialogs that must be finished, not dismissed (a secret shown once). */
+  hideClose?: boolean
+}) {
   return (
     <DialogPortal>
       <DialogOverlay />
@@ -37,12 +42,14 @@ export function DialogContent({
         {...props}
       >
         {children}
-        <DialogPrimitive.Close
-          className="absolute top-4 right-4 rounded-full p-1 text-muted-foreground hover:bg-secondary hover:text-foreground"
-          aria-label={closeLabel ?? "Close"}
-        >
-          <XIcon className="size-4" />
-        </DialogPrimitive.Close>
+        {!hideClose && (
+          <DialogPrimitive.Close
+            className="absolute top-4 right-4 rounded-full p-1 text-muted-foreground hover:bg-secondary hover:text-foreground"
+            aria-label={closeLabel ?? "Close"}
+          >
+            <XIcon className="size-4" />
+          </DialogPrimitive.Close>
+        )}
       </DialogPrimitive.Content>
     </DialogPortal>
   )

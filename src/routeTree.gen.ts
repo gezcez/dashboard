@@ -22,6 +22,8 @@ import { Route as AppAdminIndexRouteImport } from './routes/_app/admin/index'
 import { Route as AppAdminAuditRouteImport } from './routes/_app/admin/audit'
 import { Route as AppAdminPermissionsRouteImport } from './routes/_app/admin/permissions'
 import { Route as AppNNetworkRouteImport } from './routes/_app/n/$network'
+import { Route as AppAdminAppsIndexRouteImport } from './routes/_app/admin/apps/index'
+import { Route as AppAdminAppsAppIdRouteImport } from './routes/_app/admin/apps/$appId'
 import { Route as AppAdminRolesIndexRouteImport } from './routes/_app/admin/roles/index'
 import { Route as AppAdminRolesRoleIdRouteImport } from './routes/_app/admin/roles/$roleId'
 import { Route as AppAdminUsersIndexRouteImport } from './routes/_app/admin/users/index'
@@ -94,6 +96,16 @@ const AppNNetworkRoute = AppNNetworkRouteImport.update({
   path: '/n/$network',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAdminAppsIndexRoute = AppAdminAppsIndexRouteImport.update({
+  id: '/admin/apps/',
+  path: '/admin/apps/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAdminAppsAppIdRoute = AppAdminAppsAppIdRouteImport.update({
+  id: '/admin/apps/$appId',
+  path: '/admin/apps/$appId',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppAdminRolesIndexRoute = AppAdminRolesIndexRouteImport.update({
   id: '/admin/roles/',
   path: '/admin/roles/',
@@ -143,10 +155,12 @@ export interface FileRoutesByFullPath {
   '/admin/permissions': typeof AppAdminPermissionsRoute
   '/n/$network': typeof AppNNetworkRouteWithChildren
   '/admin/': typeof AppAdminIndexRoute
+  '/admin/apps/$appId': typeof AppAdminAppsAppIdRoute
   '/admin/roles/$roleId': typeof AppAdminRolesRoleIdRoute
   '/admin/users/$userId': typeof AppAdminUsersUserIdRoute
   '/n/$network/audit': typeof AppNNetworkAuditRoute
   '/n/$network/members': typeof AppNNetworkMembersRoute
+  '/admin/apps/': typeof AppAdminAppsIndexRoute
   '/admin/roles/': typeof AppAdminRolesIndexRoute
   '/admin/users/': typeof AppAdminUsersIndexRoute
   '/n/$network/': typeof AppNNetworkIndexRoute
@@ -163,10 +177,12 @@ export interface FileRoutesByTo {
   '/admin/audit': typeof AppAdminAuditRoute
   '/admin/permissions': typeof AppAdminPermissionsRoute
   '/admin': typeof AppAdminIndexRoute
+  '/admin/apps/$appId': typeof AppAdminAppsAppIdRoute
   '/admin/roles/$roleId': typeof AppAdminRolesRoleIdRoute
   '/admin/users/$userId': typeof AppAdminUsersUserIdRoute
   '/n/$network/audit': typeof AppNNetworkAuditRoute
   '/n/$network/members': typeof AppNNetworkMembersRoute
+  '/admin/apps': typeof AppAdminAppsIndexRoute
   '/admin/roles': typeof AppAdminRolesIndexRoute
   '/admin/users': typeof AppAdminUsersIndexRoute
   '/n/$network': typeof AppNNetworkIndexRoute
@@ -186,10 +202,12 @@ export interface FileRoutesById {
   '/_app/admin/permissions': typeof AppAdminPermissionsRoute
   '/_app/n/$network': typeof AppNNetworkRouteWithChildren
   '/_app/admin/': typeof AppAdminIndexRoute
+  '/_app/admin/apps/$appId': typeof AppAdminAppsAppIdRoute
   '/_app/admin/roles/$roleId': typeof AppAdminRolesRoleIdRoute
   '/_app/admin/users/$userId': typeof AppAdminUsersUserIdRoute
   '/_app/n/$network/audit': typeof AppNNetworkAuditRoute
   '/_app/n/$network/members': typeof AppNNetworkMembersRoute
+  '/_app/admin/apps/': typeof AppAdminAppsIndexRoute
   '/_app/admin/roles/': typeof AppAdminRolesIndexRoute
   '/_app/admin/users/': typeof AppAdminUsersIndexRoute
   '/_app/n/$network/': typeof AppNNetworkIndexRoute
@@ -209,10 +227,12 @@ export interface FileRouteTypes {
     | '/admin/permissions'
     | '/n/$network'
     | '/admin/'
+    | '/admin/apps/$appId'
     | '/admin/roles/$roleId'
     | '/admin/users/$userId'
     | '/n/$network/audit'
     | '/n/$network/members'
+    | '/admin/apps/'
     | '/admin/roles/'
     | '/admin/users/'
     | '/n/$network/'
@@ -229,10 +249,12 @@ export interface FileRouteTypes {
     | '/admin/audit'
     | '/admin/permissions'
     | '/admin'
+    | '/admin/apps/$appId'
     | '/admin/roles/$roleId'
     | '/admin/users/$userId'
     | '/n/$network/audit'
     | '/n/$network/members'
+    | '/admin/apps'
     | '/admin/roles'
     | '/admin/users'
     | '/n/$network'
@@ -251,10 +273,12 @@ export interface FileRouteTypes {
     | '/_app/admin/permissions'
     | '/_app/n/$network'
     | '/_app/admin/'
+    | '/_app/admin/apps/$appId'
     | '/_app/admin/roles/$roleId'
     | '/_app/admin/users/$userId'
     | '/_app/n/$network/audit'
     | '/_app/n/$network/members'
+    | '/_app/admin/apps/'
     | '/_app/admin/roles/'
     | '/_app/admin/users/'
     | '/_app/n/$network/'
@@ -364,6 +388,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppNNetworkRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/admin/apps/': {
+      id: '/_app/admin/apps/'
+      path: '/admin/apps'
+      fullPath: '/admin/apps/'
+      preLoaderRoute: typeof AppAdminAppsIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/admin/apps/$appId': {
+      id: '/_app/admin/apps/$appId'
+      path: '/admin/apps/$appId'
+      fullPath: '/admin/apps/$appId'
+      preLoaderRoute: typeof AppAdminAppsAppIdRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/admin/roles/': {
       id: '/_app/admin/roles/'
       path: '/admin/roles'
@@ -438,8 +476,10 @@ interface AppRouteChildren {
   AppAdminPermissionsRoute: typeof AppAdminPermissionsRoute
   AppNNetworkRoute: typeof AppNNetworkRouteWithChildren
   AppAdminIndexRoute: typeof AppAdminIndexRoute
+  AppAdminAppsAppIdRoute: typeof AppAdminAppsAppIdRoute
   AppAdminRolesRoleIdRoute: typeof AppAdminRolesRoleIdRoute
   AppAdminUsersUserIdRoute: typeof AppAdminUsersUserIdRoute
+  AppAdminAppsIndexRoute: typeof AppAdminAppsIndexRoute
   AppAdminRolesIndexRoute: typeof AppAdminRolesIndexRoute
   AppAdminUsersIndexRoute: typeof AppAdminUsersIndexRoute
 }
@@ -450,8 +490,10 @@ const AppRouteChildren: AppRouteChildren = {
   AppAdminPermissionsRoute: AppAdminPermissionsRoute,
   AppNNetworkRoute: AppNNetworkRouteWithChildren,
   AppAdminIndexRoute: AppAdminIndexRoute,
+  AppAdminAppsAppIdRoute: AppAdminAppsAppIdRoute,
   AppAdminRolesRoleIdRoute: AppAdminRolesRoleIdRoute,
   AppAdminUsersUserIdRoute: AppAdminUsersUserIdRoute,
+  AppAdminAppsIndexRoute: AppAdminAppsIndexRoute,
   AppAdminRolesIndexRoute: AppAdminRolesIndexRoute,
   AppAdminUsersIndexRoute: AppAdminUsersIndexRoute,
 }

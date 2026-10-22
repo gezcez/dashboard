@@ -453,5 +453,163 @@
     "addSubmit": "Add member",
     "added": "Added {{name}} to {{network}}.",
     "addFailed": "The member wasn't added. Try again."
+  },
+  "apps": {
+    "eyebrow": "Platform",
+    "title": "OAuth apps",
+    "intro": "Clients that sign people in with gezcez: redirect URIs, scopes, token lifetimes and secrets.",
+    "search": "Search by name or client id",
+    "empty": "No apps yet.",
+    "noMatch": "No apps match.",
+    "back": "All apps",
+    "notFoundTitle": "App not found",
+    "notFoundBody": "There is no client with this id.",
+    "columns": {
+      "app": "App",
+      "type": "Type",
+      "redirects": "Redirect URIs",
+      "families": "Active sessions",
+      "tokens": "Tokens (24 h)",
+      "created": "Created"
+    },
+    "types": {
+      "public": "Public",
+      "confidential": "Confidential"
+    },
+    "typeHints": {
+      "public": "No secret: for browser and mobile apps, which use PKCE.",
+      "confidential": "Has a secret: for servers that can keep one private."
+    },
+    "platforms": {
+      "web": "Web",
+      "native": "Native",
+      "dev": "Dev"
+    },
+    "firstParty": "First-party",
+    "system": "System",
+    "systemHint": "A system client (the dashboard or the mobile app). It can't be deleted from here.",
+    "fields": {
+      "name": "Name",
+      "description": "Description",
+      "homepage": "Homepage",
+      "logo": "Logo URL",
+      "type": "Type",
+      "platform": "Platform"
+    },
+    "tabs": {
+      "general": "General",
+      "redirects": "Redirect URIs",
+      "scopes": "Scopes",
+      "lifetimes": "Token lifetimes",
+      "secrets": "Secrets",
+      "usage": "Usage"
+    },
+    "create": {
+      "action": "New app",
+      "title": "New OAuth app",
+      "body": "Type and platform can't be changed later. Creating a client needs a recent sign-in.",
+      "submit": "Create app",
+      "failed": "The app wasn't created. Try again."
+    },
+    "general": {
+      "title": "Details",
+      "fixed": "(fixed after creation)",
+      "firstPartyBody": "First-party apps skip the consent screen. Only gezcez's own apps should be first-party.",
+      "skipsConsent": "Skips consent",
+      "asksConsent": "Asks for consent",
+      "makeFirstParty": "Make first-party",
+      "makeThirdParty": "Ask for consent again",
+      "firstPartyTitle": "Make {{name}} first-party?",
+      "firstPartyEffect": "People signing in to {{name}} won't see the consent screen any more. Every scope it asks for is granted silently.",
+      "thirdPartyTitle": "Ask for consent in {{name}} again?",
+      "thirdPartyEffect": "People see the consent screen again the next time they sign in to this app."
+    },
+    "needsSudo": "Saving needs a recent sign-in.",
+    "reset": "Reset",
+    "saved": "Saved.",
+    "saveFailed": "The change wasn't saved. Try again.",
+    "redirects": {
+      "title": "Redirect URIs",
+      "list": "Redirect URIs",
+      "uri": "Redirect URI {{n}}",
+      "remove": "Remove redirect URI {{n}}",
+      "add": "Add URI",
+      "trailingSlash": "Another URI differs only by a trailing slash. Both are kept as separate exact matches.",
+      "problems": {
+        "invalid": "Not a valid URL.",
+        "https_required": "Use https:// (http only for localhost with a port on dev clients).",
+        "custom_scheme_native_only": "Custom schemes are only allowed for native apps.",
+        "wildcard": "Wildcards aren't allowed: URIs match exactly.",
+        "fragment": "Remove the #fragment.",
+        "duplicate": "This URI is already in the list."
+      },
+      "rules": {
+        "web": "Exact match. https:// only.",
+        "native": "Exact match. https:// or a custom scheme such as gezcez://oauth/callback.",
+        "dev": "Exact match. https://, or http://localhost:<port> and http://127.0.0.1:<port>."
+      }
+    },
+    "scopes": {
+      "title": "Scopes this app may request"
+    },
+    "lifetimes": {
+      "title": "Token lifetimes",
+      "access": "Access token",
+      "refresh": "Refresh, sliding",
+      "max": "Refresh, absolute maximum",
+      "minutes": "minutes",
+      "days": "days",
+      "accessHint": "5 to 60 minutes. Default 15.",
+      "refreshHint": "Renewed on use. Web 30 days, mobile 90. At most the maximum.",
+      "maxHint": "Sign in again after this, however active."
+    },
+    "secret": {
+      "title": "Client secrets",
+      "body": "At most two exist: the current one and, during a rotation grace period, the previous one.",
+      "prefix": "Secret",
+      "state": "State",
+      "lastUsed": "Last used",
+      "expires": "Expires",
+      "noExpiry": "Doesn't expire",
+      "states": {
+        "current": "Current",
+        "previous": "Previous"
+      },
+      "rotate": "Rotate secret",
+      "rotateTitle": "Rotate the secret of {{name}}?",
+      "grace": "Keep the old secret working for",
+      "graces": {
+        "none": "No grace",
+        "24h": "24 hours",
+        "7d": "7 days"
+      },
+      "rotateEffect": {
+        "none": "Creates a new secret and stops the current one immediately. Servers using it fail until updated.",
+        "24h": "Creates a new secret. The current one keeps working for 24 hours, then stops.",
+        "7d": "Creates a new secret. The current one keeps working for 7 days, then stops."
+      },
+      "revokePrevious": "Revoke previous now",
+      "revokePreviousTitle": "Revoke the previous secret now?",
+      "revokePreviousEffect": "The previous secret of {{name}} stops working immediately instead of at the end of its grace period.",
+      "previousRevoked": "Previous secret revoked.",
+      "onceTitle": "Copy the new secret now",
+      "onceBody": "This is the only time the secret for {{clientId}} is shown. Store it in your server's secret manager.",
+      "stored": "I have stored it somewhere safe",
+      "done": "Done"
+    },
+    "usage": {
+      "title": "Tokens issued per day",
+      "empty": "No tokens issued in the last 30 days.",
+      "summary": "Bar chart of tokens issued per day over {{days}} days: {{total}} in total, at most {{max}} in a day.",
+      "caption": "{{total}} tokens in total; busiest day {{max}}.",
+      "revokeTitle": "Sign everyone out of this app",
+      "revokeBody": "Revokes every refresh-token family. People have to sign in again in this app.",
+      "revokeAll": "Revoke all sessions",
+      "revokeConfirmTitle": "Sign everyone out of {{name}}?",
+      "revokeEffect_one": "Revokes {{count}} active session of {{name}}. Its holder has to sign in again.",
+      "revokeEffect_other": "Revokes {{count}} active sessions of {{name}}. Everyone has to sign in again.",
+      "revoked_one": "Revoked {{count}} session.",
+      "revoked_other": "Revoked {{count}} sessions."
+    }
   }
 }

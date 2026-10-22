@@ -1,6 +1,7 @@
 import {
   GaugeIcon,
   KeyRoundIcon,
+  AppWindowIcon,
   LayoutDashboardIcon,
   ScrollTextIcon,
   UsersRoundIcon,
@@ -86,6 +87,14 @@ export const PAGES = {
     group: "platform",
     label: "nav.permissions",
     icon: KeyRoundIcon,
+  },
+  "admin.apps": {
+    to: "/admin/apps",
+    perm: "apps.read",
+    scope: "global",
+    group: "platform",
+    label: "nav.apps",
+    icon: AppWindowIcon,
   },
   "admin.audit": {
     to: "/admin/audit",

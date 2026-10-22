@@ -30,7 +30,8 @@
     "uiKit": "Arayüz kiti",
     "permissions": "İzinler",
     "members": "Üyeler",
-    "networkAudit": "Denetim kaydı"
+    "networkAudit": "Denetim kaydı",
+    "apps": "OAuth uygulamaları"
   },
   "network": {
     "switch": "Ağ değiştirin",

@@ -52,7 +52,7 @@ and again at boot (`src/env.ts`). There is no hard-coded environment anywhere. M
   `/auth/logged-out`, and the signed-in shell `_app` with `/` (redirects to your first network or
   the platform overview), `/n/$network/...` (network-scoped pages, network in the URL: overview, members, audit log) and
   `/admin/...` (platform pages: overview, users and user detail, roles and role detail with the
-  permission matrix, permission registry, audit log). `/ui-kit` is a
+  permission matrix, permission registry, OAuth apps, audit log). `/ui-kit` is a
   dev-only component gallery.
 - **Pages and permissions** (`src/lib/pages.ts`): one table lists every page with its permission
   key and scope. The sidebar, the command palette (Ctrl+K), the `/` redirect and each route's
