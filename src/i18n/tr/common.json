@@ -31,7 +31,9 @@
     "permissions": "İzinler",
     "members": "Üyeler",
     "networkAudit": "Denetim kaydı",
-    "apps": "OAuth uygulamaları"
+    "apps": "OAuth uygulamaları",
+    "moderation": "Moderasyon",
+    "email": "E-posta"
   },
   "network": {
     "switch": "Ağ değiştirin",

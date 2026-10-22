@@ -31,7 +31,9 @@
     "permissions": "Permissions",
     "members": "Members",
     "networkAudit": "Audit log",
-    "apps": "OAuth apps"
+    "apps": "OAuth apps",
+    "moderation": "Moderation",
+    "email": "Email"
   },
   "network": {
     "switch": "Switch network",

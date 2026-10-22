@@ -2,6 +2,8 @@ import {
   GaugeIcon,
   KeyRoundIcon,
   AppWindowIcon,
+  GavelIcon,
+  MailIcon,
   LayoutDashboardIcon,
   ScrollTextIcon,
   UsersRoundIcon,
@@ -96,6 +98,14 @@ export const PAGES = {
     label: "nav.apps",
     icon: AppWindowIcon,
   },
+  "admin.moderation": {
+    to: "/admin/moderation",
+    perm: "moderation.read",
+    scope: "global",
+    group: "platform",
+    label: "nav.moderation",
+    icon: GavelIcon,
+  },
   "admin.audit": {
     to: "/admin/audit",
     perm: "audit.read",
@@ -103,6 +113,14 @@ export const PAGES = {
     group: "platform",
     label: "nav.audit",
     icon: ScrollTextIcon,
+  },
+  "admin.email": {
+    to: "/admin/email",
+    perm: "email.read",
+    scope: "global",
+    group: "platform",
+    label: "nav.email",
+    icon: MailIcon,
   },
 } as const satisfies Record<string, PageDef>
 
