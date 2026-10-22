@@ -70,6 +70,33 @@ and `apiCall(client, method, path, init)` unwrap the `{ ok, data }` envelope and
 `GezcezApiError { code, message, status, details, requestId }`. Query keys are
 `["api", path, params]` and never contain tokens. Mutations get an `Idempotency-Key`.
 
+## Auth (`src/auth/`)
+
+The dashboard's own implementation of the oauth plan's "client integration contract" (oauth.md
+section 9); nothing is imported from another repo.
+
+- Authorization Code + PKCE (S256) with `state`; the transaction lives in `sessionStorage` under
+  `gz.auth.txn.<state>` for at most 10 minutes. `/auth/callback` strips `code`/`state` with
+  `history.replaceState` before exchanging, and `returnTo` must pass `safeInternalPath`.
+- Access token in memory only. The refresh token is the HttpOnly `gz_rt` cookie
+  (`Path=/v1/oauth`), so refresh and revoke are `credentials: "include"` posts with no token in JS.
+- Refresh is single-flight in the tab and serialised across tabs with
+  `navigator.locks.request("gz.auth.refresh.<clientId>")` (localStorage lease fallback), scheduled
+  at `exp - 60 s`, paused while the tab is hidden. `BroadcastChannel("gz.auth")` propagates
+  sign-out. `invalid_grant` signs out; network errors never do.
+- `auth.fetch` adds the bearer token, retries a 401 `AUTH_TOKEN_EXPIRED` once, and emits
+  `step_up_required` on a 403 `AUTH_STEP_UP_REQUIRED` without retrying.
+- `auth.stepUp()` opens `/authorize?max_age=600` in a popup that returns to `/auth/step-up`
+  (strict `postMessage` origin check, BroadcastChannel backup), falling back to a redirect.
+- `auth.logout()` revokes, wipes memory and the query cache, broadcasts, then goes to
+  `oauth.gezcez.com/logout` with the registered post-logout URI. The next login uses
+  `prompt=select_account`.
+- `requireAuth` (route `beforeLoad`), `<RequirePermission>` and `usePermission` (permission
+  lookup injected by the app from `GET /v1/me`).
+
+The RFC 7636 Appendix B vector and the contract's test vectors and race rules (9.8) run as
+Vitest tests in `src/auth/*.test.ts`.
+
 ## Brand
 
 Same brand as www.gezcez.com, copied by hand into `src/styles/tokens.css` (Tailwind v4 `@theme`):
