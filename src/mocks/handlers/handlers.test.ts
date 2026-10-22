@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it } from "vitest"
 import { challengeS256, randomBase64Url } from "@/auth/pkce"
-import { server } from "../../tests/setup/msw"
-import { createHandlers } from "./handlers"
-import { mockSession } from "./session"
+import { server } from "../../../tests/setup/msw"
+import { createHandlers } from "."
+import { mockSession } from "../session"
 
 const API = "https://api.test"
 const REDIRECT = "http://localhost:3000/auth/callback"
@@ -125,5 +125,80 @@ describe("mock API", () => {
       await get(`/v1/dash/users?limit=50&cursor=${first.data.next_cursor ?? ""}`, token)
     ).json()) as { data: { items: { id: string }[] } }
     expect(second.data.items[0]?.id).not.toBe(first.data.items[0]?.id)
+  })
+})
+
+const send = (method: string, path: string, token: string, body?: unknown) =>
+  fetch(`${API}${path}`, {
+    method,
+    headers: { authorization: `Bearer ${token}`, "content-type": "application/json" },
+    body: body === undefined ? undefined : JSON.stringify(body),
+  })
+
+describe("mock API admin rules", () => {
+  it("applies role level rules to network members", async () => {
+    const token = await signIn("network-admin")
+    const short = (await (
+      await get("/v1/dash/networks/kocaeli/members/candidates?q=a", token)
+    ).json()) as { data: { id: string }[] }
+    expect(short.data).toEqual([])
+    let found: { id: string }[] = []
+    for (const prefix of ["ay", "me", "ah", "ze", "ca", "em", "fa"]) {
+      const res = (await (
+        await get(`/v1/dash/networks/kocaeli/members/candidates?q=${prefix}`, token)
+      ).json()) as { data: { id: string }[] }
+      found = res.data
+      if (found.length) break
+    }
+    const target = found[0]?.id ?? ""
+    expect(target).not.toBe("")
+    const grant = (roleId: number) =>
+      send("POST", `/v1/dash/networks/kocaeli/members/${target}/roles`, token, {
+        operations: [{ role_id: roleId, op: "grant" }],
+      })
+    const analyst = (await (await grant(5)).json()) as { data: { results: { ok: boolean }[] } }
+    expect(analyst.data.results[0]?.ok).toBe(true)
+    const peer = (await (await grant(3)).json()) as {
+      data: { results: { ok: boolean; error_code: string }[] }
+    }
+    expect(peer.data.results[0]).toMatchObject({ ok: false, error_code: "ROLE_LEVEL_TOO_LOW" })
+    // Sakarya is not Elif's network.
+    expect((await get("/v1/dash/networks/sakarya/members", token)).status).toBe(403)
+  })
+
+  it("refuses edits to built-in roles in the matrix batch", async () => {
+    const token = await signIn("founder")
+    const res = (await (
+      await send("POST", "/v1/dash/roles/permissions:batch", token, {
+        operations: [
+          { role_id: 5, permission_key: "vehicles.history.read", op: "grant" },
+          { role_id: 1, permission_key: "users.read", op: "revoke" },
+        ],
+      })
+    ).json()) as { data: { results: { ok: boolean; error_code: string | null }[] } }
+    expect(res.data.results.map((r) => r.error_code)).toEqual([null, "ROLE_IMMUTABLE"])
+  })
+
+  it("needs a fresh sign-in for redirect URI changes and validates them", async () => {
+    const stale = await signIn("founder", Math.floor(Date.now() / 1000) - 3600)
+    const patch = (token: string, body: unknown) =>
+      send("PATCH", "/v1/dash/apps/kocaeli-open-data", token, body)
+    expect((await patch(stale, { redirect_uris: ["https://ok.example/cb"] })).status).toBe(403)
+    expect((await patch(stale, { name: "Renamed" })).status).toBe(200)
+    const fresh = await signIn("founder")
+    expect((await patch(fresh, { redirect_uris: ["http://insecure.example/cb"] })).status).toBe(400)
+    expect((await patch(fresh, { redirect_uris: ["https://ok.example/cb"] })).status).toBe(200)
+  })
+
+  it("rotates a secret keeping the previous one during grace", async () => {
+    const token = await signIn("founder")
+    const res = (await (
+      await send("POST", "/v1/dash/apps/kocaeli-open-data/secret", token, { grace: "24h" })
+    ).json()) as { data: { secret: string } }
+    expect(res.data.secret).toMatch(/^gzs_/)
+    const app = (await (await get("/v1/dash/apps/kocaeli-open-data", token)).json()) as {
+      data: { secrets: { state: string }[] }
+    }
+    expect(app.data.secrets.map((s) => s.state)).toEqual(["current", "previous"])
   })
 })

@@ -58,13 +58,83 @@ export type PermissionKey = "analytics.export" | "analytics.read" | "apps.read" 
 
 /** `METHOD /path` to the permission and step-up flag the backend enforces (x-gezcez-permission, x-gezcez-sudo). */
 export const OPERATION_AUTH = {
+  "DELETE /v1/dash/apps/{appId}/secret/previous": {
+    "key": "apps.secrets.rotate",
+    "scope": "global",
+    "sudo": true
+  },
+  "DELETE /v1/dash/email/suppressions/{id}": {
+    "key": "settings.write",
+    "scope": "global",
+    "sudo": false
+  },
+  "DELETE /v1/dash/permissions/{key}": {
+    "key": "permissions.write",
+    "scope": "global",
+    "sudo": true
+  },
+  "DELETE /v1/dash/users/{userId}/sessions/{sessionId}": {
+    "key": "users.sessions.revoke",
+    "scope": "global",
+    "sudo": false
+  },
+  "GET /v1/dash/apps": {
+    "key": "apps.read",
+    "scope": "global",
+    "sudo": false
+  },
+  "GET /v1/dash/apps/{appId}": {
+    "key": "apps.read",
+    "scope": "global",
+    "sudo": false
+  },
   "GET /v1/dash/audit": {
     "key": "audit.read",
     "scope": "global",
     "sudo": false
   },
+  "GET /v1/dash/email/deliveries": {
+    "key": "email.read",
+    "scope": "global",
+    "sudo": false
+  },
+  "GET /v1/dash/email/suppressions": {
+    "key": "email.read",
+    "scope": "global",
+    "sudo": false
+  },
+  "GET /v1/dash/email/templates": {
+    "key": "email.read",
+    "scope": "global",
+    "sudo": false
+  },
+  "GET /v1/dash/moderation": {
+    "key": "moderation.read",
+    "scope": "global",
+    "sudo": false
+  },
   "GET /v1/dash/networks/{networkId}": {
     "key": "catalog.read",
+    "scope": "network",
+    "sudo": false
+  },
+  "GET /v1/dash/networks/{networkId}/audit": {
+    "key": "audit.read",
+    "scope": "network",
+    "sudo": false
+  },
+  "GET /v1/dash/networks/{networkId}/members": {
+    "key": "members.read",
+    "scope": "network",
+    "sudo": false
+  },
+  "GET /v1/dash/networks/{networkId}/members/assignable-roles": {
+    "key": "members.roles.write",
+    "scope": "network",
+    "sudo": false
+  },
+  "GET /v1/dash/networks/{networkId}/members/candidates": {
+    "key": "members.roles.write",
     "scope": "network",
     "sudo": false
   },
@@ -78,7 +148,27 @@ export const OPERATION_AUTH = {
     "scope": "global",
     "sudo": false
   },
+  "GET /v1/dash/permissions": {
+    "key": "permissions.read",
+    "scope": "global",
+    "sudo": false
+  },
+  "GET /v1/dash/permissions/registry": {
+    "key": "permissions.read",
+    "scope": "global",
+    "sudo": false
+  },
   "GET /v1/dash/roles": {
+    "key": "roles.read",
+    "scope": "global",
+    "sudo": false
+  },
+  "GET /v1/dash/roles/{roleId}": {
+    "key": "roles.read",
+    "scope": "global",
+    "sudo": false
+  },
+  "GET /v1/dash/roles/permission-matrix": {
     "key": "roles.read",
     "scope": "global",
     "sudo": false
@@ -98,6 +188,76 @@ export const OPERATION_AUTH = {
     "scope": "global",
     "sudo": false
   },
+  "GET /v1/dash/users/{userId}/activity": {
+    "key": "audit.read",
+    "scope": "global",
+    "sudo": false
+  },
+  "GET /v1/dash/users/{userId}/emails": {
+    "key": "email.read",
+    "scope": "global",
+    "sudo": false
+  },
+  "GET /v1/dash/users/{userId}/privacy": {
+    "key": "users.read",
+    "scope": "global",
+    "sudo": false
+  },
+  "GET /v1/dash/users/{userId}/sessions": {
+    "key": "users.sessions.revoke",
+    "scope": "global",
+    "sudo": false
+  },
+  "PATCH /v1/dash/apps/{appId}": {
+    "key": "apps.write",
+    "scope": "global",
+    "sudo": false
+  },
+  "PATCH /v1/dash/roles/{roleId}": {
+    "key": "roles.write",
+    "scope": "global",
+    "sudo": true
+  },
+  "POST /v1/dash/apps": {
+    "key": "apps.write",
+    "scope": "global",
+    "sudo": true
+  },
+  "POST /v1/dash/apps/{appId}/revoke-all": {
+    "key": "apps.write",
+    "scope": "global",
+    "sudo": true
+  },
+  "POST /v1/dash/apps/{appId}/secret": {
+    "key": "apps.secrets.rotate",
+    "scope": "global",
+    "sudo": true
+  },
+  "POST /v1/dash/email/templates/{key}/preview": {
+    "key": "email.read",
+    "scope": "global",
+    "sudo": false
+  },
+  "POST /v1/dash/email/test": {
+    "key": "email.test.send",
+    "scope": "global",
+    "sudo": false
+  },
+  "POST /v1/dash/networks/{networkId}/members/{userId}/roles": {
+    "key": "members.roles.write",
+    "scope": "network",
+    "sudo": false
+  },
+  "POST /v1/dash/roles": {
+    "key": "roles.write",
+    "scope": "global",
+    "sudo": true
+  },
+  "POST /v1/dash/roles/permissions:batch": {
+    "key": "roles.write",
+    "scope": "global",
+    "sudo": true
+  },
   "POST /v1/dash/users/{userId}/ban": {
     "key": "moderation.write",
     "scope": "global",
@@ -107,6 +267,16 @@ export const OPERATION_AUTH = {
     "key": "users.pii.read",
     "scope": "global",
     "sudo": false
+  },
+  "POST /v1/dash/users/{userId}/roles": {
+    "key": "roles.assign",
+    "scope": "global",
+    "sudo": true
+  },
+  "POST /v1/dash/users/{userId}/sessions/revoke-all": {
+    "key": "users.sessions.revoke",
+    "scope": "global",
+    "sudo": true
   },
   "POST /v1/dash/users/{userId}/unban": {
     "key": "moderation.write",

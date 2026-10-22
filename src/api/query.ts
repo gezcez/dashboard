@@ -1,4 +1,4 @@
-import { queryOptions } from "@tanstack/react-query"
+import type { DataTag } from "@tanstack/react-query"
 import type { MaybeOptionalInit } from "openapi-fetch"
 import type { PathsWithMethod, RequiredKeysOf } from "openapi-typescript-helpers"
 import type { GezcezClient } from "./client"
@@ -68,15 +68,26 @@ export function apiKey<P extends PathFor<"get">>(path: P, init?: InitFor<"get", 
   return ["api", path, params] as const
 }
 
-/** TanStack Query options for a GET operation. */
+export type ApiKey<P extends PathFor<"get">> = readonly ["api", P, unknown]
+
+/**
+ * TanStack Query options for a GET operation. The return type is spelled out (instead of going
+ * through `queryOptions()`), because inferring it across every path makes TypeScript give up
+ * (TS2590) once the schema has a few dozen operations. Runtime-wise `queryOptions` is identity.
+ */
+export interface ApiQueryOptions<P extends PathFor<"get">> {
+  queryKey: DataTag<ApiKey<P>, DataFor<"get", P>, Error>
+  queryFn: (context: { signal: AbortSignal }) => Promise<DataFor<"get", P>>
+}
+
 export function apiQueryOptions<P extends PathFor<"get">>(
   client: GezcezClient,
   path: P,
   ...args: ArgsFor<"get", P>
-) {
+): ApiQueryOptions<P> {
   const [init] = args
-  return queryOptions({
-    queryKey: apiKey(path, init),
+  return {
+    queryKey: apiKey(path, init) as ApiQueryOptions<P>["queryKey"],
     queryFn: ({ signal }) =>
       apiCall(
         client,
@@ -84,5 +95,5 @@ export function apiQueryOptions<P extends PathFor<"get">>(
         path,
         ...([{ ...(init ?? {}), signal }] as unknown as ArgsFor<"get", P>),
       ),
-  })
+  }
 }

@@ -128,7 +128,7 @@ export const ROLE_PERMISSIONS: Record<keyof typeof ROLES, PermissionKey[]> = {
   viewer: ["network.overview.read", "catalog.read", "analytics.read"],
 }
 
-const roleRef = (key: keyof typeof ROLES): S["RoleRef"] => {
+export const roleRef = (key: keyof typeof ROLES): S["RoleRef"] => {
   const r = ROLES[key]
   return { id: r.id, key: r.key, name: r.name, level: r.level }
 }
@@ -209,7 +209,7 @@ export function findPersona(id: string | null | undefined): Persona | undefined 
   return PERSONAS.find((p) => p.id === id)
 }
 
-function maskEmail(email: string): string {
+export function maskEmail(email: string): string {
   const [local = "", domain = ""] = email.split("@")
   return `${local.slice(0, 1)}${"*".repeat(Math.max(local.length - 1, 3))}@${domain}`
 }
@@ -262,7 +262,7 @@ export function meFor(persona: Persona, authTime: number): S["Me"] {
 
 // ---- Users, deterministic --------------------------------------------------------------------
 
-function seeded(seed: number) {
+export function seeded(seed: number) {
   let s = seed
   return () => {
     s = (s * 1664525 + 1013904223) % 4294967296
@@ -321,8 +321,55 @@ const STATUSES: S["UserStatus"][] = [
 ]
 const CROCKFORD = "0123456789ABCDEFGHJKMNPQRSTVWXYZ"
 
-const DAY = 86_400_000
+export const DAY = 86_400_000
 export const FIXTURE_NOW = Date.parse("2026-10-22T09:00:00Z")
+
+export const userRef = (p: Persona): S["UserRef"] => ({
+  id: p.userId,
+  display_name: p.name,
+  username: p.username,
+})
+
+/** About a quarter of riders hold a network role, a few are global moderators. */
+function seedRoles(
+  rand: () => number,
+  status: S["UserStatus"],
+  created: number,
+): S["RoleAssignment"][] {
+  if (status === "unverified" || status === "pending_deletion") return []
+  const roles: S["RoleAssignment"][] = []
+  const roll = rand()
+  const grantedAt = new Date(created + Math.floor(rand() * (FIXTURE_NOW - created))).toISOString()
+  if (roll < 0.3) {
+    const n = NETWORKS[rand() < 0.65 ? 0 : 1]!
+    const key: keyof typeof ROLES =
+      roll < 0.04 ? "network_admin" : roll < 0.16 ? "analyst" : "viewer"
+    roles.push({
+      network: { id: n.id, slug: n.slug, name: n.name },
+      role: roleRef(key),
+      granted_at: grantedAt,
+      granted_by: userRef(n.slug === "kocaeli" && rand() < 0.5 ? PERSONAS[1]! : PERSONAS[0]!),
+    })
+    if (rand() < 0.15) {
+      const other = NETWORKS[n.id === 4 ? 1 : 0]!
+      roles.push({
+        network: { id: other.id, slug: other.slug, name: other.name },
+        role: roleRef("viewer"),
+        granted_at: grantedAt,
+        granted_by: userRef(PERSONAS[0]!),
+      })
+    }
+  }
+  if (status === "active" && rand() < 0.03) {
+    roles.push({
+      network: null,
+      role: roleRef("moderator"),
+      granted_at: grantedAt,
+      granted_by: userRef(PERSONAS[0]!),
+    })
+  }
+  return roles
+}
 
 export const USERS: S["DashUser"][] = (() => {
   const rand = seeded(7)
@@ -385,8 +432,8 @@ export const USERS: S["DashUser"][] = (() => {
           ? null
           : new Date(created + Math.floor(rand() * (FIXTURE_NOW - created))).toISOString(),
       email_verified: status !== "unverified",
-      methods: { email_code: true, password: rand() > 0.7, passkeys: 0 },
-      roles: [],
+      methods: { email_code: true, password: rand() > 0.7, passkeys: rand() > 0.9 ? 1 : 0 },
+      roles: seedRoles(rand, status, created),
       ban:
         status === "banned"
           ? {

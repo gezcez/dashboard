@@ -11,7 +11,9 @@ export const api = createGezcezClient({
 })
 
 export function apiQuery<P extends PathFor<"get">>(path: P, ...args: ArgsFor<"get", P>) {
-  return apiQueryOptions(api, path, ...args)
+  // `as never`: re-checking the generic ArgsFor against itself makes TS expand every path
+  // (TS2590). Callers are still checked against this function's own signature.
+  return apiQueryOptions<P>(api, path, ...(args as never))
 }
 
 export function callApi<M extends Method, P extends PathFor<M>>(
@@ -19,7 +21,7 @@ export function callApi<M extends Method, P extends PathFor<M>>(
   path: P,
   ...args: ArgsFor<M, P>
 ) {
-  return apiCall(api, method, path, ...args)
+  return apiCall<M, P>(api, method, path, ...(args as never))
 }
 
 /** Invalidates every cached GET whose path starts with `prefix` (keys are ["api", path, params]). */
