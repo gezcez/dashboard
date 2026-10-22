@@ -179,7 +179,7 @@ export function BanDialog({
             >
               {t("cancel", { ns: "common" })}
             </Button>
-            <Button type="submit" variant="destructive" disabled={ban.isPending}>
+            <Button type="submit" variant="destructive-solid" disabled={ban.isPending}>
               {ban.isPending ? t("user.ban.pending") : t("user.ban.confirm")}
             </Button>
           </DialogFooter>

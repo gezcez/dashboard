@@ -13,7 +13,6 @@
   "copy": "Copy",
   "copied": "Copied",
   "comingSoon": "Coming soon",
-  "none": "None",
   "unknown": "Unknown",
   "requestId": "Request id: {{id}}",
   "nav": {
@@ -72,7 +71,7 @@
     "shortcut": "Ctrl K"
   },
   "env": {
-    "mock": "Mock",
+    "mock": "Sample data",
     "staging": "Staging",
     "development": "Dev",
     "preview": "Preview"
@@ -134,5 +133,6 @@
     "reasonHint": "Required. Stored in the audit log.",
     "typeToConfirm": "Type the name to confirm:",
     "working": "Working…"
-  }
+  },
+  "notSet": "Not set"
 }

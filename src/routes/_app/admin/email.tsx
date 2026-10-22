@@ -19,7 +19,7 @@ import { PageHeader } from "@/components/layout/page-header"
 import { EmptyState } from "@/components/states/states"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { apiQuery, callApi, invalidateApi } from "@/lib/api"
 import { apiErrorMessage } from "@/lib/errors"
 import { formatDateTime, formatRelative } from "@/lib/format"
@@ -65,7 +65,6 @@ function EmailPage() {
             replace: true,
           })
         }}
-        className="mb-4"
       >
         <TabsList>
           {TABS.map((v) => (
@@ -74,17 +73,19 @@ function EmailPage() {
             </TabsTrigger>
           ))}
         </TabsList>
+        <TabsContent value={tab}>
+          {tab === "templates" && (
+            <TemplatesTab
+              selected={search.template}
+              onSelect={(template) => {
+                setSearch({ template })
+              }}
+            />
+          )}
+          {tab === "deliveries" && <Deliveries search={search} setSearch={setSearch} />}
+          {tab === "suppressions" && <Suppressions search={search} setSearch={setSearch} />}
+        </TabsContent>
       </Tabs>
-      {tab === "templates" && (
-        <TemplatesTab
-          selected={search.template}
-          onSelect={(template) => {
-            setSearch({ template })
-          }}
-        />
-      )}
-      {tab === "deliveries" && <Deliveries search={search} setSearch={setSearch} />}
-      {tab === "suppressions" && <Suppressions search={search} setSearch={setSearch} />}
     </>
   )
 }

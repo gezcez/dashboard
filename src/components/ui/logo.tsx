@@ -15,7 +15,9 @@ export function Logo({
       <img src="/logo.png" alt="" width={28} height={28} className="size-7 rounded-lg" />
       {wordmark && <span className="text-base">gezcez</span>}
       {suffix && (
-        <span className="text-xs font-semibold tracking-widest text-brand uppercase">{suffix}</span>
+        <span className="text-xs font-semibold tracking-widest text-brand-strong uppercase">
+          {suffix}
+        </span>
       )}
     </span>
   )

@@ -77,7 +77,7 @@ export function RedirectUriEditor({
                   {t(`apps.redirects.problems.${problem}`)}
                 </p>
               ) : check?.trailingSlashTwin && uri.trim() ? (
-                <p id={hintId} className="flex items-center gap-1 text-xs text-status-warn">
+                <p id={hintId} className="flex items-center gap-1 text-xs text-status-warn-fg">
                   <TriangleAlertIcon className="size-3.5" />
                   {t("apps.redirects.trailingSlash")}
                 </p>

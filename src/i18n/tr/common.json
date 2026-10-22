@@ -13,7 +13,6 @@
   "copy": "Kopyala",
   "copied": "Kopyalandı",
   "comingSoon": "Yakında",
-  "none": "Yok",
   "unknown": "Bilinmiyor",
   "requestId": "İstek kimliği: {{id}}",
   "nav": {
@@ -64,7 +63,7 @@
     "en": "English"
   },
   "command": {
-    "open": "Arayın veya bir sayfaya gidin…",
+    "open": "Ara veya git…",
     "placeholder": "Sayfa veya ağ adı yazın…",
     "empty": "Sonuç bulunamadı.",
     "pages": "Sayfalar",
@@ -72,7 +71,7 @@
     "shortcut": "Ctrl K"
   },
   "env": {
-    "mock": "Sahte veri",
+    "mock": "Örnek veri",
     "staging": "Test",
     "development": "Geliştirme",
     "preview": "Önizleme"
@@ -134,5 +133,6 @@
     "reasonHint": "Zorunlu. Denetim kaydına yazılır.",
     "typeToConfirm": "Onaylamak için adı yazın:",
     "working": "İşleniyor…"
-  }
+  },
+  "notSet": "Yok"
 }

@@ -153,8 +153,10 @@ Vitest tests in `src/auth/*.test.ts`.
 Same brand as www.gezcez.com, copied by hand into `src/styles/tokens.css` (Tailwind v4 `@theme`):
 cream `#fffbeb`, navy `#172554`, amber-600 `#d97706`, amber-700 `#b45309`, amber-400 `#fbbf24`,
 yellow-400 to amber-500 gradient, Inter (self-hosted), rounded-2xl cards, pill buttons, no
-shadows. The dashboard is the denser variant (14 px base, 36 px table rows) with a navy dark
-mode. `/ui-kit` shows every component (not available in production builds).
+shadows. Shared rules: 16 px root, focus ring `#b45309` (amber-400 in dark), input borders navy
+at 45 %, destructive actions as outline `#b91c1c` pills, dark mode on the www navy band (page
+`#172554`, cards white at 5 %), every text colour at least 4.5:1. The dashboard is the denser
+variant (14 px body text, 36 px table rows, 44 px targets on touch screens). `/ui-kit` shows every component (not available in production builds).
 
 ## Deploy
 

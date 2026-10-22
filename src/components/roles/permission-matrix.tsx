@@ -505,7 +505,7 @@ function ReviewDialog({
                   danger ? "bg-status-error/10" : "bg-secondary",
                 )}
               >
-                <span className={cn(danger && "font-medium text-status-error")}>
+                <span className={cn(danger && "font-medium text-status-error-fg")}>
                   {danger && <TriangleAlertIcon className="mr-1.5 inline size-3.5 align-[-2px]" />}
                   {t(o.op === "grant" ? "matrix.grantLine" : "matrix.revokeLine", {
                     key: o.permission_key,

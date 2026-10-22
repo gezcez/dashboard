@@ -21,7 +21,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { apiErrorMessage } from "@/lib/errors"
 import { formatNumber } from "@/lib/format"
@@ -74,7 +74,6 @@ function RolesPage() {
         onValueChange={(v) =>
           void navigate({ search: { view: v === "list" ? undefined : (v as "matrix") } })
         }
-        className="mb-4"
       >
         <TabsList>
           {VIEWS.map((v) => (
@@ -83,8 +82,10 @@ function RolesPage() {
             </TabsTrigger>
           ))}
         </TabsList>
+        <TabsContent value={view}>
+          {view === "matrix" ? <PermissionMatrix /> : <RolesList />}
+        </TabsContent>
       </Tabs>
-      {view === "matrix" ? <PermissionMatrix /> : <RolesList />}
       <RoleFormDialog open={creating} onOpenChange={setCreating} />
     </>
   )

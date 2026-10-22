@@ -87,7 +87,7 @@ export function TopBar({
           className="hidden w-64 justify-start font-normal text-muted-foreground md:inline-flex"
         >
           <SearchIcon />
-          <span className="flex-1 text-left">{t("command.open")}</span>
+          <span className="min-w-0 flex-1 truncate text-left">{t("command.open")}</span>
           <kbd className="rounded-md border px-1.5 font-mono text-[11px]">
             {t("command.shortcut")}
           </kbd>

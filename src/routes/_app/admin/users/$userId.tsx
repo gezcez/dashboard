@@ -153,7 +153,8 @@ function UserPage() {
             </p>
           </div>
         </div>
-        {canModerate && (
+        {/* The moderation tab has its own ban and lift-ban button. */}
+        {canModerate && tab !== "moderation" && (
           <div className="flex gap-2">
             {banned ? (
               <Button
@@ -273,7 +274,7 @@ function ProfileTab({ user }: { user: DashUser }) {
           <dl className="divide-y">
             <Field label={t("user.profile.displayName")}>{user.display_name}</Field>
             <Field label={t("user.profile.username")}>
-              {user.username ? `@${user.username}` : t("none", { ns: "common" })}
+              {user.username ? `@${user.username}` : <NotSet />}
             </Field>
             <Field label={t("user.profile.email")}>
               <EmailField user={user} />
@@ -299,12 +300,27 @@ function ProfileTab({ user }: { user: DashUser }) {
             <ul className="flex flex-wrap gap-2">
               <MethodBadge
                 on={user.methods.email_code}
-                label={t("user.profile.methods.emailCode")}
+                label={
+                  user.methods.email_code
+                    ? t("user.profile.methods.emailCode")
+                    : t("user.profile.methods.noEmailCode")
+                }
               />
-              <MethodBadge on={user.methods.password} label={t("user.profile.methods.password")} />
+              <MethodBadge
+                on={user.methods.password}
+                label={
+                  user.methods.password
+                    ? t("user.profile.methods.password")
+                    : t("user.profile.methods.noPassword")
+                }
+              />
               <MethodBadge
                 on={user.methods.passkeys > 0}
-                label={t("user.profile.methods.passkeys", { count: user.methods.passkeys })}
+                label={
+                  user.methods.passkeys > 0
+                    ? t("user.profile.methods.passkeys", { count: user.methods.passkeys })
+                    : t("user.profile.methods.noPasskeys")
+                }
               />
             </ul>
           </CardContent>
@@ -332,14 +348,22 @@ function ProfileTab({ user }: { user: DashUser }) {
   )
 }
 
+/** A method the user has not set up is plain muted text, not a struck-through chip. */
 function MethodBadge({ on, label }: { on: boolean; label: string }) {
   return (
     <li>
-      <Badge variant={on ? "ok" : "outline"} className={on ? undefined : "line-through opacity-60"}>
-        {label}
-      </Badge>
+      {on ? (
+        <Badge variant="ok">{label}</Badge>
+      ) : (
+        <span className="inline-flex px-1 py-0.5 text-xs text-muted-foreground">{label}</span>
+      )}
     </li>
   )
+}
+
+function NotSet() {
+  const { t } = useTranslation()
+  return <span className="text-muted-foreground">{t("notSet")}</span>
 }
 
 /** Masked by default; revealing needs users.pii.read and is audit-logged on the server. */
@@ -412,7 +436,7 @@ function ModerationTab({
               </Field>
               <Field label={t("user.moderation.publicReason")}>{ban.public_reason}</Field>
               <Field label={t("user.moderation.privateReason")}>
-                {ban.private_reason ?? t("none", { ns: "common" })}
+                {ban.private_reason ?? <NotSet />}
               </Field>
               <Field label={t("user.moderation.by")}>
                 {ban.created_by ? <UserChip user={ban.created_by} link /> : t("user.roles.system")}

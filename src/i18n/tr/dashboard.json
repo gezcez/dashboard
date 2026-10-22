@@ -2,11 +2,9 @@
   "overview": {
     "eyebrow": "Platform",
     "title": "Sistem durumu",
-    "intro": "gezcez sağlıklı mı? Sistem durumu, izleyiciler ve son olaylar tek yerde.",
+    "intro": "Gezcez sağlıklı mı? Sistem durumu, takip sistemleri ve son olaylar tek yerde.",
     "networkEyebrow": "Ağ",
-    "networkIntro": "Bu ağın canlı araçları, izleyicileri ve veri kalitesi.",
-    "emptyTitle": "Genel bakış bileşenleri izleyiciyle birlikte gelecek",
-    "emptyBody": "Göstergeler, izleyici tablosu ve canlı grafikler, sunucu bu verileri sunduğunda eklenecek. Sayfa düzeni ve izinler şimdiden çalışıyor.",
+    "networkIntro": "Bu ağın canlı araçları, takip sistemleri ve veri kalitesi.",
     "kpis": {
       "activeVehicles": "Aktif araçlar",
       "networksLive": "Canlı ağlar",
@@ -23,7 +21,22 @@
     "health": "Sistem sağlığı",
     "version": "Sürüm {{version}} ({{sha}}) · mod {{mode}}",
     "recentEvents": "Son olaylar",
-    "noEvents": "Henüz olay yok."
+    "noEvents": "Henüz olay yok.",
+    "healthKeys": {
+      "event_loop_lag_p95": "Olay döngüsü gecikmesi (p95)",
+      "core_db": "Ana veritabanı",
+      "vts_db": "Araç takip veritabanı",
+      "disk_free": "Boş disk alanı",
+      "backup_age": "Son yedek",
+      "archive_export": "Arşiv dışa aktarımı",
+      "email_provider": "E-posta sağlayıcısı"
+    },
+    "healthThreshold": "{{key}} · eşik {{threshold}}",
+    "healthStatus": {
+      "ok": "Sorun yok",
+      "warn": "Uyarı",
+      "error": "Hata"
+    }
   },
   "userStatus": {
     "active": "Aktif",
@@ -48,7 +61,8 @@
     "noMatchTitle": "Eşleşen kullanıcı yok",
     "noMatchBody": "Farklı bir arama deneyin veya filtreleri temizleyin.",
     "network": "Ağ",
-    "role": "Rol"
+    "role": "Rol",
+    "noRoles": "Rol yok"
   },
   "user": {
     "eyebrow": "Kullanıcı",
@@ -82,7 +96,10 @@
         "emailCode": "E-posta kodu",
         "password": "Şifre",
         "passkeys_one": "{{count}} geçiş anahtarı",
-        "passkeys_other": "{{count}} geçiş anahtarı"
+        "passkeys_other": "{{count}} geçiş anahtarı",
+        "noEmailCode": "E-posta kodu yok",
+        "noPassword": "Şifre yok",
+        "noPasskeys": "Geçiş anahtarı yok"
       },
       "activity": "Etkinlik",
       "activityBody": "Bu hesaba veya bu hesapla yapılan her işlem denetim kaydında.",
@@ -171,7 +188,7 @@
       "lastUsed": "Son kullanım",
       "expires": "Bitiş",
       "actions": "İşlemler",
-      "sso": "gezcez girişi",
+      "sso": "Gezcez girişi",
       "kinds": {
         "sso": "SSO",
         "refresh": "Yenileme"
@@ -296,7 +313,7 @@
       "after": "Sonra",
       "noChanges": "Bu kayıt için alan değişikliği yok."
     },
-    "networkIntro": "Bu ağda yapılan değişiklikler: roller, izleyici denetimleri ve ayarlar."
+    "networkIntro": "Bu ağda yapılan değişiklikler: roller, takip sistemi denetimleri ve ayarlar."
   },
   "role": {
     "eyebrow": "Rol",
@@ -511,7 +528,7 @@
     "removeFailed": "Rol kaldırılamadı. Tekrar deneyin.",
     "undoFailed": "Rol geri yüklenemedi. Yeniden ekleyin.",
     "addTitle": "{{network}} ağına üye ekleyin",
-    "addBody": "gezcez hesabı olan birini bulun, ardından buradaki rollerini seçin.",
+    "addBody": "Gezcez hesabı olan birini bulun, ardından buradaki rollerini seçin.",
     "find": "Kullanıcı bulun",
     "findHint": "Kullanıcı adının en az 2 karakterini yazın.",
     "findHintEmail": "Kullanıcı adının en az 2 karakterini ya da tam e-posta adresini yazın.",
@@ -527,7 +544,7 @@
   "apps": {
     "eyebrow": "Platform",
     "title": "OAuth uygulamaları",
-    "intro": "gezcez ile giriş yaptıran istemciler: yönlendirme URI'leri, kapsamlar, belirteç süreleri ve gizli anahtarlar.",
+    "intro": "Gezcez ile giriş yaptıran istemciler: yönlendirme URI'leri, kapsamlar, belirteç süreleri ve gizli anahtarlar.",
     "search": "Ad veya istemci kimliğiyle arayın",
     "empty": "Henüz uygulama yok.",
     "noMatch": "Eşleşen uygulama yok.",

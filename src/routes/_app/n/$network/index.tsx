@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router"
 import { ActivityIcon, BusIcon, GaugeIcon, RouteIcon, TriangleAlertIcon } from "lucide-react"
 import { useTranslation } from "react-i18next"
 import { PageHeader } from "@/components/layout/page-header"
-import { EmptyState, ErrorState } from "@/components/states/states"
+import { ErrorState } from "@/components/states/states"
 import { KpiTile } from "@/components/ui/kpi-tile"
 import { Skeleton } from "@/components/ui/skeleton"
 import { apiQuery } from "@/lib/api"
@@ -72,9 +72,6 @@ function NetworkOverview() {
           )}
         </div>
       )}
-      <div className="mt-6">
-        <EmptyState title={t("overview.emptyTitle")}>{t("overview.emptyBody")}</EmptyState>
-      </div>
     </>
   )
 }

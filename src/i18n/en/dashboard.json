@@ -5,8 +5,6 @@
     "intro": "Is gezcez healthy? Health, trackers and recent events in one place.",
     "networkEyebrow": "Network",
     "networkIntro": "Live vehicles, trackers and data quality for this network.",
-    "emptyTitle": "Overview widgets arrive with the tracker",
-    "emptyBody": "KPIs, the tracker grid and live charts land once the backend serves them. The page layout and permissions are already live.",
     "kpis": {
       "activeVehicles": "Active vehicles",
       "networksLive": "Networks live",
@@ -23,7 +21,22 @@
     "health": "System health",
     "version": "Version {{version}} ({{sha}}) · mode {{mode}}",
     "recentEvents": "Recent events",
-    "noEvents": "No events yet."
+    "noEvents": "No events yet.",
+    "healthKeys": {
+      "event_loop_lag_p95": "Event loop lag (p95)",
+      "core_db": "Core database",
+      "vts_db": "Vehicle tracking database",
+      "disk_free": "Free disk space",
+      "backup_age": "Last backup",
+      "archive_export": "Archive export",
+      "email_provider": "Email provider"
+    },
+    "healthThreshold": "{{key}} · threshold {{threshold}}",
+    "healthStatus": {
+      "ok": "OK",
+      "warn": "Warning",
+      "error": "Failing"
+    }
   },
   "userStatus": {
     "active": "Active",
@@ -48,7 +61,8 @@
     "noMatchTitle": "No users match",
     "noMatchBody": "Try a different search or clear the filters.",
     "network": "Network",
-    "role": "Role"
+    "role": "Role",
+    "noRoles": "No roles"
   },
   "user": {
     "eyebrow": "User",
@@ -82,7 +96,10 @@
         "emailCode": "Email code",
         "password": "Password",
         "passkeys_one": "{{count}} passkey",
-        "passkeys_other": "{{count}} passkeys"
+        "passkeys_other": "{{count}} passkeys",
+        "noEmailCode": "No email code",
+        "noPassword": "No password",
+        "noPasskeys": "No passkeys"
       },
       "activity": "Activity",
       "activityBody": "Everything done to or by this account is in the audit log.",
@@ -171,7 +188,7 @@
       "lastUsed": "Last used",
       "expires": "Expires",
       "actions": "Actions",
-      "sso": "gezcez sign-in",
+      "sso": "Gezcez sign-in",
       "kinds": {
         "sso": "SSO",
         "refresh": "Refresh"

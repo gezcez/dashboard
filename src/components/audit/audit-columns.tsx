@@ -101,7 +101,7 @@ export function useAuditColumns({ network = true }: { network?: boolean } = {}) 
 }
 
 const KIND_CLASS = {
-  added: "text-status-ok",
+  added: "text-status-ok-fg",
   removed: "text-destructive line-through",
   changed: "",
   same: "text-muted-foreground",
@@ -155,7 +155,7 @@ export function AuditDetail({ entry }: { entry: Entry }) {
                   className={cn(
                     "py-1 break-all",
                     r.kind === "changed"
-                      ? "text-status-ok"
+                      ? "text-status-ok-fg"
                       : r.kind === "removed"
                         ? ""
                         : KIND_CLASS[r.kind],

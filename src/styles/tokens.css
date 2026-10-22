@@ -6,8 +6,10 @@
  * amber-400 #fbbf24, gradient yellow-400 to amber-500, Inter 400 to 800, rounded-2xl cards,
  * pill buttons, no shadows. A brand change is one small PR here (and one in each other app).
  *
- * The dashboard is the denser variant: 14 px base, 36 px table rows, neutral surfaces so data
- * colours stand out, and a navy-based dark mode.
+ * The dashboard is the denser variant: 16 px root like every app, 14 px body text, 36 px table
+ * rows, neutral surfaces so data colours stand out, and the www navy band as dark mode. Shared
+ * rules (decisions section 0): focus ring amber-700, input borders navy at 45 %, outline
+ * #b91c1c destructive buttons, every text colour at least 4.5:1 on its background.
  */
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -64,16 +66,21 @@
   --secondary: rgb(23 37 84 / 0.06);
   --secondary-foreground: #172554;
   --muted: rgb(23 37 84 / 0.05);
-  --muted-foreground: rgb(23 37 84 / 0.65);
+  --muted-foreground: rgb(23 37 84 / 0.72);
   --accent: rgb(217 119 6 / 0.1);
-  --accent-foreground: #b45309;
+  --accent-foreground: #92400e;
   --brand: #d97706;
   --brand-strong: #b45309;
-  --destructive: #dc2626;
+  --destructive: #b91c1c;
   --destructive-foreground: #ffffff;
   --border: rgb(23 37 84 / 0.1);
-  --input: rgb(23 37 84 / 0.18);
-  --ring: #f59e0b;
+  --input: rgb(23 37 84 / 0.45);
+  --ring: #b45309;
+
+  /* Status text on its 12 % tint (at least 4.5:1). The mid-tones above stay for dots and icons. */
+  --status-ok-fg: #166534;
+  --status-warn-fg: #9a3412;
+  --status-error-fg: #991b1b;
 
   /* Sidebar is navy in both themes, like the "built" band on www. */
   --sidebar: #172554;
@@ -87,14 +94,17 @@
   color-scheme: light;
 }
 
-/* Dark: navy family, cream text, amber-400 primary pill with navy text. */
+/*
+ * Dark: the www navy band. Page #172554 with cards white at 5 % (#23305d is that blend, kept
+ * opaque so dialogs and sticky headers do not show through). Cream text, amber-400 primary pill.
+ */
 .dark {
-  --background: #0a0f1f;
+  --background: #172554;
   --foreground: #fffbeb;
-  --surface-cream: #111a33;
-  --card: #111a33;
+  --surface-cream: #23305d;
+  --card: #23305d;
   --card-foreground: #fffbeb;
-  --popover: #111a33;
+  --popover: #283565;
   --popover-foreground: #fffbeb;
   --primary: #fbbf24;
   --primary-foreground: #172554;
@@ -107,13 +117,17 @@
   --accent-foreground: #fcd34d;
   --brand: #fbbf24;
   --brand-strong: #fcd34d;
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  --border: rgb(255 255 255 / 0.1);
-  --input: rgb(255 255 255 / 0.16);
+  --destructive: #fca5a5;
+  --destructive-foreground: #172554;
+  --border: rgb(255 255 255 / 0.12);
+  --input: rgb(255 251 235 / 0.45);
   --ring: #fbbf24;
 
-  --sidebar: #0d1530;
+  --status-ok-fg: #86efac;
+  --status-warn-fg: #fdba74;
+  --status-error-fg: #fca5a5;
+
+  --sidebar: #0f1a3d;
   --sidebar-foreground: #fffbeb;
   --sidebar-muted: rgb(255 251 235 / 0.6);
   --sidebar-accent: rgb(255 255 255 / 0.06);
@@ -145,6 +159,9 @@
   --color-brand-strong: var(--brand-strong);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+  --color-status-ok-fg: var(--status-ok-fg);
+  --color-status-warn-fg: var(--status-warn-fg);
+  --color-status-error-fg: var(--status-error-fg);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);

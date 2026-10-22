@@ -14,7 +14,7 @@ import { MODERATION_ACTIONS, ModerationBadge } from "@/components/entity/moderat
 import { UserChip } from "@/components/entity/user-chip"
 import { PageHeader } from "@/components/layout/page-header"
 import { EmptyState } from "@/components/states/states"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { apiQuery } from "@/lib/api"
 import { formatDateTime, formatRelative } from "@/lib/format"
 import { assertPage } from "@/lib/pages"
@@ -127,7 +127,6 @@ function ModerationPage() {
         onValueChange={(v) => {
           setSearch({ view: v === "active" ? undefined : (v as "timeline"), action: undefined })
         }}
-        className="mb-4"
       >
         <TabsList>
           {VIEWS.map((v) => (
@@ -136,52 +135,54 @@ function ModerationPage() {
             </TabsTrigger>
           ))}
         </TabsList>
-      </Tabs>
-      <FilterBar>
-        <SearchFilter
-          value={search.q}
-          onChange={(q) => {
-            setSearch({ q })
-          }}
-          placeholder={t("moderation.search")}
-        />
-        {view === "timeline" && (
-          <SelectFilter
-            label={t("moderation.columns.action")}
-            value={search.action}
-            options={MODERATION_ACTIONS.map((a) => ({
-              value: a,
-              label: t(`moderation.actions.${a}`),
-            }))}
-            onChange={(action) => {
-              setSearch({ action })
-            }}
-          />
-        )}
-      </FilterBar>
-      <DataTable
-        caption={t(`moderation.views.${view}`)}
-        columns={columns}
-        rows={query.data?.items}
-        getRowId={(m) => m.id}
-        isPending={query.isPending}
-        isFetching={query.isPlaceholderData}
-        error={query.error}
-        onRetry={() => void query.refetch()}
-        empty={
-          <EmptyState
-            title={view === "active" ? t("moderation.noActive") : t("moderation.noActions")}
-          />
-        }
-        footer={
-          <CursorPager
-            page={query.data}
-            onCursor={(cursor) =>
-              void navigate({ search: (prev) => ({ ...prev, cursor }), resetScroll: true })
+        <TabsContent value={view}>
+          <FilterBar>
+            <SearchFilter
+              value={search.q}
+              onChange={(q) => {
+                setSearch({ q })
+              }}
+              placeholder={t("moderation.search")}
+            />
+            {view === "timeline" && (
+              <SelectFilter
+                label={t("moderation.columns.action")}
+                value={search.action}
+                options={MODERATION_ACTIONS.map((a) => ({
+                  value: a,
+                  label: t(`moderation.actions.${a}`),
+                }))}
+                onChange={(action) => {
+                  setSearch({ action })
+                }}
+              />
+            )}
+          </FilterBar>
+          <DataTable
+            caption={t(`moderation.views.${view}`)}
+            columns={columns}
+            rows={query.data?.items}
+            getRowId={(m) => m.id}
+            isPending={query.isPending}
+            isFetching={query.isPlaceholderData}
+            error={query.error}
+            onRetry={() => void query.refetch()}
+            empty={
+              <EmptyState
+                title={view === "active" ? t("moderation.noActive") : t("moderation.noActions")}
+              />
+            }
+            footer={
+              <CursorPager
+                page={query.data}
+                onCursor={(cursor) =>
+                  void navigate({ search: (prev) => ({ ...prev, cursor }), resetScroll: true })
+                }
+              />
             }
           />
-        }
-      />
+        </TabsContent>
+      </Tabs>
     </>
   )
 }

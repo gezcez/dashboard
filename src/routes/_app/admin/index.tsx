@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router"
 import { BusIcon, NetworkIcon, TriangleAlertIcon, UsersIcon } from "lucide-react"
 import { useTranslation } from "react-i18next"
 import { PageHeader } from "@/components/layout/page-header"
-import { EmptyState, ErrorState } from "@/components/states/states"
+import { ErrorState } from "@/components/states/states"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { KpiTile } from "@/components/ui/kpi-tile"
@@ -28,6 +28,20 @@ export const Route = createFileRoute("/_app/admin/")({
 })
 
 const SEVERITY = { info: "default", warn: "warn", critical: "error" } as const
+
+/** Health check keys with a translated label; an unknown key falls back to the raw key. */
+const HEALTH_KEYS = [
+  "event_loop_lag_p95",
+  "core_db",
+  "vts_db",
+  "disk_free",
+  "backup_age",
+  "archive_export",
+  "email_provider",
+] as const
+type HealthKey = (typeof HEALTH_KEYS)[number]
+const isHealthKey = (key: string): key is HealthKey =>
+  (HEALTH_KEYS as readonly string[]).includes(key)
 
 function GlobalOverview() {
   const { t } = useTranslation("dashboard")
@@ -102,13 +116,17 @@ function GlobalOverview() {
             ) : (
               <ul className="divide-y">
                 {health.data.checks.map((c) => (
-                  <li
-                    key={c.key}
-                    className="flex items-center gap-3 py-2 text-sm"
-                    title={c.threshold ?? undefined}
-                  >
-                    <StatusDot status={c.status} label={c.status} />
-                    <span className="font-mono text-xs">{c.key}</span>
+                  <li key={c.key} className="flex items-center gap-3 py-2 text-sm">
+                    <StatusDot status={c.status} label={t(`overview.healthStatus.${c.status}`)} />
+                    <span
+                      title={
+                        c.threshold
+                          ? t("overview.healthThreshold", { key: c.key, threshold: c.threshold })
+                          : c.key
+                      }
+                    >
+                      {isHealthKey(c.key) ? t(`overview.healthKeys.${c.key}`) : c.key}
+                    </span>
                     <span className="ml-auto text-right text-muted-foreground">{c.value}</span>
                   </li>
                 ))}
@@ -151,10 +169,6 @@ function GlobalOverview() {
             )}
           </CardContent>
         </Card>
-      </div>
-
-      <div className="mt-6">
-        <EmptyState title={t("overview.emptyTitle")}>{t("overview.emptyBody")}</EmptyState>
       </div>
     </>
   )

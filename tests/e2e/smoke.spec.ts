@@ -35,7 +35,7 @@ test("root lands on the system overview and returns to the deep link", async ({ 
   await signInAs(page, /phasenull/, "/admin")
   await expect(page).toHaveURL(/\/admin$/)
   await expect(page.getByRole("heading", { level: 1, name: "System overview" })).toBeVisible()
-  await expect(page.getByText("event_loop_lag_p95")).toBeVisible()
+  await expect(page.getByText("Event loop lag (p95)")).toBeVisible()
   expect(errors).toEqual([])
 })
 

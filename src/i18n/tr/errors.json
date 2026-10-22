@@ -38,5 +38,5 @@
   "ANALYTICS_TIMEOUT": "Analiz sorgusu çok uzun sürdü. Tarih aralığını daraltıp tekrar deneyin.",
   "INTERNAL": "Bizim tarafımızda bir sorun oluştu.",
   "_unknown": "Beklenmeyen hata ({{code}}).",
-  "_network": "gezcez API'sine ulaşılamadı. Bağlantınızı kontrol edin."
+  "_network": "Gezcez API'sine ulaşılamadı. Bağlantınızı kontrol edin."
 }

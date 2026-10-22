@@ -142,7 +142,7 @@ export function ConfirmDialog({
             </Button>
             <Button
               type="submit"
-              variant={destructive ? "destructive" : "primary"}
+              variant={destructive ? "destructive-solid" : "primary"}
               disabled={pending || !reasonOk || !typedOk}
             >
               {pending ? (pendingLabel ?? t("confirm.working")) : confirmLabel}

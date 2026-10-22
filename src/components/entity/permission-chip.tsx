@@ -60,7 +60,7 @@ function PermissionCard({ permission, info }: { permission: string; info?: Permi
           <p className="flex flex-wrap gap-2 text-xs">
             <span>{t(`permissions.scope.${p.scope}`)}</span>
             {p.sudo && (
-              <span className="inline-flex items-center gap-1 text-status-warn">
+              <span className="inline-flex items-center gap-1 text-status-warn-fg">
                 <ShieldAlertIcon className="size-3.5" />
                 {t("permissions.sudo")}
               </span>

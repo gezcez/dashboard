@@ -91,7 +91,14 @@ function UsersPage() {
         id: "roles",
         header: t("users.columns.roles"),
         meta: { hideOnMobile: true, className: "text-right" },
-        cell: ({ row }) => <span className="tabular">{formatNumber(row.original.role_count)}</span>,
+        cell: ({ row }) =>
+          row.original.role_count === 0 ? (
+            <span className="text-muted-foreground" aria-label={t("users.noRoles")}>
+              —
+            </span>
+          ) : (
+            <span className="tabular">{formatNumber(row.original.role_count)}</span>
+          ),
       },
       {
         id: "last_active_at",

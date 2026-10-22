@@ -7,13 +7,12 @@
   }
 
   html {
-    /* Dashboard density: 14 px base (www uses 16 px). */
-    font-size: 14px;
+    /* 16 px root like every gezcez app; density comes from 14 px body text and 36 px rows. */
     -webkit-font-smoothing: antialiased;
   }
 
   body {
-    @apply bg-background font-sans text-foreground;
+    @apply bg-background font-sans text-sm text-foreground;
     min-height: 100dvh;
   }
 
