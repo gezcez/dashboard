@@ -1,7 +1,7 @@
 import type { HttpHandler } from "msw"
 import { PERMISSION_KEYS, type PermissionKey } from "@/api/permission-keys.gen"
 import type { components } from "@/api/schema.gen"
-import { permissionInfo, routesFor } from "../fixtures-admin"
+import { emailOf, permissionInfo, routesFor } from "../fixtures-admin"
 import { applyRoleOp } from "./users"
 import { byNumber, byString, errorBody, matches, paginate, type Ctx } from "./context"
 
@@ -263,10 +263,16 @@ export function roleHandlers(ctx: Ctx): HttpHandler[] {
           params.networkId,
         )
         if (c instanceof Response) return c
-        const q = (query.get("q") ?? "").toLowerCase().replace(/^@/, "")
+        const raw = (query.get("q") ?? "").trim().toLowerCase()
+        // Exact email matches need users.pii.read (plan 6.10); otherwise usernames only.
+        const byEmail = raw.includes("@") && !raw.startsWith("@") && holds(c, "users.pii.read")
+        const q = raw.replace(/^@/, "")
         if (q.length < 2) return response(200).json({ ok: true, data: [] })
         const data = db.users
-          .filter((u) => u.status === "active" && (u.username ?? "").startsWith(q))
+          .filter((u) => u.status === "active")
+          .filter((u) =>
+            byEmail ? emailOf(u.id, u.display_name) === q : (u.username ?? "").startsWith(q),
+          )
           .slice(0, 8)
           .map((u) => ({ id: u.id, display_name: u.display_name, username: u.username }))
         return response(200).json({ ok: true, data })

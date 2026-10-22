@@ -7,7 +7,7 @@ import { tableSearchSchema } from "@/api/pagination"
 import { CursorPager } from "@/components/data-table/cursor-pager"
 import { DataTable } from "@/components/data-table/data-table"
 import { FilterBar, SearchFilter, SelectFilter } from "@/components/data-table/filters"
-import { AuditDetail, useAuditColumns } from "@/components/audit/audit-columns"
+import { ACTION_GROUPS, AuditDetail, useAuditColumns } from "@/components/audit/audit-columns"
 import { PageHeader } from "@/components/layout/page-header"
 import { EmptyState } from "@/components/states/states"
 import { Badge } from "@/components/ui/badge"
@@ -16,7 +16,6 @@ import { apiQuery } from "@/lib/api"
 import { downloadText, toCsv } from "@/lib/csv"
 import { assertPage } from "@/lib/pages"
 
-const ACTION_GROUPS = ["user.", "role.", "tracker.", "app.", "settings.", "auth."] as const
 const TARGET_TYPES = ["user", "role", "binding", "app", "settings", "session"] as const
 
 const searchSchema = tableSearchSchema.extend({

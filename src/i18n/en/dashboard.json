@@ -295,7 +295,8 @@
       "before": "Before",
       "after": "After",
       "noChanges": "No field changes recorded for this event."
-    }
+    },
+    "networkIntro": "Changes made in this network: roles, tracker controls and settings."
   },
   "role": {
     "eyebrow": "Role",
@@ -418,5 +419,39 @@
       "user": "User",
       "locale": "Language"
     }
+  },
+  "members": {
+    "title": "Members",
+    "intro": "People with roles in this network. You can manage roles below your own level.",
+    "add": "Add member",
+    "search": "Search members",
+    "empty": "Nobody has a role here yet.",
+    "emptyBody": "Add a member to give someone access to this network.",
+    "noMatch": "No members match.",
+    "columns": {
+      "member": "Member",
+      "email": "Email",
+      "roles": "Roles",
+      "granted": "Last granted",
+      "lastActive": "Last active"
+    },
+    "removeRole": "Remove {{role}} from {{name}}",
+    "removed": "Removed {{role}} from {{name}}.",
+    "undo": "Undo",
+    "removeFailed": "The role wasn't removed. Try again.",
+    "undoFailed": "The role couldn't be restored. Add it again.",
+    "addTitle": "Add a member to {{network}}",
+    "addBody": "Find someone with a gezcez account, then pick their roles here.",
+    "find": "Find a user",
+    "findHint": "Type at least 2 characters of their username.",
+    "findHintEmail": "Type at least 2 characters of their username, or their exact email address.",
+    "results": "Matching users",
+    "noCandidates": "No users match.",
+    "change": "Change",
+    "roles": "Roles",
+    "noAssignable": "There are no roles you can assign here.",
+    "addSubmit": "Add member",
+    "added": "Added {{name}} to {{network}}.",
+    "addFailed": "The member wasn't added. Try again."
   }
 }

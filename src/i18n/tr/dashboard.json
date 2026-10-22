@@ -295,7 +295,8 @@
       "before": "Önce",
       "after": "Sonra",
       "noChanges": "Bu kayıt için alan değişikliği yok."
-    }
+    },
+    "networkIntro": "Bu ağda yapılan değişiklikler: roller, izleyici denetimleri ve ayarlar."
   },
   "role": {
     "eyebrow": "Rol",
@@ -418,5 +419,39 @@
       "user": "Kullanıcı",
       "locale": "Dil"
     }
+  },
+  "members": {
+    "title": "Üyeler",
+    "intro": "Bu ağda rolü olan kişiler. Kendi seviyenizin altındaki rolleri yönetebilirsiniz.",
+    "add": "Üye ekle",
+    "search": "Üyelerde arayın",
+    "empty": "Burada henüz kimsenin rolü yok.",
+    "emptyBody": "Birine bu ağa erişim vermek için üye ekleyin.",
+    "noMatch": "Eşleşen üye yok.",
+    "columns": {
+      "member": "Üye",
+      "email": "E-posta",
+      "roles": "Roller",
+      "granted": "Son verilen",
+      "lastActive": "Son etkinlik"
+    },
+    "removeRole": "{{name}} kullanıcısından {{role}} rolünü kaldır",
+    "removed": "{{name}} kullanıcısından {{role}} kaldırıldı.",
+    "undo": "Geri al",
+    "removeFailed": "Rol kaldırılamadı. Tekrar deneyin.",
+    "undoFailed": "Rol geri yüklenemedi. Yeniden ekleyin.",
+    "addTitle": "{{network}} ağına üye ekleyin",
+    "addBody": "gezcez hesabı olan birini bulun, ardından buradaki rollerini seçin.",
+    "find": "Kullanıcı bulun",
+    "findHint": "Kullanıcı adının en az 2 karakterini yazın.",
+    "findHintEmail": "Kullanıcı adının en az 2 karakterini ya da tam e-posta adresini yazın.",
+    "results": "Eşleşen kullanıcılar",
+    "noCandidates": "Eşleşen kullanıcı yok.",
+    "change": "Değiştir",
+    "roles": "Roller",
+    "noAssignable": "Burada atayabileceğiniz rol yok.",
+    "addSubmit": "Üye ekle",
+    "added": "{{name}}, {{network}} ağına eklendi.",
+    "addFailed": "Üye eklenemedi. Tekrar deneyin."
   }
 }

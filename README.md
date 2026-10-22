@@ -50,7 +50,7 @@ and again at boot (`src/env.ts`). There is no hard-coded environment anywhere. M
 
 - **Routes** (`src/routes/`, file-based): `/login`, `/auth/callback`, `/auth/step-up` (popup),
   `/auth/logged-out`, and the signed-in shell `_app` with `/` (redirects to your first network or
-  the platform overview), `/n/$network/...` (network-scoped pages, network in the URL) and
+  the platform overview), `/n/$network/...` (network-scoped pages, network in the URL: overview, members, audit log) and
   `/admin/...` (platform pages: overview, users and user detail, roles and role detail with the
   permission matrix, permission registry, audit log). `/ui-kit` is a
   dev-only component gallery.

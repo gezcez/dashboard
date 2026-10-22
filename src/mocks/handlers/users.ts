@@ -1,6 +1,6 @@
 import type { HttpHandler } from "msw"
 import type { components } from "@/api/schema.gen"
-import { privacyFor, personaEmail } from "../fixtures-admin"
+import { emailOf, privacyFor } from "../fixtures-admin"
 import { byString, errorBody, paginate, type Ctx } from "./context"
 
 type S = components["schemas"]
@@ -26,8 +26,7 @@ export function userHandlers(ctx: Ctx): HttpHandler[] {
       if (c instanceof Response) return c
       const u = db.user(params.userId)
       if (!u) return response(404).json(notFound())
-      const email =
-        personaEmail(u.id) ?? `${u.display_name.toLowerCase().replace(/\s+/g, ".")}@example.com`
+      const email = emailOf(u.id, u.display_name)
       record(c, "user.email.reveal", label(u))
       return response(200).json({ ok: true, data: { email } })
     }),

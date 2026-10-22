@@ -12,6 +12,9 @@ import { cn } from "@/lib/utils"
 
 type Entry = components["schemas"]["AuditEntry"]
 
+/** Action prefixes offered as filters (the API matches `action` as a prefix). */
+export const ACTION_GROUPS = ["user.", "role.", "tracker.", "app.", "settings.", "auth."] as const
+
 const SEVERITY = { info: "default", warn: "warn", critical: "error" } as const
 
 /** Columns shared by the platform audit log, network audit and a user's activity tab. */

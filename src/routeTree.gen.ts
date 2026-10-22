@@ -27,6 +27,8 @@ import { Route as AppAdminRolesRoleIdRouteImport } from './routes/_app/admin/rol
 import { Route as AppAdminUsersIndexRouteImport } from './routes/_app/admin/users/index'
 import { Route as AppAdminUsersUserIdRouteImport } from './routes/_app/admin/users/$userId'
 import { Route as AppNNetworkIndexRouteImport } from './routes/_app/n/$network/index'
+import { Route as AppNNetworkAuditRouteImport } from './routes/_app/n/$network/audit'
+import { Route as AppNNetworkMembersRouteImport } from './routes/_app/n/$network/members'
 
 const AppRoute = AppRouteImport.update({
   id: '/_app',
@@ -117,6 +119,16 @@ const AppNNetworkIndexRoute = AppNNetworkIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppNNetworkRoute,
 } as any)
+const AppNNetworkAuditRoute = AppNNetworkAuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
+  getParentRoute: () => AppNNetworkRoute,
+} as any)
+const AppNNetworkMembersRoute = AppNNetworkMembersRouteImport.update({
+  id: '/members',
+  path: '/members',
+  getParentRoute: () => AppNNetworkRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AppIndexRoute
@@ -133,6 +145,8 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AppAdminIndexRoute
   '/admin/roles/$roleId': typeof AppAdminRolesRoleIdRoute
   '/admin/users/$userId': typeof AppAdminUsersUserIdRoute
+  '/n/$network/audit': typeof AppNNetworkAuditRoute
+  '/n/$network/members': typeof AppNNetworkMembersRoute
   '/admin/roles/': typeof AppAdminRolesIndexRoute
   '/admin/users/': typeof AppAdminUsersIndexRoute
   '/n/$network/': typeof AppNNetworkIndexRoute
@@ -151,6 +165,8 @@ export interface FileRoutesByTo {
   '/admin': typeof AppAdminIndexRoute
   '/admin/roles/$roleId': typeof AppAdminRolesRoleIdRoute
   '/admin/users/$userId': typeof AppAdminUsersUserIdRoute
+  '/n/$network/audit': typeof AppNNetworkAuditRoute
+  '/n/$network/members': typeof AppNNetworkMembersRoute
   '/admin/roles': typeof AppAdminRolesIndexRoute
   '/admin/users': typeof AppAdminUsersIndexRoute
   '/n/$network': typeof AppNNetworkIndexRoute
@@ -172,6 +188,8 @@ export interface FileRoutesById {
   '/_app/admin/': typeof AppAdminIndexRoute
   '/_app/admin/roles/$roleId': typeof AppAdminRolesRoleIdRoute
   '/_app/admin/users/$userId': typeof AppAdminUsersUserIdRoute
+  '/_app/n/$network/audit': typeof AppNNetworkAuditRoute
+  '/_app/n/$network/members': typeof AppNNetworkMembersRoute
   '/_app/admin/roles/': typeof AppAdminRolesIndexRoute
   '/_app/admin/users/': typeof AppAdminUsersIndexRoute
   '/_app/n/$network/': typeof AppNNetworkIndexRoute
@@ -193,6 +211,8 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/admin/roles/$roleId'
     | '/admin/users/$userId'
+    | '/n/$network/audit'
+    | '/n/$network/members'
     | '/admin/roles/'
     | '/admin/users/'
     | '/n/$network/'
@@ -211,6 +231,8 @@ export interface FileRouteTypes {
     | '/admin'
     | '/admin/roles/$roleId'
     | '/admin/users/$userId'
+    | '/n/$network/audit'
+    | '/n/$network/members'
     | '/admin/roles'
     | '/admin/users'
     | '/n/$network'
@@ -231,6 +253,8 @@ export interface FileRouteTypes {
     | '/_app/admin/'
     | '/_app/admin/roles/$roleId'
     | '/_app/admin/users/$userId'
+    | '/_app/n/$network/audit'
+    | '/_app/n/$network/members'
     | '/_app/admin/roles/'
     | '/_app/admin/users/'
     | '/_app/n/$network/'
@@ -375,14 +399,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppNNetworkIndexRouteImport
       parentRoute: typeof AppNNetworkRoute
     }
+    '/_app/n/$network/audit': {
+      id: '/_app/n/$network/audit'
+      path: '/audit'
+      fullPath: '/n/$network/audit'
+      preLoaderRoute: typeof AppNNetworkAuditRouteImport
+      parentRoute: typeof AppNNetworkRoute
+    }
+    '/_app/n/$network/members': {
+      id: '/_app/n/$network/members'
+      path: '/members'
+      fullPath: '/n/$network/members'
+      preLoaderRoute: typeof AppNNetworkMembersRouteImport
+      parentRoute: typeof AppNNetworkRoute
+    }
   }
 }
 
 interface AppNNetworkRouteChildren {
+  AppNNetworkAuditRoute: typeof AppNNetworkAuditRoute
+  AppNNetworkMembersRoute: typeof AppNNetworkMembersRoute
   AppNNetworkIndexRoute: typeof AppNNetworkIndexRoute
 }
 
 const AppNNetworkRouteChildren: AppNNetworkRouteChildren = {
+  AppNNetworkAuditRoute: AppNNetworkAuditRoute,
+  AppNNetworkMembersRoute: AppNNetworkMembersRoute,
   AppNNetworkIndexRoute: AppNNetworkIndexRoute,
 }
 
