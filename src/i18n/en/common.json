@@ -1,0 +1,94 @@
+{
+  "appName": "gezcez dashboard",
+  "loading": "Loading…",
+  "retry": "Try again",
+  "cancel": "Cancel",
+  "close": "Close",
+  "save": "Save",
+  "search": "Search",
+  "back": "Back",
+  "goHome": "Go to the dashboard",
+  "copy": "Copy",
+  "copied": "Copied",
+  "comingSoon": "Coming soon",
+  "none": "None",
+  "unknown": "Unknown",
+  "requestId": "Request id: {{id}}",
+  "nav": {
+    "groupNetwork": "Network",
+    "groupPlatform": "Platform",
+    "networkOverview": "Overview",
+    "systemOverview": "System overview",
+    "users": "Users",
+    "roles": "Roles",
+    "audit": "Audit log",
+    "openMenu": "Open navigation",
+    "home": "Home",
+    "toggleSidebar": "Collapse sidebar",
+    "uiKit": "UI kit"
+  },
+  "network": {
+    "switch": "Switch network",
+    "searchPlaceholder": "Search networks…",
+    "empty": "No networks match.",
+    "yourNetworks": "Your networks",
+    "allNetworks": "All networks",
+    "none": "No network selected",
+    "noNetworks": "You have no network roles yet."
+  },
+  "user": {
+    "menu": "Account menu",
+    "account": "Account and security",
+    "signOut": "Sign out",
+    "language": "Language",
+    "theme": "Theme",
+    "build": "Build {{sha}} · {{env}}",
+    "switchPersona": "Switch mock persona"
+  },
+  "theme": {
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark",
+    "toggle": "Toggle dark mode"
+  },
+  "language": {
+    "tr": "Türkçe",
+    "en": "English"
+  },
+  "command": {
+    "open": "Search or jump to…",
+    "placeholder": "Type a page or network…",
+    "empty": "Nothing found.",
+    "pages": "Pages",
+    "networks": "Networks",
+    "shortcut": "Ctrl K"
+  },
+  "env": {
+    "mock": "Mock",
+    "staging": "Staging",
+    "development": "Dev",
+    "preview": "Preview"
+  },
+  "session": {
+    "expired": "Your session expired. Sign in again to continue; this page keeps its state.",
+    "signInAgain": "Sign in again"
+  },
+  "states": {
+    "forbiddenTitle": "No access",
+    "forbiddenBody": "You don't have the {{permission}} permission here.",
+    "forbiddenBodyNetwork": "You don't have the {{permission}} permission in {{network}}.",
+    "forbiddenHint": "Ask a network admin or a platform admin for a role that includes it.",
+    "notFoundTitle": "Page not found",
+    "notFoundBody": "This page doesn't exist or was moved.",
+    "networkNotFoundTitle": "Network not found",
+    "networkNotFoundBody": "There is no network called \"{{slug}}\", or you can't see it.",
+    "errorTitle": "Something went wrong",
+    "errorBody": "The page hit an unexpected error. Try again, and report the request id if it keeps happening.",
+    "emptyTitle": "Nothing here yet",
+    "noRolesTitle": "No roles yet",
+    "noRolesBody": "Your account is signed in but has no dashboard roles. Ask an admin to add you to a network."
+  },
+  "time": {
+    "never": "Never"
+  }
+}

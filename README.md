@@ -1,69 +1,60 @@
-# React + TypeScript + Vite
+# gezcez dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Operations console for gezcez at **dash.gezcez.com**: identity admin, transit catalogue, VTS tracker
+operations, live vehicles and analytics. Static SPA (Vite, React 19, TypeScript strict) on Cloudflare
+Workers static assets.
 
-Currently, two official plugins are available:
+This repo is standalone: no monorepo, no shared gezcez packages. It owns its auth client
+(`src/auth/`), generated API types and query wrappers (`src/api/`), shadcn components
+(`src/components/ui/`), brand tokens (`src/styles/tokens.css`) and tr/en catalogs (`src/i18n/`).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Quick start
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```sh
+bun install
+bun run dev:mock     # no backend needed: MSW mocks + persona sign-in at http://localhost:5173
+bun run dev          # against VITE_API_URL from .env.development (local backend)
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Scripts
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Script                                        | What it does                                                              |
+| --------------------------------------------- | ------------------------------------------------------------------------- |
+| `dev` / `dev:mock`                            | Vite dev server, live API or MSW mock mode                                |
+| `build` / `build:mock`                        | Typecheck, then production build (`--mode mock` for previews and e2e)     |
+| `typecheck`, `lint`, `format`, `format:check` | `tsc -b`, ESLint (type-aware), Prettier                                   |
+| `test`                                        | Vitest + Testing Library + MSW (node)                                     |
+| `e2e`                                         | Playwright smoke against `vite preview` of a mock build                   |
+| `api:gen [source]`                            | Regenerate `src/api/*.gen.ts` from the backend's `openapi.json`           |
+| `api:check [source]`                          | Fail when the committed `*.gen.ts` files differ from the spec             |
+| `i18n:check`                                  | Every backend error code has tr and en text; tr and en have the same keys |
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Environment
+
+All variables are validated with zod in `vite.config.ts` (the build fails on a missing variable)
+and again at boot (`src/env.ts`). There is no hard-coded environment anywhere. Modes:
+`.env.development`, `.env.mock`, `.env.staging`, `.env.production`; per-machine overrides go in
+`.env.<mode>.local` (git-ignored). See `.env.example`.
+
+| Variable                                      | Example                                           |
+| --------------------------------------------- | ------------------------------------------------- |
+| `VITE_ENV`                                    | `production`, `staging`, `development`, `preview` |
+| `VITE_API_MODE`                               | `live` or `mock`                                  |
+| `VITE_API_URL`                                | `https://api.gezcez.com`                          |
+| `VITE_OAUTH_URL`                              | `https://oauth.gezcez.com`                        |
+| `VITE_WS_URL`                                 | `wss://api.gezcez.com/v1/ws`                      |
+| `VITE_CLIENT_ID`                              | `dashboard` (`dashboard-dev` on localhost)        |
+| `VITE_MAP_STYLE_LIGHT`, `VITE_MAP_STYLE_DARK` | map style URLs (default OpenFreeMap)              |
+
+## Brand
+
+Same brand as www.gezcez.com, copied by hand into `src/styles/tokens.css` (Tailwind v4 `@theme`):
+cream `#fffbeb`, navy `#172554`, amber-600 `#d97706`, amber-700 `#b45309`, amber-400 `#fbbf24`,
+yellow-400 to amber-500 gradient, Inter (self-hosted), rounded-2xl cards, pill buttons, no
+shadows. The dashboard is the denser variant (14 px base, 36 px table rows) with a navy dark
+mode. `/ui-kit` shows every component (not available in production builds).
+
+## Deploy
+
+`wrangler.jsonc` serves `dist/` as static assets with SPA fallback
+(`not_found_handling: "single-page-application"`); `public/_headers` sets CSP, HSTS and cache rules.

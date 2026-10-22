@@ -1,0 +1,158 @@
+/*
+ * gezcez brand tokens for the dashboard.
+ *
+ * Canonical values are copied by hand from the revamp decisions (section 0) and match
+ * www.gezcez.com: cream #fffbeb, navy #172554, amber-600 #d97706, amber-700 #b45309,
+ * amber-400 #fbbf24, gradient yellow-400 to amber-500, Inter 400 to 800, rounded-2xl cards,
+ * pill buttons, no shadows. A brand change is one small PR here (and one in each other app).
+ *
+ * The dashboard is the denser variant: 14 px base, 36 px table rows, neutral surfaces so data
+ * colours stand out, and a navy-based dark mode.
+ */
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Brand palette (fixed, theme independent) */
+  --color-cream: #fffbeb;
+  --color-navy: #172554;
+  --color-navy-900: #1e3a8a;
+  --color-navy-deep: #0a0f1f;
+  --color-navy-card: #111a33;
+  --color-brand-amber-400: #fbbf24;
+  --color-brand-amber-500: #f59e0b;
+  --color-brand-amber-600: #d97706;
+  --color-brand-amber-700: #b45309;
+  --color-brand-yellow-400: #facc15;
+
+  /* Status colours. Warning is a distinct orange so it never reads as the amber accent. */
+  --color-status-ok: #16a34a;
+  --color-status-warn: #ea580c;
+  --color-status-error: #dc2626;
+  --color-status-off: #94a3b8;
+  --color-status-info: #2563eb;
+
+  --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "JetBrains Mono", Menlo, monospace;
+
+  /* Radii: rounded-2xl cards (1rem), 0.75rem inputs, pills for buttons and chips. */
+  --radius-card: 1rem;
+  --radius-control: 0.75rem;
+
+  /* Flat brand: no elevation anywhere. */
+  --shadow-xs: none;
+  --shadow-sm: none;
+  --shadow: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+  --shadow-xl: none;
+  --shadow-2xl: none;
+}
+
+/* Semantic (shadcn) variables, light. */
+:root {
+  --background: #fcfbf7;
+  --foreground: #172554;
+  --surface-cream: #fffbeb;
+  --card: #ffffff;
+  --card-foreground: #172554;
+  --popover: #ffffff;
+  --popover-foreground: #172554;
+  --primary: #172554;
+  --primary-foreground: #fffbeb;
+  --primary-hover: #1e3a8a;
+  --secondary: rgb(23 37 84 / 0.06);
+  --secondary-foreground: #172554;
+  --muted: rgb(23 37 84 / 0.05);
+  --muted-foreground: rgb(23 37 84 / 0.65);
+  --accent: rgb(217 119 6 / 0.1);
+  --accent-foreground: #b45309;
+  --brand: #d97706;
+  --brand-strong: #b45309;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: rgb(23 37 84 / 0.1);
+  --input: rgb(23 37 84 / 0.18);
+  --ring: #f59e0b;
+
+  /* Sidebar is navy in both themes, like the "built" band on www. */
+  --sidebar: #172554;
+  --sidebar-foreground: #fffbeb;
+  --sidebar-muted: rgb(255 251 235 / 0.65);
+  --sidebar-accent: rgb(255 255 255 / 0.08);
+  --sidebar-active: #fbbf24;
+  --sidebar-active-foreground: #172554;
+  --sidebar-border: rgb(255 255 255 / 0.1);
+
+  color-scheme: light;
+}
+
+/* Dark: navy family, cream text, amber-400 primary pill with navy text. */
+.dark {
+  --background: #0a0f1f;
+  --foreground: #fffbeb;
+  --surface-cream: #111a33;
+  --card: #111a33;
+  --card-foreground: #fffbeb;
+  --popover: #111a33;
+  --popover-foreground: #fffbeb;
+  --primary: #fbbf24;
+  --primary-foreground: #172554;
+  --primary-hover: #fcd34d;
+  --secondary: rgb(255 255 255 / 0.08);
+  --secondary-foreground: #fffbeb;
+  --muted: rgb(255 255 255 / 0.05);
+  --muted-foreground: rgb(255 251 235 / 0.65);
+  --accent: rgb(251 191 36 / 0.12);
+  --accent-foreground: #fcd34d;
+  --brand: #fbbf24;
+  --brand-strong: #fcd34d;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: rgb(255 255 255 / 0.1);
+  --input: rgb(255 255 255 / 0.16);
+  --ring: #fbbf24;
+
+  --sidebar: #0d1530;
+  --sidebar-foreground: #fffbeb;
+  --sidebar-muted: rgb(255 251 235 / 0.6);
+  --sidebar-accent: rgb(255 255 255 / 0.06);
+  --sidebar-active: #fbbf24;
+  --sidebar-active-foreground: #172554;
+  --sidebar-border: rgb(255 255 255 / 0.08);
+
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface-cream: var(--surface-cream);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-muted: var(--sidebar-muted);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-active: var(--sidebar-active);
+  --color-sidebar-active-foreground: var(--sidebar-active-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+}

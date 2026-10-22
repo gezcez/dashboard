@@ -1,0 +1,28 @@
+{
+  "overview": {
+    "eyebrow": "Platform",
+    "title": "Sistem durumu",
+    "intro": "gezcez sağlıklı mı? Sistem durumu, izleyiciler ve son olaylar tek yerde.",
+    "networkEyebrow": "Ağ",
+    "networkIntro": "Bu ağın canlı araçları, izleyicileri ve veri kalitesi.",
+    "emptyTitle": "Genel bakış bileşenleri izleyiciyle birlikte gelecek",
+    "emptyBody": "Göstergeler, izleyici tablosu ve canlı grafikler, sunucu bu verileri sunduğunda eklenecek. Sayfa düzeni ve izinler şimdiden çalışıyor.",
+    "kpis": {
+      "activeVehicles": "Aktif araçlar",
+      "networksLive": "Canlı ağlar",
+      "users": "Kullanıcılar",
+      "signups7d": "Son 7 günde {{count}} kayıt",
+      "sessions24h": "Aktif oturumlar (24 sa)",
+      "openIssues": "Açık veri sorunları",
+      "vehiclesNow": "Şu anki araçlar",
+      "routesRunning": "Çalışan hatlar",
+      "feedLag": "Ortanca veri gecikmesi",
+      "quality": "Bugünkü veri kalitesi",
+      "ofTotal": "toplam {{total}}"
+    },
+    "health": "Sistem sağlığı",
+    "version": "Sürüm {{version}} ({{sha}}) · mod {{mode}}",
+    "recentEvents": "Son olaylar",
+    "noEvents": "Henüz olay yok."
+  }
+}

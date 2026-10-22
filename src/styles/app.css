@@ -1,0 +1,33 @@
+@import "tailwindcss";
+@import "./tokens.css";
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    /* Dashboard density: 14 px base (www uses 16 px). */
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    @apply bg-background font-sans text-foreground;
+    min-height: 100dvh;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-ring;
+  }
+
+  /* Tabular numbers wherever data is shown. */
+  table,
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@utility brand-gradient {
+  background-image: linear-gradient(to bottom right, #facc15, #f59e0b);
+}

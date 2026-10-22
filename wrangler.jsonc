@@ -1,7 +1,17 @@
 {
-	"name": "dash-gezcez-com",
-	"compatibility_date": "2025-09-07",
-	"assets": {
-		"directory": "./dist"
-	}
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "dash-gezcez-com",
+  "compatibility_date": "2026-10-01",
+  // Static assets only, no Worker script. Deep links fall back to index.html.
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application",
+  },
+  "routes": [{ "pattern": "dash.gezcez.com", "custom_domain": true }],
+  "env": {
+    "staging": {
+      "name": "dash-gezcez-staging",
+      "routes": [{ "pattern": "dash-staging.gezcez.com", "custom_domain": true }],
+    },
+  },
 }

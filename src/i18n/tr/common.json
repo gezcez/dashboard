@@ -1,0 +1,94 @@
+{
+  "appName": "gezcez yönetim paneli",
+  "loading": "Yükleniyor…",
+  "retry": "Tekrar deneyin",
+  "cancel": "Vazgeç",
+  "close": "Kapat",
+  "save": "Kaydet",
+  "search": "Ara",
+  "back": "Geri",
+  "goHome": "Panele dön",
+  "copy": "Kopyala",
+  "copied": "Kopyalandı",
+  "comingSoon": "Yakında",
+  "none": "Yok",
+  "unknown": "Bilinmiyor",
+  "requestId": "İstek kimliği: {{id}}",
+  "nav": {
+    "groupNetwork": "Ağ",
+    "groupPlatform": "Platform",
+    "networkOverview": "Genel bakış",
+    "systemOverview": "Sistem durumu",
+    "users": "Kullanıcılar",
+    "roles": "Roller",
+    "audit": "Denetim kaydı",
+    "openMenu": "Menüyü açın",
+    "home": "Ana sayfa",
+    "toggleSidebar": "Kenar çubuğunu daralt",
+    "uiKit": "Arayüz kiti"
+  },
+  "network": {
+    "switch": "Ağ değiştirin",
+    "searchPlaceholder": "Ağ arayın…",
+    "empty": "Eşleşen ağ yok.",
+    "yourNetworks": "Ağlarınız",
+    "allNetworks": "Tüm ağlar",
+    "none": "Ağ seçilmedi",
+    "noNetworks": "Henüz bir ağda rolünüz yok."
+  },
+  "user": {
+    "menu": "Hesap menüsü",
+    "account": "Hesap ve güvenlik",
+    "signOut": "Çıkış yapın",
+    "language": "Dil",
+    "theme": "Tema",
+    "build": "Sürüm {{sha}} · {{env}}",
+    "switchPersona": "Test kişisini değiştirin"
+  },
+  "theme": {
+    "system": "Sistem",
+    "light": "Açık",
+    "dark": "Koyu",
+    "toggle": "Koyu modu değiştirin"
+  },
+  "language": {
+    "tr": "Türkçe",
+    "en": "English"
+  },
+  "command": {
+    "open": "Arayın veya bir sayfaya gidin…",
+    "placeholder": "Sayfa veya ağ adı yazın…",
+    "empty": "Sonuç bulunamadı.",
+    "pages": "Sayfalar",
+    "networks": "Ağlar",
+    "shortcut": "Ctrl K"
+  },
+  "env": {
+    "mock": "Sahte veri",
+    "staging": "Test",
+    "development": "Geliştirme",
+    "preview": "Önizleme"
+  },
+  "session": {
+    "expired": "Oturumunuzun süresi doldu. Devam etmek için yeniden giriş yapın; bu sayfadaki bilgiler korunur.",
+    "signInAgain": "Yeniden giriş yapın"
+  },
+  "states": {
+    "forbiddenTitle": "Erişim yok",
+    "forbiddenBody": "Burada {{permission}} izniniz yok.",
+    "forbiddenBodyNetwork": "{{network}} ağında {{permission}} izniniz yok.",
+    "forbiddenHint": "Bu izni içeren bir rol için ağ yöneticisine veya platform yöneticisine başvurun.",
+    "notFoundTitle": "Sayfa bulunamadı",
+    "notFoundBody": "Bu sayfa yok ya da taşındı.",
+    "networkNotFoundTitle": "Ağ bulunamadı",
+    "networkNotFoundBody": "\"{{slug}}\" adında bir ağ yok ya da bu ağı göremiyorsunuz.",
+    "errorTitle": "Bir şeyler ters gitti",
+    "errorBody": "Sayfada beklenmeyen bir hata oluştu. Tekrar deneyin; sorun sürerse istek kimliğini bildirin.",
+    "emptyTitle": "Henüz bir şey yok",
+    "noRolesTitle": "Henüz rolünüz yok",
+    "noRolesBody": "Giriş yaptınız ancak hesabınızın panelde bir rolü yok. Bir ağa eklenmek için yöneticiye başvurun."
+  },
+  "time": {
+    "never": "Hiç"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "overview": {
+    "eyebrow": "Platform",
+    "title": "System overview",
+    "intro": "Is gezcez healthy? Health, trackers and recent events in one place.",
+    "networkEyebrow": "Network",
+    "networkIntro": "Live vehicles, trackers and data quality for this network.",
+    "emptyTitle": "Overview widgets arrive with the tracker",
+    "emptyBody": "KPIs, the tracker grid and live charts land once the backend serves them. The page layout and permissions are already live.",
+    "kpis": {
+      "activeVehicles": "Active vehicles",
+      "networksLive": "Networks live",
+      "users": "Users",
+      "signups7d": "{{count}} signups in 7 days",
+      "sessions24h": "Active sessions (24 h)",
+      "openIssues": "Open data issues",
+      "vehiclesNow": "Vehicles now",
+      "routesRunning": "Routes running",
+      "feedLag": "Median feed lag",
+      "quality": "Data quality today",
+      "ofTotal": "of {{total}}"
+    },
+    "health": "System health",
+    "version": "Version {{version}} ({{sha}}) · mode {{mode}}",
+    "recentEvents": "Recent events",
+    "noEvents": "No events yet."
+  }
+}
