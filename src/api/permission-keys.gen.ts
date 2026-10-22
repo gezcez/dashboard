@@ -123,6 +123,11 @@ export const OPERATION_AUTH = {
     "scope": "network",
     "sudo": false
   },
+  "GET /v1/dash/networks/{networkId}/analytics": {
+    "key": "analytics.read",
+    "scope": "network",
+    "sudo": false
+  },
   "GET /v1/dash/networks/{networkId}/analytics/{metric}": {
     "key": "analytics.read",
     "scope": "network",

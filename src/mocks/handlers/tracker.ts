@@ -55,7 +55,10 @@ export function trackerHandlers(ctx: Ctx, transit: TransitState): HttpHandler[] 
       if (c instanceof Response) return c
       const n = ctx.network(params.networkId)
       if (!n) return notFound("network")
-      return response(200).json({ ok: true, data: transit.bindingsOf(n.id).map((b) => transit.toBinding(b)) })
+      return response(200).json({
+        ok: true,
+        data: transit.bindingsOf(n.id).map((b) => transit.toBinding(b)),
+      })
     }),
     http.get(
       "/v1/dash/networks/{networkId}/bindings/{bindingId}",

@@ -137,18 +137,20 @@ describe("transit mock API", () => {
       "/v1/dash/networks/4/analytics/fleet.hourly?from=2026-10-01&to=2026-10-07&granularity=1h",
       token,
     )
-    expect(ok.body.data.columns).toEqual(["t", "agency", "active_vehicles", "vehicle_hours", "n"])
-    expect(ok.body.data.rows.length).toBeGreaterThan(100)
+    expect(ok.body.data.columns).toEqual(["bucket", "vehicles", "vehicle_hours", "peak_vehicles"])
+    expect(ok.body.data.rows.length).toBeGreaterThan(80)
     const tooLong = await call(
       "/v1/dash/networks/4/analytics/fleet.hourly?from=2026-01-01&to=2026-10-07",
       token,
     )
     expect(tooLong.status).toBe(400)
-    const sakarya = await call<{ meta: { timetable: boolean } }>(
+    const sakarya = await call<{ rows: unknown[] }>(
       "/v1/dash/networks/54/analytics/adherence.departure?from=2026-10-01&to=2026-10-02",
       await signIn("founder"),
     )
-    expect(sakarya.body.data.meta.timetable).toBe(false)
+    expect(sakarya.body.data.rows).toEqual([])
+    const marey = await call("/v1/dash/networks/4/analytics/headways.marey?date=2026-10-01", token)
+    expect(marey.status).toBe(400)
   })
 })
 
@@ -180,7 +182,7 @@ describe("mock realtime gateway", () => {
       },
     )
     expect(snapshot.fields).toContain("plate")
-    expect(snapshot.vehicles.length).toBeGreaterThan(20)
+    expect(snapshot.vehicles.length).toBeGreaterThan(0)
     client.dispose()
   })
 

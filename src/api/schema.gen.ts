@@ -110,7 +110,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description (copied from backend rewrite-transit) */
+        /** @description (copied from backend rewrite) */
         get: operations["Networks_cities"];
         put?: never;
         post?: never;
@@ -266,6 +266,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/dash/networks/{networkId}/analytics": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description (copied from backend rewrite) */
+        get: operations["Analytics_catalog"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/dash/networks/{networkId}/analytics/{metric}": {
         parameters: {
             query?: never;
@@ -273,10 +290,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /**
-         * One metric of backend 6.9 as columnar JSON
-         * @description PLANNED (backend 7.2), not in the backend yet. Shape written by the dashboard.
-         */
+        /** @description (copied from backend rewrite) */
         get: operations["Analytics_metric"];
         put?: never;
         post?: never;
@@ -293,10 +307,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /**
-         * CSV or Parquet stream of the same query
-         * @description PLANNED (backend 7.2), not in the backend yet. Shape written by the dashboard.
-         */
+        /** @description (copied from backend rewrite) */
         get: operations["Analytics_export"];
         put?: never;
         post?: never;
@@ -329,7 +340,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description (copied from backend rewrite-transit) */
+        /** @description (copied from backend rewrite) */
         get: operations["Networks_bindings"];
         put?: never;
         post?: never;
@@ -346,7 +357,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description (copied from backend rewrite-transit) */
+        /** @description (copied from backend rewrite) */
         get: operations["Networks_binding"];
         put?: never;
         post?: never;
@@ -385,7 +396,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** @description (copied from backend rewrite-transit) */
+        /** @description (copied from backend rewrite) */
         post: operations["TrackerAdmin_control"];
         delete?: never;
         options?: never;
@@ -400,7 +411,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description (copied from backend rewrite-transit) */
+        /** @description (copied from backend rewrite) */
         get: operations["TrackerAdmin_polls"];
         put?: never;
         post?: never;
@@ -437,7 +448,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description (copied from backend rewrite-transit) */
+        /** @description (copied from backend rewrite) */
         get: operations["TrackerAdmin_stats"];
         put?: never;
         post?: never;
@@ -456,7 +467,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** @description (copied from backend rewrite-transit) */
+        /** @description (copied from backend rewrite) */
         post: operations["TransitAdmin_run"];
         delete?: never;
         options?: never;
@@ -597,7 +608,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description (copied from backend rewrite-transit) */
+        /** @description (copied from backend rewrite) */
         get: operations["TransitAdmin_runs"];
         put?: never;
         post?: never;
@@ -614,7 +625,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description (copied from backend rewrite-transit) */
+        /** @description (copied from backend rewrite) */
         get: operations["TrackerAdmin_overview"];
         put?: never;
         post?: never;
@@ -715,7 +726,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description (copied from backend rewrite-transit) */
+        /** @description (copied from backend rewrite) */
         get: operations["Networks_providers"];
         put?: never;
         post?: never;
@@ -732,7 +743,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description (copied from backend rewrite-transit) */
+        /** @description (copied from backend rewrite) */
         get: operations["Networks_provider"];
         put?: never;
         post?: never;
@@ -751,7 +762,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** @description (copied from backend rewrite-transit) */
+        /** @description (copied from backend rewrite) */
         post: operations["Networks_kill"];
         delete?: never;
         options?: never;
@@ -1075,7 +1086,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description (copied from backend rewrite-transit) */
+        /** @description (copied from backend rewrite) */
         get: operations["Cities_network"];
         put?: never;
         post?: never;
@@ -1092,7 +1103,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description (copied from backend rewrite-transit) */
+        /** @description (copied from backend rewrite) */
         get: operations["Transit_routes"];
         put?: never;
         post?: never;
@@ -1109,7 +1120,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description (copied from backend rewrite-transit) */
+        /** @description (copied from backend rewrite) */
         get: operations["Transit_stops"];
         put?: never;
         post?: never;
@@ -1126,7 +1137,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description (copied from backend rewrite-transit) */
+        /** @description (copied from backend rewrite) */
         get: operations["Vehicles_snapshot"];
         put?: never;
         post?: never;
@@ -1159,7 +1170,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description (copied from backend rewrite-transit) */
+        /** @description (copied from backend rewrite) */
         get: operations["Transit_route"];
         put?: never;
         post?: never;
@@ -1176,7 +1187,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description (copied from backend rewrite-transit) */
+        /** @description (copied from backend rewrite) */
         get: operations["Transit_shape"];
         put?: never;
         post?: never;
@@ -1193,7 +1204,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description (copied from backend rewrite-transit) */
+        /** @description (copied from backend rewrite) */
         get: operations["Transit_timetable"];
         put?: never;
         post?: never;
@@ -1210,7 +1221,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description (copied from backend rewrite-transit) */
+        /** @description (copied from backend rewrite) */
         get: operations["Transit_stop"];
         put?: never;
         post?: never;
@@ -1227,7 +1238,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description (copied from backend rewrite-transit) */
+        /** @description (copied from backend rewrite) */
         get: operations["Vehicles_departures"];
         put?: never;
         post?: never;
@@ -1244,7 +1255,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description (copied from backend rewrite-transit) */
+        /** @description (copied from backend rewrite) */
         get: operations["Vehicles_vehicle"];
         put?: never;
         post?: never;
@@ -1260,21 +1271,6 @@ export interface components {
     schemas: {
         /** @enum {string} */
         Amr: "otp" | "pwd" | "webauthn";
-        /** @enum {string} */
-        AnalyticsMetric: "fleet.hourly" | "fleet.vehicle-days" | "runs.runtime" | "runs.departures" | "headways.observed" | "adherence.departure" | "speed.heatmap" | "segments.travel-time" | "dwell.stops" | "quality.feed" | "coverage.routes" | "headways.marey";
-        AnalyticsResultDto: {
-            columns: string[];
-            meta: {
-                generated_at: string;
-                n: number;
-                /** @enum {string} */
-                source: "hot" | "archive" | "rollup";
-                /** @description adherence.departure: false when the network has no timetable */
-                timetable?: boolean;
-                timezone?: string;
-            };
-            rows: (string | number | boolean | null)[][];
-        };
         ApiError: {
             code: components["schemas"]["ErrorCode"];
             details?: {
@@ -1821,6 +1817,37 @@ export interface components {
             permissions: components["schemas"]["PermissionKey"][];
             roles: components["schemas"]["RoleRef"][];
             slug: string;
+        };
+        MetricCatalogDto: {
+            archive: {
+                first_date: string | null;
+                last_date: string | null;
+            };
+            /** @enum {string} */
+            h3: "extension" | "js";
+            max_days: number;
+            metrics: {
+                datasets: string[];
+                description: string;
+                /** @enum {string} */
+                key: "fleet.hourly" | "fleet.vehicle-days" | "runs.runtime" | "runs.departures" | "headways.observed" | "adherence.departure" | "speed.heatmap" | "segments.travel-time" | "dwell.stops" | "quality.feed" | "coverage.routes" | "headways.marey";
+            }[];
+        };
+        MetricResultDto: {
+            columns: string[];
+            meta: {
+                binding_ids: number[];
+                from: string;
+                generated_at: string;
+                /** @enum {string} */
+                metric: "fleet.hourly" | "fleet.vehicle-days" | "runs.runtime" | "runs.departures" | "headways.observed" | "adherence.departure" | "speed.heatmap" | "segments.travel-time" | "dwell.stops" | "quality.feed" | "coverage.routes" | "headways.marey";
+                n: number;
+                /** @enum {string} */
+                source: "hot" | "archive" | "rollup";
+                timezone: string;
+                to: string;
+            };
+            rows: (number | string | boolean | null)[][];
         };
         MeUser: {
             avatar_initials: string;
@@ -3314,36 +3341,11 @@ export interface operations {
             500: components["responses"]["Error"];
         };
     };
-    Analytics_metric: {
+    Analytics_catalog: {
         parameters: {
-            query?: {
-                compare?: "previous" | "last_week";
-                /** @description headways.marey */
-                date?: string;
-                day_type?: "all" | "weekday" | "saturday" | "sunday";
-                direction?: 0 | 1;
-                /** @description First day (network timezone), inclusive */
-                from?: string;
-                /** @description fleet.hourly */
-                granularity?: "5m" | "1h" | "1d";
-                /** @description speed.heatmap */
-                hour?: number;
-                hour_from?: number;
-                hour_to?: number;
-                /** @description speed.heatmap */
-                res?: number;
-                /** @description runs.runtime, headways.marey */
-                route_id?: string;
-                /** @description Comma separated stable route ids */
-                routes?: string;
-                /** @description dwell.stops */
-                stop_id?: string;
-                /** @description Last day (network timezone), inclusive; at most 90 days after from */
-                to?: string;
-            };
+            query?: never;
             header?: never;
             path: {
-                metric: components["schemas"]["AnalyticsMetric"];
                 networkId: string;
             };
             cookie?: never;
@@ -3357,7 +3359,72 @@ export interface operations {
                 };
                 content: {
                     "application/json": {
-                        data: components["schemas"]["AnalyticsResultDto"];
+                        data: components["schemas"]["MetricCatalogDto"];
+                        /** @enum {boolean} */
+                        ok: true;
+                    };
+                };
+            };
+            /** @description Error envelope */
+            default: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorEnvelope"];
+                };
+            };
+        };
+    };
+    Analytics_metric: {
+        parameters: {
+            query?: {
+                /** @description One binding of the network */
+                binding_id?: number;
+                /** @description One local day (sets from and to) */
+                date?: string;
+                day_type?: "all" | "weekday" | "saturday" | "sunday";
+                direction?: number;
+                /** @description First local date (default: 6 days before `to`) */
+                from?: string;
+                /** @description fleet.hourly bucket size */
+                granularity?: "5m" | "1h" | "1d";
+                /** @description speed.heatmap: one local hour */
+                hour?: number;
+                hour_from?: number;
+                hour_to?: number;
+                /** @description dwell.stops: top N */
+                limit?: number;
+                /** @description speed.heatmap: minimum samples per cell */
+                min_samples?: number;
+                /** @description runs.runtime: minimum max_stop_seq of a run */
+                min_stops?: number;
+                /** @description speed.heatmap H3 resolution */
+                res?: number;
+                /** @description Route id(s), comma separated: external or public `<binding>.<external>` */
+                route_id?: string;
+                /** @description dwell.stops: one stop, by hour */
+                stop_id?: string;
+                /** @description Last local date, inclusive (default: today) */
+                to?: string;
+            };
+            header?: never;
+            path: {
+                metric: string;
+                networkId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        data: components["schemas"]["MetricResultDto"];
                         /** @enum {boolean} */
                         ok: true;
                     };
@@ -3377,58 +3444,51 @@ export interface operations {
     Analytics_export: {
         parameters: {
             query?: {
-                compare?: "previous" | "last_week";
-                /** @description headways.marey */
+                /** @description One binding of the network */
+                binding_id?: number;
+                /** @description One local day (sets from and to) */
                 date?: string;
                 day_type?: "all" | "weekday" | "saturday" | "sunday";
-                direction?: 0 | 1;
+                direction?: number;
                 format?: "csv" | "parquet";
-                /** @description First day (network timezone), inclusive */
+                /** @description First local date (default: 6 days before `to`) */
                 from?: string;
-                /** @description fleet.hourly */
+                /** @description fleet.hourly bucket size */
                 granularity?: "5m" | "1h" | "1d";
-                /** @description speed.heatmap */
+                /** @description speed.heatmap: one local hour */
                 hour?: number;
                 hour_from?: number;
                 hour_to?: number;
-                /** @description speed.heatmap */
+                /** @description dwell.stops: top N */
+                limit?: number;
+                /** @description speed.heatmap: minimum samples per cell */
+                min_samples?: number;
+                /** @description runs.runtime: minimum max_stop_seq of a run */
+                min_stops?: number;
+                /** @description speed.heatmap H3 resolution */
                 res?: number;
-                /** @description runs.runtime, headways.marey */
+                /** @description Route id(s), comma separated: external or public `<binding>.<external>` */
                 route_id?: string;
-                /** @description Comma separated stable route ids */
-                routes?: string;
-                /** @description dwell.stops */
+                /** @description dwell.stops: one stop, by hour */
                 stop_id?: string;
-                /** @description Last day (network timezone), inclusive; at most 90 days after from */
+                /** @description Last local date, inclusive (default: today) */
                 to?: string;
             };
             header?: never;
             path: {
-                metric: components["schemas"]["AnalyticsMetric"];
+                metric: string;
                 networkId: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description File stream */
+            /** @description The metric's rows as a file */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "application/vnd.apache.parquet": string;
-                    "text/csv": string;
-                };
-            };
-            /** @description Error envelope */
-            default: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ErrorEnvelope"];
-                };
+                content?: never;
             };
         };
     };
