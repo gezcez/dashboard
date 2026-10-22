@@ -3,12 +3,16 @@ import type { ChannelLike, LockManagerLike } from "./config"
 export const CHANNEL_NAME = "gz.auth"
 
 export type CrossTabMessage =
-  { type: "logout" } | { type: "refreshed" } | { type: "step_up"; ok: boolean }
+  | { type: "logout" }
+  | { type: "refreshed" }
+  /** Step-up result from the /auth/step-up popup; `state` names the transaction it answers. */
+  | { type: "step_up"; ok: boolean; state: string }
 
 export function isCrossTabMessage(data: unknown): data is CrossTabMessage {
   if (typeof data !== "object" || data === null) return false
-  const type = (data as { type?: unknown }).type
-  return type === "logout" || type === "refreshed" || type === "step_up"
+  const { type, ok, state } = data as { type?: unknown; ok?: unknown; state?: unknown }
+  if (type === "step_up") return typeof ok === "boolean" && typeof state === "string"
+  return type === "logout" || type === "refreshed"
 }
 
 export function defaultLocks(): LockManagerLike | null {

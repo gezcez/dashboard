@@ -29,7 +29,10 @@ test("users list filters through the URL and opens a user", async ({ page }) => 
   await expect(page.getByRole("cell", { name: /Network admin/ })).toBeVisible()
 })
 
-test("banning needs a fresh sign-in and asks for it in a popup", async ({ page, isMobile }) => {
+test("banning needs a fresh sign-in and asks for it in a popup without an opener", async ({
+  page,
+  isMobile,
+}) => {
   test.skip(isMobile, "popup flow is covered on desktop")
   await signInAs(page, /phasenull/, "/admin/users?q=Mehmet")
   await expect(page.getByRole("heading", { level: 1, name: "Users" })).toBeVisible()
@@ -42,6 +45,11 @@ test("banning needs a fresh sign-in and asks for it in a popup", async ({ page, 
   await dialog.getByRole("button", { name: "Ban user" }).click()
 
   await expect(page.getByText("Confirm it's you")).toBeVisible()
+  // Production identity pages send COOP same-origin, which leaves the step-up page without an
+  // opener. Recreate that so the result can only come back over BroadcastChannel.
+  await page.context().addInitScript({
+    content: `if (location.pathname === "/auth/step-up") Object.defineProperty(window, "opener", { value: null })`,
+  })
   const popupPromise = page.waitForEvent("popup")
   await page.getByRole("button", { name: "Confirm it's me" }).click()
   const popup = await popupPromise

@@ -92,7 +92,7 @@ describe("login and callback", () => {
     })
 
     const result = await client.handleCallback(`${ORIGIN}/auth/callback?code=abc&state=${state}`)
-    expect(result).toEqual({ returnTo: "/admin", kind: "login" })
+    expect(result).toEqual({ returnTo: "/admin", kind: "login", popup: false })
     expect(order).toEqual(["replaceState", "token"])
     expect(web.href).toBe(`${ORIGIN}/auth/callback`)
     expect(calls).toHaveLength(1)
@@ -394,82 +394,141 @@ describe("logout", () => {
 })
 
 describe("step-up", () => {
-  function popupWindow() {
-    return {
-      closed: false,
-      close() {
-        this.closed = true
-      },
-    }
+  /** A popup severed by COOP: the opener sees it as closed and the popup has no opener. */
+  function severedPopup() {
+    return { closed: true, close: vi.fn() }
   }
 
-  it("opens the authorize popup with max_age=600 and the step-up redirect URI, then refreshes", async () => {
+  async function startStepUp(opts: { channel?: boolean; popup?: object } = {}) {
+    const bus = channelBus()
     const web = fakeWeb()
-    const popup = popupWindow()
-    web.popup = popup
+    const popup = opts.popup ?? severedPopup()
     let opened = ""
     web.openPopup = (url) => {
       opened = url
       return popup as unknown as Window
     }
-    const { client } = makeClient({ web })
+    const { client } = makeClient({ web, channel: opts.channel === false ? null : bus.create() })
     await signIn(client)
     const calls = tokenRoute(() => okToken())
-
-    const pending = client.stepUp()
+    const controller = new AbortController()
+    const pending = client.stepUp({ signal: controller.signal })
     await vi.waitFor(() => expect(opened).not.toBe(""))
+    const state = new URL(opened).searchParams.get("state")!
+    // The /auth/step-up page in the popup is another client on the same origin.
+    const { client: popupClient } = makeClient({ channel: bus.create() })
+    return { client, popupClient, web, popup, opened, state, calls, pending, controller }
+  }
+
+  it("opens the authorize popup with max_age=600 and the step-up redirect URI", async () => {
+    const { opened, controller, pending } = await startStepUp()
     const params = new URL(opened).searchParams
     expect(params.get("max_age")).toBe("600")
     expect(params.get("redirect_uri")).toBe(`${ORIGIN}/auth/step-up`)
+    controller.abort()
+    await expect(pending).rejects.toBeInstanceOf(AuthError)
+  })
 
-    // A message from another origin or another window is ignored.
-    web.message({
-      origin: "https://evil.test",
-      source: popup as unknown as Window,
-      data: { type: STEP_UP_MESSAGE, ok: true },
-    })
-    web.message({ origin: ORIGIN, source: {} as Window, data: { type: STEP_UP_MESSAGE, ok: true } })
-    await new Promise((r) => setTimeout(r, 10))
+  it("hears the result over BroadcastChannel when COOP severed the popup, then refreshes", async () => {
+    const { popupClient, state, calls, pending } = await startStepUp()
+    // `closed` is already true (severed); that alone must not cancel.
+    await new Promise((r) => setTimeout(r, 30))
     expect(calls).toHaveLength(0)
-
-    web.message({
-      origin: ORIGIN,
-      source: popup as unknown as Window,
-      data: { type: STEP_UP_MESSAGE, ok: true },
-    })
+    popupClient.reportStepUp(true, state, null)
     await expect(pending).resolves.toEqual({ type: "elevated" })
     expect(calls).toHaveLength(1) // fresh access token with the new auth_time
   })
 
-  it("falls back to a full redirect when the popup is blocked", async () => {
+  it("ignores a BroadcastChannel result for another tab's step-up", async () => {
+    const { popupClient, state, calls, pending, controller } = await startStepUp()
+    popupClient.reportStepUp(true, "someone-elses-state", null)
+    await new Promise((r) => setTimeout(r, 20))
+    expect(calls).toHaveLength(0)
+    popupClient.reportStepUp(false, state, null)
+    const error: unknown = await pending.catch((e: unknown) => e)
+    expect(isAuthError(error, "server")).toBe(true)
+    controller.abort()
+  })
+
+  it("falls back to postMessage with strict origin, source and state checks", async () => {
+    const popup = { closed: false, close: vi.fn() }
+    const { web, state, calls, pending } = await startStepUp({ channel: false, popup })
+    const source = popup as unknown as Window
+    web.message({
+      origin: "https://evil.test",
+      source,
+      data: { type: STEP_UP_MESSAGE, ok: true, state },
+    })
+    web.message({
+      origin: ORIGIN,
+      source: {} as Window,
+      data: { type: STEP_UP_MESSAGE, ok: true, state },
+    })
+    web.message({ origin: ORIGIN, source, data: { type: STEP_UP_MESSAGE, ok: true, state: "x" } })
+    await new Promise((r) => setTimeout(r, 10))
+    expect(calls).toHaveLength(0)
+    web.message({ origin: ORIGIN, source, data: { type: STEP_UP_MESSAGE, ok: true, state } })
+    await expect(pending).resolves.toEqual({ type: "elevated" })
+  })
+
+  it("the popup page broadcasts first and posts to a surviving opener with a strict origin", () => {
+    const bus = channelBus()
+    const listener = bus.create()
+    const heard: unknown[] = []
+    listener.addEventListener("message", (e) => heard.push(e.data))
+    const { client } = makeClient({ channel: bus.create() })
+    const opener = { postMessage: vi.fn() }
+    client.reportStepUp(true, "s1", opener as unknown as Window)
+    expect(heard).toEqual([{ type: "step_up", ok: true, state: "s1" }])
+    expect(opener.postMessage).toHaveBeenCalledWith(
+      { type: STEP_UP_MESSAGE, ok: true, state: "s1" },
+      ORIGIN,
+    )
+  })
+
+  it("cancels through the signal and closes the popup", async () => {
+    const { popup, pending, controller, calls } = await startStepUp()
+    controller.abort()
+    const error: unknown = await pending.catch((e: unknown) => e)
+    expect(isAuthError(error, "cancelled")).toBe(true)
+    expect((popup as { close: () => void }).close).toHaveBeenCalled()
+    expect(calls).toHaveLength(0)
+  })
+
+  it("flags the popup transaction so the callback page knows to report and close", async () => {
+    const storage = memoryStorage()
+    const web = fakeWeb()
+    let opened = ""
+    web.openPopup = (url) => {
+      opened = url
+      return severedPopup() as unknown as Window
+    }
+    const { client } = makeClient({ web, storage })
+    const controller = new AbortController()
+    const pending = client.stepUp({ signal: controller.signal }).catch(() => undefined)
+    await vi.waitFor(() => expect(opened).not.toBe(""))
+    const state = new URL(opened).searchParams.get("state")!
+    // The popup shares the opener's sessionStorage copy, so it finds the transaction.
+    const { client: popupClient } = makeClient({ storage })
+    tokenRoute(() => okToken())
+    const result = await popupClient.handleCallback(`${ORIGIN}/auth/step-up?code=c&state=${state}`)
+    expect(result).toMatchObject({ kind: "step_up", popup: true })
+    controller.abort()
+    await pending
+  })
+
+  it("falls back to a full redirect, with an unflagged transaction, when the popup is blocked", async () => {
+    const storage = memoryStorage()
     const web = fakeWeb()
     web.openPopup = () => null
-    const { client } = makeClient({ web })
+    const { client } = makeClient({ web, storage })
     await expect(client.stepUp({ returnTo: "/admin/users/01U" })).resolves.toEqual({
       type: "redirected",
     })
     const url = new URL(web.navigated.at(-1)!)
     expect(url.searchParams.get("max_age")).toBe("600")
     expect(url.searchParams.get("redirect_uri")).toBe(`${ORIGIN}/auth/step-up`)
-  })
-
-  it("resolves cancelled when the popup is closed", async () => {
-    const web = fakeWeb()
-    const popup = popupWindow()
-    web.openPopup = () => popup as unknown as Window
-    const { client } = makeClient({ web })
-    const pending = client.stepUp().catch((e: unknown) => e)
-    await new Promise((r) => setTimeout(r, 10))
-    popup.close()
-    const error = await pending
-    expect(error).toBeInstanceOf(AuthError)
-    expect((error as AuthError).kind).toBe("cancelled")
-  })
-
-  it("the popup page reports back to its opener with a strict target origin", () => {
-    const { client } = makeClient()
-    const opener = { postMessage: vi.fn() }
-    client.reportStepUp(true, opener as unknown as Window)
-    expect(opener.postMessage).toHaveBeenCalledWith({ type: STEP_UP_MESSAGE, ok: true }, ORIGIN)
+    const raw = await storage.get(TXN_PREFIX + url.searchParams.get("state")!)
+    expect(JSON.parse(raw!)).not.toHaveProperty("popup")
   })
 })

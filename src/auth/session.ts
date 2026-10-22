@@ -35,6 +35,8 @@ export interface StepUpOptions {
   maxAge?: number
   returnTo?: string
   mode?: "popup" | "redirect"
+  /** Cancels a popup step-up that is still waiting (the dialog's Cancel button). */
+  signal?: AbortSignal
 }
 
 export type StepUpResult = { type: "elevated" } | { type: "redirected" }
@@ -42,6 +44,8 @@ export type StepUpResult = { type: "elevated" } | { type: "redirected" }
 export interface CallbackResult {
   returnTo: string
   kind: TransactionKind
+  /** True when this callback runs in a step-up popup. */
+  popup: boolean
 }
 
 /** Reference interface from oauth.md 9.2, web flavour. */
@@ -63,6 +67,14 @@ export interface AuthClient {
 }
 
 export const STEP_UP_MESSAGE = "gz-step-up"
+
+function closeQuietly(popup: Window): void {
+  try {
+    popup.close()
+  } catch {
+    // severed by COOP
+  }
+}
 export const SELECT_ACCOUNT_FLAG = "gz.auth.select_account"
 const STEP_UP_MAX_WAIT_MS = 10 * 60 * 1000
 
@@ -234,6 +246,7 @@ export class WebAuthClient implements AuthClient {
     prompt?: string
     maxAge?: number
     loginHint?: string
+    popup?: boolean
   }): Promise<string> {
     const state = createState()
     const verifier = createVerifier()
@@ -244,6 +257,7 @@ export class WebAuthClient implements AuthClient {
       redirectUri: params.redirectUri,
       returnTo: toInternalPath(params.returnTo, this.env.origin),
       kind: params.kind,
+      ...(params.popup ? { popup: true } : {}),
       createdAt: this.now(),
     })
     const query = new URLSearchParams({
@@ -306,7 +320,7 @@ export class WebAuthClient implements AuthClient {
     this.setAccess(tokens)
     this.setStatus("signed_in")
     this.emit({ type: "signed_in" })
-    return { returnTo: txn.returnTo, kind: txn.kind }
+    return { returnTo: txn.returnTo, kind: txn.kind, popup: txn.popup === true }
   }
 
   // ---- tokens -------------------------------------------------------------------------------
@@ -454,28 +468,42 @@ export class WebAuthClient implements AuthClient {
    */
   async stepUp(opts: StepUpOptions = {}): Promise<StepUpResult> {
     const maxAge = opts.maxAge ?? 600
-    const url = await this.buildAuthorizeUrl({
-      kind: "step_up",
-      redirectUri: this.cfg.stepUpRedirectUri,
-      returnTo: opts.returnTo ?? this.env.currentHref(),
-      maxAge,
-    })
+    const authorize = (popup: boolean) =>
+      this.buildAuthorizeUrl({
+        kind: "step_up",
+        redirectUri: this.cfg.stepUpRedirectUri,
+        returnTo: opts.returnTo ?? this.env.currentHref(),
+        maxAge,
+        popup,
+      })
     if (opts.mode === "redirect") {
-      this.env.navigate(url)
+      this.env.navigate(await authorize(false))
       return { type: "redirected" }
     }
+    // The popup must open in the click's task, so build its URL first. A blocked popup falls back
+    // to a redirect with its own transaction (one not flagged as a popup).
+    const url = await authorize(true)
     const popup = this.env.openPopup(url)
     if (!popup) {
-      this.env.navigate(url)
+      this.env.navigate(await authorize(false))
       return { type: "redirected" }
     }
-    await this.waitForStepUp(popup)
+    const state = new URL(url).searchParams.get("state") ?? ""
+    await this.waitForStepUp(popup, state, opts.signal)
     this.access = null
     await this.refresh()
     return { type: "elevated" }
   }
 
-  private waitForStepUp(popup: Window): Promise<void> {
+  /**
+   * Waits for the popup's result. The identity pages send Cross-Origin-Opener-Policy: same-origin,
+   * which severs the popup from this window: the popup's `window.opener` is null and, here,
+   * `popup.closed` turns true as soon as it reaches the identity origin. So the primary signal is
+   * the BroadcastChannel (same origin, unaffected by COOP); postMessage stays as a fallback for an
+   * opener link that survives. `closed` cannot tell "user closed it" from "severed", so it is not
+   * a cancel: the caller cancels through `signal`, and a stale wait ends after 10 minutes.
+   */
+  private waitForStepUp(popup: Window, state: string, signal?: AbortSignal): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       const started = this.now()
       let done = false
@@ -484,38 +512,54 @@ export class WebAuthClient implements AuthClient {
         done = true
         clearInterval(poll)
         offMessage()
-        if (this.channel) this.channel.removeEventListener("message", onChannel)
+        this.channel?.removeEventListener("message", onChannel)
+        signal?.removeEventListener("abort", onAbort)
         if (ok) resolve()
         else reject(error ?? new AuthError("server", "step-up failed"))
       }
-      // Primary signal: postMessage from the popup, strict origin and source checks.
-      const offMessage = this.env.onMessage((event) => {
-        if (event.origin !== this.env.origin || event.source !== popup) return
-        const data = event.data as { type?: unknown; ok?: unknown } | null
-        if (data?.type !== STEP_UP_MESSAGE) return
-        finish(data.ok === true)
-      })
-      // Backup signal for when the opener link was severed (COOP on the identity pages).
       const onChannel = (event: MessageEvent) => {
-        if (isCrossTabMessage(event.data) && event.data.type === "step_up") finish(event.data.ok)
+        const data: unknown = event.data
+        if (isCrossTabMessage(data) && data.type === "step_up" && data.state === state)
+          finish(data.ok)
       }
       this.channel?.addEventListener("message", onChannel)
+      // Fallback: postMessage from the popup, strict origin and source checks.
+      const offMessage = this.env.onMessage((event) => {
+        if (event.origin !== this.env.origin || event.source !== popup) return
+        const data = event.data as { type?: unknown; ok?: unknown; state?: unknown } | null
+        if (data?.type !== STEP_UP_MESSAGE || data.state !== state) return
+        finish(data.ok === true)
+      })
+      const onAbort = () => {
+        closeQuietly(popup)
+        finish(false, new AuthError("cancelled"))
+      }
+      if (signal?.aborted) {
+        onAbort()
+        return
+      }
+      signal?.addEventListener("abort", onAbort)
       const poll = setInterval(() => {
-        if (popup.closed) {
-          // Give a just-posted message a moment to arrive before calling it cancelled.
-          setTimeout(() => finish(false, new AuthError("cancelled")), 300)
-        } else if (this.now() - started > STEP_UP_MAX_WAIT_MS) {
-          popup.close()
+        if (this.now() - started > STEP_UP_MAX_WAIT_MS) {
+          closeQuietly(popup)
           finish(false, new AuthError("cancelled", "step-up timed out"))
         }
-      }, 500)
+      }, 1000)
     })
   }
 
-  /** Called by the /auth/step-up page after handleCallback() in popup mode. */
-  reportStepUp(ok: boolean, opener: Window | null): void {
-    this.broadcast({ type: "step_up", ok })
-    opener?.postMessage({ type: STEP_UP_MESSAGE, ok }, this.env.origin)
+  /**
+   * Called by the /auth/step-up page in a popup. `state` is the callback's `state` parameter, so
+   * only the window that started this step-up acts on it. BroadcastChannel first; postMessage to
+   * a surviving opener as the fallback.
+   */
+  reportStepUp(ok: boolean, state: string, opener: Window | null): void {
+    this.broadcast({ type: "step_up", ok, state })
+    try {
+      opener?.postMessage({ type: STEP_UP_MESSAGE, ok, state }, this.env.origin)
+    } catch {
+      // opener gone
+    }
   }
 
   // ---- logout -------------------------------------------------------------------------------

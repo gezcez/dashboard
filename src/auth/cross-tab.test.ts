@@ -26,7 +26,9 @@ describe("localStorage lock fallback (no Web Locks)", () => {
 describe("isCrossTabMessage", () => {
   it("accepts only known message shapes", () => {
     expect(isCrossTabMessage({ type: "logout" })).toBe(true)
-    expect(isCrossTabMessage({ type: "step_up", ok: true })).toBe(true)
+    expect(isCrossTabMessage({ type: "step_up", ok: true, state: "s" })).toBe(true)
+    // A step-up result must name the transaction it answers.
+    expect(isCrossTabMessage({ type: "step_up", ok: true })).toBe(false)
     expect(isCrossTabMessage({ type: "token", token: "x" })).toBe(false)
     expect(isCrossTabMessage(null)).toBe(false)
   })

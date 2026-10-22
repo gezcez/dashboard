@@ -13,9 +13,11 @@ export const Route = createFileRoute("/auth/step-up")({
 const exchanges = new Map<string, Promise<unknown>>()
 
 /**
- * Step-up callback. In popup mode it exchanges the code (rotating gz_rt to the fresh session),
- * tells the opener `{ type: "gz-step-up", ok }` with a strict target origin, and closes. In
- * redirect mode it returns to the page; the dangerous action is not replayed automatically.
+ * Step-up callback. In a popup it exchanges the code (rotating gz_rt to the fresh session),
+ * reports `{ ok, state }` to the waiting tab and closes. The identity pages send COOP
+ * same-origin, so `window.opener` is usually null here: the transaction's popup flag says which
+ * mode this is, and the result goes over BroadcastChannel (postMessage only when an opener
+ * survives). In redirect mode it returns to the page; the action is not replayed automatically.
  */
 function StepUpPage() {
   const { t } = useTranslation("auth")
@@ -25,6 +27,7 @@ function StepUpPage() {
   useEffect(() => {
     const href = window.location.href
     const opener = window.opener as Window | null
+    const state = new URL(href).searchParams.get("state") ?? ""
     let exchange = exchanges.get(href)
     if (!exchange) {
       exchange = auth.handleCallback(href)
@@ -32,9 +35,9 @@ function StepUpPage() {
     }
     exchange
       .then((result) => {
-        const { returnTo } = result as { returnTo: string }
-        if (opener) {
-          auth.reportStepUp(true, opener)
+        const { returnTo, popup } = result as { returnTo: string; popup: boolean }
+        if (popup) {
+          auth.reportStepUp(true, state, opener)
           setState("done")
           window.close()
         } else {
@@ -43,7 +46,8 @@ function StepUpPage() {
         }
       })
       .catch(() => {
-        if (opener) auth.reportStepUp(false, opener)
+        // The flag is unknown when the exchange failed; a report no tab waits for is harmless.
+        auth.reportStepUp(false, state, opener)
         setState("failed")
       })
   }, [router])

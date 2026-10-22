@@ -1,5 +1,5 @@
 import { ShieldCheckIcon, ShieldIcon } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { isAuthError } from "@/auth/errors"
 import { useAuth } from "@/auth/react"
@@ -26,25 +26,31 @@ export function StepUpDialog() {
   const setPending = useSudoStore((s) => s.setPending)
   const markElevated = useSudoStore((s) => s.markElevated)
   const [state, setState] = useState<"idle" | "working" | "cancelled" | "failed">("idle")
+  const waiting = useRef<AbortController | null>(null)
 
   useEffect(() => {
     if (pending) setState("idle")
   }, [pending])
 
   const close = (elevated: boolean) => {
+    waiting.current?.abort()
+    waiting.current = null
     pending?.resolve(elevated)
     setPending(null)
   }
 
   const confirm = async () => {
     setState("working")
+    const controller = new AbortController()
+    waiting.current = controller
     try {
-      const result = await auth.stepUp({ maxAge: SUDO_MAX_AGE_S })
+      const result = await auth.stepUp({ maxAge: SUDO_MAX_AGE_S, signal: controller.signal })
       if (result.type === "redirected") return
       const authTime = auth.claims()?.authTime
       if (authTime) markElevated(authTime)
       close(true)
     } catch (error) {
+      if (controller.signal.aborted) return
       setState(isAuthError(error, "cancelled") ? "cancelled" : "failed")
     }
   }
@@ -53,7 +59,7 @@ export function StepUpDialog() {
     <Dialog
       open={pending !== null}
       onOpenChange={(open) => {
-        if (!open && state !== "working") close(false)
+        if (!open) close(false)
       }}
     >
       <DialogContent closeLabel={t("close")} className="max-w-md">
@@ -70,9 +76,9 @@ export function StepUpDialog() {
           </p>
         )}
         <DialogFooter>
+          {/* Cancel stays live while waiting: the popup cannot tell us it was closed. */}
           <Button
             variant="ghost"
-            disabled={state === "working"}
             onClick={() => {
               close(false)
             }}

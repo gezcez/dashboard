@@ -138,7 +138,11 @@ section 9); nothing is imported from another repo.
 - `auth.fetch` adds the bearer token, retries a 401 `AUTH_TOKEN_EXPIRED` once, and emits
   `step_up_required` on a 403 `AUTH_STEP_UP_REQUIRED` without retrying.
 - `auth.stepUp()` opens `/authorize?max_age=600` in a popup that returns to `/auth/step-up`
-  (strict `postMessage` origin check, BroadcastChannel backup), falling back to a redirect.
+  and falls back to a redirect if the popup is blocked. The identity pages send COOP same-origin,
+  which leaves the popup without `window.opener`, so the result comes back over BroadcastChannel,
+  matched to the transaction `state`. `postMessage` (strict origin, source and state checks) is
+  the fallback. The dialog's Cancel aborts the wait, because COOP also hides whether the popup
+  was closed.
 - `auth.logout()` revokes, wipes memory and the query cache, broadcasts, then goes to
   `oauth.gezcez.com/logout` with the registered post-logout URI. The next login uses
   `prompt=select_account`.

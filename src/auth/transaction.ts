@@ -11,6 +11,8 @@ export interface Transaction {
   redirectUri: string
   returnTo: string
   kind: TransactionKind
+  /** A step-up running in a popup: the callback page reports back and closes itself. */
+  popup?: boolean
   createdAt: number
 }
 
@@ -48,6 +50,7 @@ export async function takeTransaction(
       redirectUri: txn.redirectUri,
       returnTo: safeInternalPath(txn.returnTo),
       kind: txn.kind === "step_up" ? "step_up" : "login",
+      popup: txn.popup === true,
       createdAt: txn.createdAt,
     }
   } catch {
